@@ -1,0 +1,125 @@
+{
+    "movies": [
+        {
+            "title": "Barbie",
+            "releaseDate": "10 July 2023",
+            "genre": "Comedy",
+            "poster": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQaoW2gxmJFDPtqfC9pGL6Rdist9nH9ntMLV7XR1FXpaQj1VrGT",
+            "director": "Greta Gerwig",
+            "duration": 114,
+            "sessions": [
+              { "day": "Monday", "date": "2023-08-28", "times": ["10:00 AM", "2:00 PM", "7:30 PM"] },
+              { "day": "Tuesday", "date": "2023-08-29", "times": ["1:00 PM", "5:00 PM", "9:30 PM"] },
+              { "day": "Wednesday", "date": "2023-08-30", "times": ["11:00 AM", "3:00 PM", "8:00 PM"] },
+              { "day": "Thursday", "date": "2023-08-31", "times": ["12:30 PM", "6:30 PM", "10:00 PM"] }
+            ],
+            "description": "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+            "reviews": [
+              {"id": 1, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 5.0, "datetime": "2023-08-20T12:34:56Z"},
+              {"id": 2, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 2.0, "datetime": "2023-08-21T13:45:32Z"},
+              {"id": 3, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 3.0, "datetime": "2023-08-22T09:15:47Z"}
+            ]
+          },
+        {
+          "title": "Avengers: Endgame",
+          "releaseDate": "26 April 2019",
+          "genre": "Action",
+          "poster": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+          "director": "Anthony Russo, Joe Russo",
+          "duration": 181,
+          "sessions": [
+            { "day": "Monday", "date": "2023-08-28", "times": ["10:00 AM", "2:00 PM", "7:30 PM"] },
+            { "day": "Tuesday", "date": "2023-08-29", "times": ["1:00 PM", "5:00 PM", "9:30 PM"] }
+          ],
+          "description": "After the devastating events of Infinity War, the Avengers assemble once again to undo the actions of Thanos and restore balance to the universe.",
+          "reviews": [
+            {"id": 1, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 5.0, "datetime": "2023-08-20T15:27:59Z"},
+            {"id": 2, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 2.0, "datetime": "2023-08-21T18:09:14Z"},
+            {"id": 3, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 3.0, "datetime": "2023-08-22T22:46:02Z"}
+          ]
+        },
+        {
+          "title": "The Lion King",
+          "releaseDate": "9 July 2019",
+          "poster":"https://m.media-amazon.com/images/M/MV5BMjIwMjE1Nzc4NV5BMl5BanBnXkFtZTgwNDg4OTA1NzM@._V1_.jpg",
+          "genre": "Animation",
+          "director": "Jon Favreau",
+          "cast": ["Donald Glover", "Beyoncé", "James Earl Jones"],
+          "duration": 118,
+          "sessions": [
+            { "day": "Wednesday", "date": "2023-08-30", "times": ["11:30 AM", "4:15 PM", "9:00 PM"] },
+            { "day": "Thursday", "date": "2023-08-31", "times": ["12:00 PM", "6:00 PM", "10:45 PM"] }
+          ],
+          "description": "Simba, a young lion prince, must reclaim his throne after his father's death and overcome the challenges that come with his destiny.",
+          "reviews": [
+            {"id": 1, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 5.0, "datetime": "2023-08-20T10:12:34Z"},
+            {"id": 2, "email": "lukemacdonald21@gmail.com", "comment": "Bad movie", "rating": 1.0, "datetime": "2023-08-21T14:23:45Z"},
+            {"id": 3, "email": "lukemacdonald21@gmail.com", "comment": "Not worth Watching", "rating": 1.0, "datetime": "2023-08-22T16:30:18Z"}
+          ]
+        },
+        {
+          "title": "Inception",
+          "releaseDate": "16 July 2010",
+          "poster":"https://m.media-amazon.com/images/I/91Rc8cAmnAL._AC_UF894,1000_QL80_.jpg",
+          "genre": "Science Fiction",
+          "director": "Christopher Nolan",
+          "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"],
+          "duration": 148,
+          "sessions": [
+            { "day": "Friday", "date": "2023-09-01", "times": ["1:45 PM", "6:20 PM", "10:30 PM"] },
+            { "day": "Saturday", "date": "2023-09-02", "times": ["3:00 PM", "8:15 PM", "11:00 PM"] }
+          ],
+          "description": "Dom Cobb is a skilled thief, but his expertise lies in entering people's dreams to steal their secrets. Now he is given a challenging task of planting an idea into someone's mind.",
+          "reviews": [
+            {"id": 1, "email": "lukemacdonald21@gmail.com", "comment": "GREAT!", "rating": 5.0, "datetime": "2023-08-20T08:09:17Z"},
+            {"id": 2, "email": "lukemacdonald21@gmail.com", "comment": "I rewatch this movie all the time", "rating": 5.0, "datetime": "2023-08-21T10:45:32Z"},
+            {"id": 3, "email": "lukemacdonald21@gmail.com", "comment": "GREAT MOVIE!!!!!", "rating": 5.0, "datetime": "2023-08-22T12:30:59Z"}
+          ]
+        },
+        {
+          "title": "Jurassic Park",
+          "releaseDate": "2 September 1993",
+          "poster": "https://i.ebayimg.com/images/g/fl4AAOSwakxdOOVA/s-l1600.jpg",
+          "genre": "Adventure",
+          "director": "Steven Spielberg",
+          "cast": ["Sam Neill", "Laura Dern", "Jeff Goldblum"],
+          "duration": 127,
+          "sessions": [
+            { "day": "Sunday", "date": "2023-09-03", "times": ["10:15 AM", "3:45 PM", "8:15 PM"] },
+            { "day": "Monday", "date": "2023-09-04", "times": ["11:00 AM", "5:30 PM", "9:45 PM"] }
+          ],
+          "description": "A group of scientists is invited to preview a theme park where cloned dinosaurs are the main attraction. However, when the creatures escape, chaos ensues.",
+          "reviews": [
+            {"id": 1, "email": "lukemacdonald21@gmail.com", "comment": "Good movie", "rating": 4.0, "datetime": "2023-08-20T11:56:27Z"},
+            {"id": 2, "email": "lukemacdonald21@gmail.com", "comment": "Terrible movie", "rating": 1.0, "datetime": "2023-08-21T15:22:14Z"},
+            {"id": 3, "email": "lukemacdonald21@gmail.com", "comment": "I did not enjoy this movie", "rating": 2.0, "datetime": "2023-08-22T17:47:59Z"}
+          ]
+        }
+    ],
+    "addresses": [
+        "123 Smith Street, Sydney, NSW 2000",
+        "789 Brown Crescent, Brisbane, QLD 4000",
+        "987 Green Road, Perth, WA 6000",
+        "654 White Street, Adelaide, SA 5000",
+        "321 Blue Lane, Canberra, ACT 2600",
+        "234 Red Terrace, Darwin, NT 0800",
+        "567 Purple Close, Hobart, TAS 7000"
+    ],
+    "events": [
+      {
+        "title": "Summer Music Festival",
+        "date": "July 22-24, 2023",
+        "description": "Get ready for three days of live music, delicious food, and fun activities at our Summer Music Festival. This family-friendly event brings the community together to celebrate the season."
+      },
+      {
+        "title": "Community Gardening Workshop",
+        "date": "May 8, 2023",
+        "description": "Learn about sustainable gardening practices, composting, and plant care in our Community Gardening Workshop. Green thumbs and beginners are all welcome to join and grow together."
+      },
+      {
+        "title": "Art in the Park Exhibition",
+        "date": "August 27, 2023",
+        "description": "Explore local creativity at our Art in the Park Exhibition. Artists from the community will showcase their paintings, sculptures, and crafts. It's a great opportunity to support local talent."
+      }
+    ]
+}
