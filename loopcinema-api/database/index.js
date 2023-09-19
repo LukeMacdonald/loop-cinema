@@ -10,12 +10,12 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     dialect: config.DIALECT
 });
 
-
 // Define Models 
 db.user = require("./models/user.js")(db, DataTypes);
 db.movie = require("./models/movie.js")(db, DataTypes);
 db.review = require("./models/review.js")(db, DataTypes);
 db.session = require("./models/session.js")(db,DataTypes);
+db.seat = require("./models/seat.js")(db,DataTypes);
 db.reservation = require('./models/reservation.js')(db,DataTypes);
 
 // Define Relationships
@@ -34,6 +34,16 @@ db.session.belongsTo(db.movie,{
     allowNull: false,
 });
 
+db.movie.hasMany(db.review,{
+    foreignKey: 'movie_id',
+    as:'reviews'
+});
+
+db.movie.hasMany(db.session,{
+    foreignKey: 'movie_id',
+    as:'sessions'
+});
+
 db.session.hasMany(db.seat, {
     foreignKey: 'session_id', // Corrected foreign key reference
     allowNull: false,
@@ -50,7 +60,7 @@ db.reservation.belongsTo(db.user,{
 });
 
 db.reservation.hasMany(db.seat, {
-    foreignKey: 'reservation_id', // Corrected foreign key reference
+    foreignKey: 'reservation_id',
     allowNull: false,
     as:'seats'
 });

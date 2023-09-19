@@ -1,5 +1,5 @@
 module.exports = (db, DataTypes) =>
-db.sequalize.define("reservation",{
+db.sequelize.define("reservation",{
     reserveration_id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
