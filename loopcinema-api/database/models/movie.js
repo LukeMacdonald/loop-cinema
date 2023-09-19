@@ -1,6 +1,5 @@
-const { DataTypes } = require("sequelize");
-
-const Movie = sequelize.define("movie", {
+module.exports = (db, DataTypes) =>
+  db.sequelize.define("movie", {
     movie_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
