@@ -12,19 +12,5 @@ module.exports = (db, DataTypes) =>
     comment:{
         type: DataTypes.STRING(600),
         allowNull: false
-    },
-    user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: db.user,
-          key: "user_id"
-        }
-    },
-    movie_id:{
-        type: DataTypes.INTEGER,
-        references:{
-            model: db.movie,
-            key: "movie_id"
-        }
-    }
+    }, 
 });
