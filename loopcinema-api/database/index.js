@@ -16,6 +16,7 @@ db.user = require("./models/user.js")(db, DataTypes);
 db.movie = require("./models/movie.js")(db, DataTypes);
 db.review = require("./models/review.js")(db, DataTypes);
 db.session = require("./models/session.js")(db,DataTypes);
+db.reservation = require('./models/reservation.js')(db,DataTypes);
 
 // Define Relationships
 db.review.belongsTo(db.user,{
@@ -33,12 +34,26 @@ db.session.belongsTo(db.movie,{
     allowNull: false,
 });
 
-db.session.hasMany(db.seat,{
-    foreignKey: 'seat_id',
+db.session.hasMany(db.seat, {
+    foreignKey: 'session_id', // Corrected foreign key reference
     allowNull: false,
+    as:'seats'
 });
-
-db.session.belongsTo(db.session,{
+db.seat.belongsTo(db.session,{
     foreignKey: 'session_id',
     allowNull: false,
 });
+
+db.reservation.belongsTo(db.user,{
+    foreignKey:'user_id',
+    allowNull: false,
+});
+
+db.reservation.hasMany(db.seat, {
+    foreignKey: 'reservation_id', // Corrected foreign key reference
+    allowNull: false,
+    as:'seats'
+});
+
+
+module.exports = db;
