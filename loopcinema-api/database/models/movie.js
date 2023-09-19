@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-sequelize.define("movie", {
+const Movie = sequelize.define("movie", {
     movie_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -35,3 +35,5 @@ sequelize.define("movie", {
     // Don't add the timestamp attributes (updatedAt, createdAt).
     timestamps: false
   });
+
+module.exports = Movie;

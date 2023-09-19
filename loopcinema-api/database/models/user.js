@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
+const sequelize = require("./sequelize");
 
-sequelize.define("user", {
+const User = sequelize.define("user", {
     user_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -29,3 +30,5 @@ sequelize.define("user", {
     // Don't add the timestamp attributes (updatedAt, createdAt).
     timestamps: false
   });
+
+module.exports = User;
