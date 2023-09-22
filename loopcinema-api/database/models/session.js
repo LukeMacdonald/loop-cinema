@@ -9,6 +9,6 @@ db.sequelize.define('session',{
     session_time:{
         type: DataTypes.DATE,
         allowNull:false
-    }, 
+    },
 });
 

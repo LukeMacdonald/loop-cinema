@@ -35,6 +35,7 @@ exports.sessionInsert = async(req,res) => {
     });
     res.json(session);
 }
+
 exports.movieSessions = async (req, res) => {
     const movie_id = req.params.movie_id;
   
@@ -50,6 +51,7 @@ exports.movieSessions = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching movie sessions.' });
     }
 };
+
 exports.movieReviews = async (req, res) => {
     const movie_id = req.params.movie_id;
   
