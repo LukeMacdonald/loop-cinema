@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
+import { movieSessions } from '../data/repository';
+import { getDayOfWeek, extractTime, formatDate } from '../config/config';
 
 function SessionTimes(props) {
-  const showings = props.times;
-
-  // Array to map numeric month to month names
-  const monthNames = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const [showings, setSessions] = useState([]);
+  useEffect(() => {
+    async function fetchMovies() {
+      const sessions = await movieSessions(props.movieID);
+      console.log(sessions);
+      setSessions(sessions); // Update movies state with the fetched data
+    }
+    fetchMovies(); // Call the async function to fetch movies
+  }, [props.movieID]); // Empty dependency array to run the effect once
 
   return (
     <Modal
@@ -29,9 +36,9 @@ function SessionTimes(props) {
           <tbody>
             {showings.map((showing, index) => (
               <tr key={index}>
-                <td>{showing.day}</td>
-                <td>{`${new Date(showing.date).getDate()} ${monthNames[new Date(showing.date).getMonth()]}`}</td>
-                <td>{showing.times.join(', ')}</td>
+                <td>{getDayOfWeek(showing.session_time)}</td>
+                <td>{formatDate(showing.session_time)}</td>
+                <td>{extractTime(showing.session_time)}</td>
               </tr>
             ))}
           </tbody>
@@ -45,4 +52,3 @@ function SessionTimes(props) {
 }
 
 export default SessionTimes;
-

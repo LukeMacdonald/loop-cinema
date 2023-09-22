@@ -1,5 +1,5 @@
 import React from 'react';
-import addressData from '../data/data.json'
+import addressData from '../../data/data.json'
 
 function BusinessInfoCard() {
   return (
@@ -20,4 +20,3 @@ function BusinessInfoCard() {
 }
 
 export default BusinessInfoCard;
-

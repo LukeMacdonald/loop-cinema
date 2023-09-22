@@ -1,26 +1,25 @@
-import React, { useState } from "react";
-import { getMovies, calculateSumOfRatingsValue } from "../data/movieRepository";
-import BusinessInfoCard from "../components/BusinessInfoCard";
-import WelcomeCarousel from "../components/WelcomeCarousel";
-import MovieCard from "../components/MovieCard";
-import EventInfoCard from "../components/EventInfoCard";
+import React, { useEffect, useState } from "react";
+import LandingCarousel from "../components/LandingCarousel";
+import { allMovies } from "../data/repository";
+import MovieCard from "../components/cards/MovieCard";
+import BusinessInfoCard from "../components/cards/BusinessInfoCard";
+import EventInfoCard from "../components/cards/EventInfoCard";
 
 function Landing(props) {
-  const [movies, setMovies] = useState(getMovies()); // State to hold movies
+  const [movies, setMovies] = useState([]); // State to hold movies
+  
+  useEffect(() => {
+    async function fetchMovies() {
+      const cinemaMovies = await allMovies();
+      setMovies(cinemaMovies); // Update movies state with the fetched data
+    }
 
-  const handleSort = () => {
-    const sortedMovies = [...movies]; // Create a copy of the movies array
-
-    sortedMovies.sort((movieA, movieB) =>
-      calculateSumOfRatingsValue(movieB.title) - calculateSumOfRatingsValue(movieA.title)
-    );
-
-    setMovies(sortedMovies); // Update the movies state with the sorted array
-  };
+    fetchMovies(); // Call the async function to fetch movies
+  }, []); // Empty dependency array to run the effect once
 
   return (
     <div>
-      <WelcomeCarousel />
+      <LandingCarousel />
       <h1 className="website-name">Loop Cinema</h1>
       <h4 style={{fontWeight:'bold', fontStyle:'italic', marginBottom:'4rem'}}>"Bringing Movies and Community Together: Loop Cinemas, Where Entertainment Meets Unity"</h4>
       
@@ -31,7 +30,7 @@ function Landing(props) {
               <h3>Movies Showing</h3>
             </div>
             <div className="col" style={{ textAlign: "right", marginRight: "2rem" }}>
-              <button className="btn btn-secondary" style={{ width: "100px" }} onClick={handleSort}>Sort</button>
+              <button className="btn btn-secondary" style={{ width: "100px" }}>Sort</button>
             </div>
           </div>
           <hr className="solid" />
@@ -40,7 +39,7 @@ function Landing(props) {
           ))}
         </div>
         <div className="col-lg-4">
-          <BusinessInfoCard />
+        <BusinessInfoCard />
           <EventInfoCard/>
         </div>
       </div>

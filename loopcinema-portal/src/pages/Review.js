@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
-import { getMovie } from '../data/movieRepository';
 import ReviewTableRow from '../components/ReviewTableRow';
-import { verifyReview, updateReview } from '../data/movieRepository';
+import { findMovieByID, movieReviews } from '../data/repository';
 
 function Review(props) {
   // Get the "movieName" parameter from the URL
-  const { movieTitle } = useParams();
+  const { movieID } = useParams();
+
+  const [movie, setMovie] = useState({});
+
+  const [reviews, setReviews] = useState([]);
 
   // State to manage the review rating and comment
   const [rating, setRating] = useState(1);
@@ -15,9 +18,6 @@ function Review(props) {
 
   // State to manage error messages
   const [errorMessage, setErrorMessage] = useState(null);
-
-  // Get the movie object based on the "movieName" parameter
-  const movie = getMovie(movieTitle);
 
   // Extract user information from props
   const { email, isLoggedIn } = props;
@@ -32,25 +32,18 @@ function Review(props) {
     setRating(newValue);
   };
 
-  // Handler for submitting a review
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
-    // Verify the review and get the response
-    const response = verifyReview(email, comment, rating, movieTitle);
-
-    if (response.successful) {
-      // Update the review and show a success message
-      updateReview(movieTitle, response.review);
-      window.alert("Review successfully posted!");
-      window.location.reload();
-    } else {
-      // Reset the comment and rating, and show the error message
-      setComment("");
-      setRating(1);
-      setErrorMessage(response.message);
+  useEffect(() => {
+    async function fetchMovies() {
+      const currentMovie = await findMovieByID(movieID);
+      console.log(currentMovie);
+      const allReviews = await movieReviews(movieID);
+      setMovie(currentMovie);
+      setReviews(allReviews); // Update movies state with the fetched data
     }
-  };
+
+    fetchMovies(); // Call the async function to fetch movies
+  }, [movieID]); // Empty dependency array to run the effect once
 
   return (
     <div>
@@ -61,10 +54,10 @@ function Review(props) {
         </div>
         <div className='col-lg-9'>
           <div className='movie-details'>
-            <h1>{movieTitle}</h1>
+            <h1>{movie.title}</h1>
             <p>{movie.description}</p>
             <div style={{ marginTop: '1rem', marginLeft: '1rem' }}>
-              <p><b>Release Date: </b>{movie.releaseDate}</p>
+              <p><b>Release Date: </b>{movie.release_date}</p>
               <p><b>Director: </b>{movie.director}</p>
               <p><b>Runtime: </b>{movie.duration} minutes</p>
               <p><b>Genre: </b>{movie.genre}</p>
@@ -88,13 +81,13 @@ function Review(props) {
           </thead>
           <tbody>
             {/* Map through reviews and display each using ReviewTableRow component */}
-            {movie.reviews.map((review, index) => (
+            {reviews.map((review, index) => (
               <ReviewTableRow
                 key={index}
                 review={review}
                 email={email}
                 index={index}
-                movieTitle={movieTitle}
+                movieTitle={movie.title}
               />
             ))}
           </tbody>
@@ -103,7 +96,7 @@ function Review(props) {
         {/* Form to leave a review */}
         <h4 className="review-header">Leave a Review</h4>
         {isLoggedIn ? (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={console.log("submit")}>
             {/* Rating component */}
             <Rating
               name="size-large"

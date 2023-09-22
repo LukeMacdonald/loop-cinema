@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import { verifyLogin } from "../data/userRepository";
+
 import '../styles/styles.css'
 
 function Signin(props) {
@@ -11,9 +11,9 @@ function Signin(props) {
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  // const [errorMessage, setErrorMessage] = useState(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   // Generic change handler.
   const handleInputChange = (event) => {
@@ -29,18 +29,18 @@ function Signin(props) {
   // handles form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    const verified = verifyLogin(fields.email,fields.password)
-    if (verified === "success"){
-        // Show a pop-up message after form submission.
-        window.alert("Login successful!");
-        props.loginUser(fields.email);
-        navigate("/profile");
-    }
+    // const verified = verifyLogin(fields.email,fields.password)
+    // if (verified === "success"){
+    //     // Show a pop-up message after form submission.
+    //     window.alert("Login successful!");
+    //     props.loginUser(fields.email);
+    //     navigate("/profile");
+    // }
     // Reset password field to blank.
     const temp = { ...fields };
     temp.password = "";
     setFields(temp);
-    setErrorMessage(verified)
+    // setErrorMessage(verified)
   };
 
   return (
@@ -70,12 +70,12 @@ function Signin(props) {
           <div className="form-group" style={{textAlign:'center'}}>
               <input type="submit" className="btn btn-primary form-input" value="Submit" style={{width:'70%' ,marginTop: '5%'}} />
           </div>
-          {errorMessage && (
+          {/* {errorMessage && (
           <div className="form-group" style={{marginTop:'1rem'}}>
               <span className="text-danger">{errorMessage}</span>
           </div>
           
-          )}
+          )} */}
           <div className={'auth-signup-link'}>
             <a href="/signup">Don't already have an Account?</a>
           </div>

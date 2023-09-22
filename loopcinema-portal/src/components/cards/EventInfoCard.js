@@ -1,5 +1,5 @@
 import React from 'react';
-import eventData from '../data/data.json'
+import eventData from '../../data/data.json'
 
 function EventInfoCard() {
   return (
@@ -23,4 +23,3 @@ function EventInfoCard() {
 }
 
 export default EventInfoCard;
-
