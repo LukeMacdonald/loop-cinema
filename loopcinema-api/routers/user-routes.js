@@ -1,3 +1,4 @@
+
 module.exports = (express, app) => {
     const controller = require('../controllers/user-controller');
     
@@ -12,4 +13,5 @@ module.exports = (express, app) => {
     router.get('/:id', controller.select)
 
     app.use('/user', router);
+
 }

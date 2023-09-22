@@ -9,10 +9,10 @@ app.use(express.json());
 // Add CORS suport.
 app.use(cors());
 
-// Simple Hello World route.
-app.get("/", (req, res) => {
-  res.json({ message: "Hello World!" });
-});
+
+require("./routers/user-routes")(express, app);
+require("./routers/movie-routes")(express, app);
+
 
 // Set port, listen for requests.
 const PORT = 4000;

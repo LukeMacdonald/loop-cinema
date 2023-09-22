@@ -13,12 +13,16 @@ module.exports = (db, DataTypes) =>
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    director: {
+      type: DataTypes.STRING(60),
+      allowNull: false,
+    },
     release_date:{
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         allowNull: false
     },
     poster:{
-        type: DataTypes.BLOB,
+        type: DataTypes.STRING(255),
         allowNull: false
     },
     duration:{
