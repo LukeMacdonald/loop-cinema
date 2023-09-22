@@ -7,5 +7,14 @@ module.exports = (express, app) => {
 
     router.get('/:id', controller.select);
 
+    router.post('/review', controller.reviewInsert);
+
+    router.get('/review/:movie_id', controller.movieReviews);
+
+    router.post('/session', controller.sessionInsert);
+
+    router.get('/session/:movie_id', controller.movieSessions);
+
     app.use('/movies',router)
 }
+
