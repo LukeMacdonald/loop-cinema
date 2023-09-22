@@ -5,5 +5,7 @@ module.exports = (express, app) => {
 
     router.post('/', controller.insert);
 
+    router.get('/:id', controller.select);
+
     app.use('/movies',router)
 }

@@ -14,3 +14,9 @@ exports.insert = async (req,res) => {
     res.json(movie);
 
 }
+
+exports.select = async (req,res) =>{
+    const id = req.params.id;
+    const movie = await db.movie.findByPk(id);
+    res.json(movie);
+}
