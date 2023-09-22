@@ -37,3 +37,19 @@ exports.select = async (req,res) => {
     const user = await db.user.findByPk(id);
     res.json(user)
 }
+
+exports.findByEmail = async (req,res) =>{
+  const email = req.params.email;
+  
+    try {
+      // Find all sessions with the specified movie_id
+      const user = await db.user.findAll({
+        where: { email: email },
+      });
+      res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: 'An error occurred while fetching user by email.' });
+    }
+
+}

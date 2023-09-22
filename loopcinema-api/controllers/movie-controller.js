@@ -13,10 +13,16 @@ exports.insert = async (req,res) => {
 }
 
 exports.select = async (req,res) =>{
-    const id = req.params.id;
-    const movie = await db.movie.findByPk(id);
+    const movie_id = req.params.movie_id;
+    console.log(movie_id)
+    const movie = await db.movie.findByPk(movie_id);
     res.json(movie);
 };
+
+exports.all = async (req,res) =>{
+  const movies = await db.movie.findAll();
+  return res.json(movies);
+}
 
 exports.reviewInsert = async (req,res) => {
     const review = await db.review.create({

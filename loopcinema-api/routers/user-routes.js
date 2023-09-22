@@ -10,7 +10,9 @@ module.exports = (express, app) => {
 
     router.delete('/:id', controller.delete)
 
-    router.get('/:id', controller.select)
+    // router.get('/:id', controller.select)
+
+    router.get('/:email', controller.findByEmail);
 
     app.use('/user', router);
 
