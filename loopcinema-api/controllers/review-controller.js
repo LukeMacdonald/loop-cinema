@@ -1,7 +1,7 @@
 // Import your Sequelize model and any required dependencies here
 const db = require('../database')
 // Function to find reviews by movie ID
-exports.findReviewsByMovieID = async (req, res) => {
+exports.allByMovieID = async (req, res) => {
     try {
       const movie_id = req.params.movie_id;
       const reviews = await db.review.findAll({

@@ -24,7 +24,7 @@ function EditReview(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Edit the review with new comment and rating
-    const updatedReview = await updateReview({
+    await updateReview({
         review_id: review.review_id,
         movie_id: review.movie_id,
         comment: comment,

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Rating } from "@mui/material";
-import { updateReview, deleteReview } from "../data/repository";
+import { deleteReview } from "../data/repository";
 import EditReview from "../components/modals/EditReview"
 
 
 function ReviewTableRow(props) {
-  const { review, index, movie, username } = props;
+  const { review, index, username } = props;
   
 
   // State to manage whether the EditReview modal is open or not
@@ -26,7 +26,7 @@ function ReviewTableRow(props) {
   const handleDelete = (review_id) => async () => {
     const confirmation = window.confirm("Confirm to delete your review");
     if (confirmation) {
-      const response = await deleteReview(review_id)
+      await deleteReview(review_id)
       window.alert("Review deleted successfully!");
       window.location.reload();
     }

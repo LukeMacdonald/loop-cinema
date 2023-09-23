@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import ReviewTableRow from '../components/ReviewTableRow';
 import { findMovieByID, getMovieReviews, createReview } from '../data/repository';
@@ -59,7 +59,6 @@ function Review(props) {
   useEffect(() => {
     async function fetchMovies() {
       const currentMovie = await findMovieByID(movieID);
-      console.log(currentMovie);
       const allReviews = await getMovieReviews(movieID);
       setMovie(currentMovie);
       setReviews(allReviews); // Update movies state with the fetched data
@@ -109,8 +108,7 @@ function Review(props) {
                 key={index}
                 review={review}
                 username={username}
-                index={index}
-                movie={movie}
+                index={index} 
               />
             ))}
           </tbody>

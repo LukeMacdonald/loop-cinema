@@ -45,13 +45,14 @@ async function getAllMovies() {
   return response.data;
 }
 
-async function getMovieSessions(movieID) {
-  const response = await api.get(`/movies/session/${movieID}`);
+async function findMovieByID(movieID) {
+  const response = await api.get(`/movies/movie/${movieID}`);
   return response.data;
 }
 
-async function findMovieByID(movieID) {
-  const response = await api.get(`/movies/${movieID}`);
+// Session-related functions
+async function getMovieSessions(movieID) {
+  const response = await api.get(`/sessions/movie/${movieID}`);
   return response.data;
 }
 

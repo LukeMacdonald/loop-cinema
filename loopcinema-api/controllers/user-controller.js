@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt")
 const saltRounds = 10
 
 
-exports.insert = async (req, res) => {
+exports.create = async (req, res) => {
     const password = req.body.password;
   
     try {
@@ -34,6 +34,7 @@ exports.update = async (req,res) => {
   
   res.json(user);
 };
+
 exports.delete = async (req,res) => {
 
 }
@@ -44,7 +45,7 @@ exports.select = async (req,res) => {
     res.json(user)
 }
 
-exports.findByEmail = async (req,res) =>{
+exports.getByEmail = async (req,res) =>{
   const email = req.params.email;
   
     try {

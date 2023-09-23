@@ -5,11 +5,11 @@ module.exports = (express, app) => {
 
     router.post('/', controller.create);
 
-    router.get('/movie/:movie_id', controller.findReviewsByMovieID);
-
     router.put('/', controller.update);
 
     router.delete('/:review_id', controller.delete)
+
+    router.get('/movie/:movie_id', controller.allByMovieID);
 
     app.use('/reviews',router)
 }

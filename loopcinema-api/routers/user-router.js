@@ -4,7 +4,7 @@ module.exports = (express, app) => {
     
     const router = express.Router();
 
-    router.post('/', controller.insert);
+    router.post('/', controller.create);
 
     router.put('/', controller.update)
 
@@ -12,7 +12,7 @@ module.exports = (express, app) => {
 
     router.get('/profile/:username', controller.select)
 
-    router.get('/:email', controller.findByEmail);
+    router.get('/:email', controller.getByEmail);
 
     router.post("/login", controller.login)
 

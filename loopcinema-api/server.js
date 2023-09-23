@@ -11,10 +11,10 @@ app.use(express.json());
 // Add CORS suport.
 app.use(cors());
 
-
-require("./routers/user-routes")(express, app);
-require("./routers/movie-routes")(express, app);
+require("./routers/user-router")(express, app);
+require("./routers/movie-router")(express, app);
 require("./routers/review-router")(express, app);
+require("./routers/session-router")(express, app);
 
 
 // Set port, listen for requests.
