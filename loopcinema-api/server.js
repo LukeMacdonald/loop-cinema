@@ -3,6 +3,8 @@ const cors = require("cors");
 const db = require("./database/index");
 const app = express();
 
+
+db.sync();
 // Parse requests of content-type - application/json.
 app.use(express.json());
 

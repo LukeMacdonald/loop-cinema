@@ -1,14 +1,8 @@
 module.exports = (db, DataTypes) =>
   db.sequelize.define("user", {
-    user_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
     username:{
         type: DataTypes.STRING(255),
-        unique: true,
-        allowNull: false
+        primaryKey: true,
     },
     email: {
       type: DataTypes.STRING(255),
@@ -16,16 +10,12 @@ module.exports = (db, DataTypes) =>
       unique: true
     },
     password:{
-        type: DataTypes.STRING(60),
+        type: DataTypes.STRING(100),
         allowNull: false
     },
     name:{
         type: DataTypes.STRING(255),
         allowNull: false
     }
-  },
-  {
-    // Don't add the timestamp attributes (updatedAt, createdAt).
-    timestamps: false
   });
 

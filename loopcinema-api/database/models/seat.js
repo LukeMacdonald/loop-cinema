@@ -9,5 +9,10 @@ module.exports = (db, DataTypes) =>
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false, // Use defaultValue instead of default
-    }
+    },
+
+  },
+  {
+    // Don't add the timestamp attributes (updatedAt, createdAt).
+    timestamps: false
   }); 

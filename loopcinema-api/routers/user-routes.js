@@ -14,6 +14,8 @@ module.exports = (express, app) => {
 
     router.get('/:email', controller.findByEmail);
 
+    router.post("/login", controller.login)
+
     app.use('/user', router);
 
 }

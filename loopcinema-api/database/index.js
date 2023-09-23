@@ -20,7 +20,7 @@ db.reservation = require('./models/reservation.js')(db,DataTypes);
 
 // Define Relationships
 db.review.belongsTo(db.user,{
-    foreignKey: 'user_id',
+    foreignKey: 'username',
     allowNull: false,
 });
 
@@ -55,7 +55,7 @@ db.seat.belongsTo(db.session,{
 });
 
 db.reservation.belongsTo(db.user,{
-    foreignKey:'user_id',
+    foreignKey:'username',
     allowNull: false,
 });
 
@@ -65,5 +65,48 @@ db.reservation.hasMany(db.seat, {
     as:'seats'
 });
 
+
+db.sync = async () => {
+    try {
+        // Sync schema.
+        await db.sequelize.sync();
+
+        // Seed data.
+        await seedData();
+    } catch (error) {
+        console.error('Error syncing database or seeding data:', error);
+    }
+};
+
+async function seedData() {
+    const count = await db.movie.count();
+    console.log("Seeding data...");
+  
+    // Only seed data if necessary.
+    if (count > 0)
+        return;
+    console.log("Seeding data...");
+    // Create movie records.
+    await db.movie.bulkCreate([
+        {
+            title: "Barbie",
+            description: "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+            director: "Greta Gerwig",
+            release_date: "2023-07-02",
+            poster: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQaoW2gxmJFDPtqfC9pGL6Rdist9nH9ntMLV7XR1FXpaQj1VrGT",
+            duration: 114,
+            genre: "Comedy"
+        },
+        {
+            title: "Avengers: Endgame",
+            description: "After the devastating events of Infinity War, the Avengers assemble once again to undo the actions of Thanos and restore balance to the universe.",
+            director: "Anthony Russo, Joe Russo",
+            release_date: "2029-04-26",
+            poster: "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+            duration: 181,
+            genre: "Action"
+        },
+    ]);
+}
 
 module.exports = db;

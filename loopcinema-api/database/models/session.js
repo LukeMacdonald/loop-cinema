@@ -10,5 +10,9 @@ db.sequelize.define('session',{
         type: DataTypes.DATE,
         allowNull:false
     },
-});
+    
+},{
+    // Don't add the timestamp attributes (updatedAt, createdAt).
+    timestamps: false
+  });
 
