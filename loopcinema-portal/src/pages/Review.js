@@ -2,7 +2,9 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import ReviewTableRow from '../components/ReviewTableRow';
-import { findMovieByID, movieReviews } from '../data/repository';
+import { findMovieByID, getMovieReviews, createReview } from '../data/repository';
+import { verifyReview } from '../data/validation';
+
 
 function Review(props) {
   // Get the "movieName" parameter from the URL
@@ -20,7 +22,8 @@ function Review(props) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   // Extract user information from props
-  const { email, isLoggedIn } = props;
+  const { username, isLoggedIn } = props;
+  console.log(username)
 
   // Handler for updating the comment state
   const handleCommentChange = (event) => {
@@ -32,12 +35,32 @@ function Review(props) {
     setRating(newValue);
   };
 
+    // Handler for submitting a review
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      // Verify the review and get the response
+      const response = verifyReview(username, comment, rating, movie.movie_id);
+  
+      if (response.successful) {
+        // Update the review and show a success message
+        await createReview(response.review);
+        window.alert("Review successfully posted!");
+        window.location.reload();
+      } else {
+        // Reset the comment and rating, and show the error message
+        setComment("");
+        setRating(1);
+        setErrorMessage(response.message);
+      }
+    };
+
 
   useEffect(() => {
     async function fetchMovies() {
       const currentMovie = await findMovieByID(movieID);
       console.log(currentMovie);
-      const allReviews = await movieReviews(movieID);
+      const allReviews = await getMovieReviews(movieID);
       setMovie(currentMovie);
       setReviews(allReviews); // Update movies state with the fetched data
     }
@@ -85,9 +108,9 @@ function Review(props) {
               <ReviewTableRow
                 key={index}
                 review={review}
-                email={email}
+                username={username}
                 index={index}
-                movieTitle={movie.title}
+                movie={movie}
               />
             ))}
           </tbody>
@@ -96,7 +119,7 @@ function Review(props) {
         {/* Form to leave a review */}
         <h4 className="review-header">Leave a Review</h4>
         {isLoggedIn ? (
-          <form onSubmit={console.log("submit")}>
+          <form onSubmit={handleSubmit}>
             {/* Rating component */}
             <Rating
               name="size-large"

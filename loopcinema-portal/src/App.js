@@ -12,16 +12,17 @@ import './styles/styles.css'
 
 
 function App() {
-  const [username, setEmail] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("user"));
   const loginUser = (username) => {
-    setEmail(username);
+    localStorage.setItem('user',username);
+    setUsername(username);
   }
 
   const logoutUser = () => {
-    setEmail(null);
+    localStorage.removeItem('user')
+    setUsername(null);
   };
 
-  
   return (
     <div className="App">
       <Router>
@@ -33,7 +34,7 @@ function App() {
                 <Route path="/signup" element={<Signup loginUser={loginUser}/>} />
                 <Route path="/signin" element={<Signin loginUser={loginUser}/>} />
                 <Route path="/profile/:username" element={<Profile logoutUser={logoutUser}/>}/>
-                <Route path="/reviews/:movieID" element={<Review email = {username} isLoggedIn={username !== null}/>}/>
+                <Route path="/reviews/:movieID" element={<Review username = {username} isLoggedIn={username !== null}/>}/>
               </Routes>
             </div>
         </main>

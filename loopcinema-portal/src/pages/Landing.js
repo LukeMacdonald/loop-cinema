@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LandingCarousel from "../components/LandingCarousel";
-import { allMovies } from "../data/repository";
+import { getAllMovies } from "../data/repository";
 import MovieCard from "../components/cards/MovieCard";
 import BusinessInfoCard from "../components/cards/BusinessInfoCard";
 import EventInfoCard from "../components/cards/EventInfoCard";
@@ -10,7 +10,7 @@ function Landing(props) {
   
   useEffect(() => {
     async function fetchMovies() {
-      const cinemaMovies = await allMovies();
+      const cinemaMovies = await getAllMovies();
       setMovies(cinemaMovies); // Update movies state with the fetched data
     }
 

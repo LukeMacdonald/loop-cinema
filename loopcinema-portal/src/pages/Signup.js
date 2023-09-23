@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { verifySignUp } from "../data/validation";
-import { createProfile } from "../data/repository";
+import { createUser } from "../data/repository";
 
 function Signup(props) {
   const [fields, setFields] = useState({
@@ -37,7 +37,7 @@ function Signup(props) {
     );
 
     if (verified === "success") {
-      await createProfile({
+      await createUser({
         username: fields.username,
         password: fields.password,
         name: fields.name,

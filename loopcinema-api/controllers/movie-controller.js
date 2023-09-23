@@ -28,7 +28,7 @@ exports.reviewInsert = async (req,res) => {
     const review = await db.review.create({
         rating: req.body.rating,
         comment: req.body.comment,
-        user_id: req.body.user_id,
+        username: req.body.username,
         movie_id: req.body.movie_id,
     })
     res.json(review);

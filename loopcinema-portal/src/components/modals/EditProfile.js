@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import FormInput from '../FormInput';
-import { updateUser } from '../../data/repository';
+import { updateUserProfile } from '../../data/repository';
 
 function EditProfile(props) {
   const { user } = props;
-  console.log(user.name);
-
-
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [fields, setFields] = useState({
@@ -45,13 +42,13 @@ function EditProfile(props) {
       return;
     }
 
-    const editedUser = await updateUser({
+    const editedUser = await updateUserProfile({
       username: user.username,
       email: fields.email,
       name: fields.name,
     });
+    props.setUser(editedUser)
 
-    props.setUser(editedUser);
     window.alert('Account edited successfully!');
     props.onHide();
     setErrorMessage(null);

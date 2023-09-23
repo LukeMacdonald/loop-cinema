@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import { login } from "../data/repository";
+import { userLogin } from "../data/repository";
 
 import '../styles/styles.css'
 
@@ -30,7 +30,7 @@ function Signin(props) {
   // handles form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await login({username: fields.username, password: fields.password})
+    const response = await userLogin({username: fields.username, password: fields.password})
     if (response.message === "Login successful"){
         // Show a pop-up message after form submission.
         window.alert(response.message);

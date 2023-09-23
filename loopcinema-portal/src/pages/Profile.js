@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getUser, removeUser } from '../data/repository';
+import { getUserProfile, removeUser } from '../data/repository';
 import EditProfile from "../components/modals/EditProfile";
 
 function Profile(props) {
@@ -12,8 +12,7 @@ function Profile(props) {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const account = await getUser(username)
-        console.log(username)
+        const account = await getUserProfile(username)
         setUser(account);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -99,7 +98,7 @@ function Profile(props) {
         </div>
 
         {/* Uncomment the following line if you plan to use an EditProfile modal */}
-        <EditProfile show={modalShow} onHide={() => setModalShow(false)} user={user} setUser={setUser} />
+        <EditProfile show={modalShow} onHide={() => setModalShow(false)} user={user} setUser={setUser}/>
       </div>
     </div>
   );

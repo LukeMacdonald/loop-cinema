@@ -14,6 +14,7 @@ app.use(cors());
 
 require("./routers/user-routes")(express, app);
 require("./routers/movie-routes")(express, app);
+require("./routers/review-router")(express, app);
 
 
 // Set port, listen for requests.

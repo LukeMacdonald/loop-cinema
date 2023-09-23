@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
-import { movieSessions } from '../data/repository';
+import { getMovieSessions } from '../data/repository';
 import { getDayOfWeek, extractTime, formatDate } from '../config/config';
 
 function SessionTimes(props) {
   const [showings, setSessions] = useState([]);
   useEffect(() => {
     async function fetchMovies() {
-      const sessions = await movieSessions(props.movieID);
+      const sessions = await getMovieSessions(props.movieID);
       console.log(sessions);
       setSessions(sessions); // Update movies state with the fetched data
     }

@@ -33,8 +33,6 @@ function passwordsMatch(password, confirmPassword) {
   return password === confirmPassword;
 }
 
-
-
 // Function to verify sign-up information
 function verifySignUp(email, password, confirmPassword) {
   if (!isValidEmail(email)) {
@@ -62,7 +60,33 @@ function verifyEditProfile(email, name, oldEmail) {
   return "success"; // Validation successful
 }
 
+// Function to verify and prepare a review for submission
+function verifyReview(username, comment, rating, movie_id) {
+  const response = {
+    "message": "",
+    "successful": false
+  };
+
+  if (comment.trim() === "") {
+    response.message = "Comment cannot be blank!";
+    return response;
+  }
+  response.successful = true;
+
+  response["review"] = {
+    username: username,
+    comment: comment,
+    rating: rating,
+    movie_id: movie_id
+  };
+  console.log(response.review)
+
+  return response
+}
+
+
 export {
   verifyEditProfile,
   verifySignUp,
+  verifyReview
 };

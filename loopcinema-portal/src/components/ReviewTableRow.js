@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Rating } from "@mui/material";
+import { updateReview, deleteReview } from "../data/repository";
+import EditReview from "../components/modals/EditReview"
 
 
 function ReviewTableRow(props) {
-  const { review, index, movie, email } = props;
+  const { review, index, movie, username } = props;
   
 
   // State to manage whether the EditReview modal is open or not
@@ -21,10 +23,10 @@ function ReviewTableRow(props) {
   };
 
   // Handler to delete a review
-  const handleDelete = (id, title) => () => {
+  const handleDelete = (review_id) => async () => {
     const confirmation = window.confirm("Confirm to delete your review");
     if (confirmation) {
-    //   deleteReview(id, title);
+      const response = await deleteReview(review_id)
       window.alert("Review deleted successfully!");
       window.location.reload();
     }
@@ -38,17 +40,22 @@ function ReviewTableRow(props) {
       <td>
         {review.comment}
         <br />
-        <span className="review-email"> - {email}</span>
+        <span className="review-email"> - {username}</span>
       </td>
       <td>{review.updatedAt.split("T")[0]}</td>
-      {email === review.email && (
+      {username === review.username && (
         <td style={{ textAlign: "center" }}>
           <button className="btn btn-secondary" style={{ margin: "0 0.5rem" }} onClick={() => handleOpenModal(index)}>
             <i className="fa fa-pen-to-square" />
           </button>
-          <button className="btn btn-danger" style={{ margin: "0 0.5rem" }} onClick={handleDelete(review.id, movie.title)}>
+          <button className="btn btn-danger" style={{ margin: "0 0.5rem" }} onClick={handleDelete(review.review_id)}>
             <i className="fa fa-trash" />
           </button>
+          <EditReview
+            review={review}
+            show={reviewsModalShow[index] || false}
+            onHide={() => handleCloseModal(index)}
+          />
         </td>
       )}
     </tr>
