@@ -1,25 +1,41 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { findUserByEmail, removeUser } from '../data/repository'; // Import the removeUser function
+import { getUser, removeUser } from '../data/repository';
+import EditProfile from "../components/modals/EditProfile";
 
 function Profile(props) {
   const navigate = useNavigate();
+  const {username} = useParams()
   const [user, setUser] = useState({});
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     async function fetchUserData() {
       try {
-        console.log(props.email);
-        const userData = await findUserByEmail(props.email);
-        setUser(userData);
+        const account = await getUser(username)
+        console.log(username)
+        setUser(account);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     }
 
     fetchUserData();
-  }, [props.email]);
+  }, [username]);
+
+  const formatJoin = (dataString) =>{
+    const date = new Date(dataString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are 0-based, so add 1
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    // Format the date and time components
+    const formattedDate = `${day}/${month}/${year}`;
+    const formattedTime = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+    return `${formattedDate} at ${formattedTime}`;
+  }
 
   // Function to handle user account deletion
   const handleDelete = async () => {
@@ -27,7 +43,7 @@ function Profile(props) {
 
     if (userConfirmed) {
       try {
-        await removeUser(user.id); // Assuming removeUser takes the user ID as a parameter
+        await removeUser(user.username); // Assuming removeUser takes the user ID as a parameter
         window.alert("User Deleted!");
         props.logoutUser();
         navigate("/");
@@ -60,13 +76,15 @@ function Profile(props) {
         <div className="row">
           <hr></hr>
           <div className="col-6">
+            <p><b>Username:</b></p>
             <p><b>Email:</b></p>
             <p><b>Date Joined:</b></p>
           </div>
           <div className="col-6">
+            <p>{user.username}</p>
             <p>{user.email}</p>
             {/* Assuming user.username should be user.createdAt */}
-            <p>{user.createdAt}</p>
+            <p>{formatJoin(user.createdAt)}</p>
           </div>
         </div>
         <div style={{ textAlign: 'center', marginTop: '4rem' }}>
@@ -81,7 +99,7 @@ function Profile(props) {
         </div>
 
         {/* Uncomment the following line if you plan to use an EditProfile modal */}
-        {/* <EditProfile show={modalShow} onHide={() => setModalShow(false)} email={user.email} setUser={setUser} /> */}
+        <EditProfile show={modalShow} onHide={() => setModalShow(false)} user={user} setUser={setUser} />
       </div>
     </div>
   );

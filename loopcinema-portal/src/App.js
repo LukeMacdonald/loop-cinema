@@ -12,9 +12,9 @@ import './styles/styles.css'
 
 
 function App() {
-  const [email, setEmail] = useState("");
-  const loginUser = (email) => {
-    setEmail(email);
+  const [username, setEmail] = useState("");
+  const loginUser = (username) => {
+    setEmail(username);
   }
 
   const logoutUser = () => {
@@ -25,15 +25,15 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header isLoggedIn={email !== null} email={email} loginUser={loginUser} logoutUser={logoutUser}/>
+        <Header isLoggedIn={username !== null} username={username} loginUser={loginUser} logoutUser={logoutUser}/>
         <main role="main" className="main">
             <div className="container my-3">
               <Routes>
-                <Route path="/" element={<Landing isLoggedIn={email !== null}/>}/>
+                <Route path="/" element={<Landing isLoggedIn={username !== null}/>}/>
                 <Route path="/signup" element={<Signup loginUser={loginUser}/>} />
                 <Route path="/signin" element={<Signin loginUser={loginUser}/>} />
-                <Route path="/profile" element={<Profile email={email} logoutUser={logoutUser}/>}/>
-                <Route path="/reviews/:movieID" element={<Review email = {email} isLoggedIn={email !== null}/>}/>
+                <Route path="/profile/:username" element={<Profile logoutUser={logoutUser}/>}/>
+                <Route path="/reviews/:movieID" element={<Review email = {username} isLoggedIn={username !== null}/>}/>
               </Routes>
             </div>
         </main>

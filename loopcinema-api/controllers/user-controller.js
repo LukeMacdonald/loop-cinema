@@ -25,11 +25,10 @@ exports.insert = async (req, res) => {
   };
 
 exports.update = async (req,res) => {
-  const user = await db.user.findByPk(req.body.email); 
+  const user = await db.user.findByPk(req.body.username); 
   // Update profile fields.
   user.name = req.body.name;
   user.email = req.body.email;
-  user.password = user.password;
 
   await user.save();
   
@@ -40,8 +39,8 @@ exports.delete = async (req,res) => {
 }
 
 exports.select = async (req,res) => {
-    const id = req.params.id
-    const user = await db.user.findByPk(id);
+    const username = req.params.username
+    const user = await db.user.findByPk(username);
     res.json(user)
 }
 

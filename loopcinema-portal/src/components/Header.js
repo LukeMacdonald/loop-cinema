@@ -32,7 +32,7 @@ function Header(props) {
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
                         {/* Show "Profile" link if user is logged in */}
-                        {props.isLoggedIn && <a className="nav-link" href="/profile">Profile<span className="sr-only">(current)</span></a>}
+                        {props.isLoggedIn && <a className="nav-link" href={`/profile/${props.username}`}>Profile<span className="sr-only">(current)</span></a>}
                     </li>
                     <li className="nav-item active">
                         {/* Show "Reviews" link if user is logged in */}

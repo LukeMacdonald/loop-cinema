@@ -3,9 +3,9 @@ import axios from "axios";
 // --- Constants ----------------------------------------------------------------------------------
 const API_HOST = "http://localhost:4000";
 
-// --- Profile ---------------------------------------------------------------------------------------
-async function createProfile(profile){
-    const response = await axios.post(API_HOST + '/user', profile);
+// --- User ---------------------------------------------------------------------------------------
+async function createProfile(user){
+    const response = await axios.post(API_HOST + '/user', user);
     return response.data;
 }
 
@@ -14,9 +14,25 @@ async function findUserByEmail(email){
     return response.data;
 }
 
+async function getUser(username){
+    const response = await axios.get(API_HOST + `/user/profile/${username}`)
+    return response.data;
+}
+
 async function removeUser(userID){
     const response = await axios.delete(API_HOST + `/user/${userID}`)
     return response.data
+}
+
+async function login(login){
+    const response = await axios.post(API_HOST + '/user/login', login);
+    return response.data
+}
+
+async function updateUser(user){
+    console.log(user);
+    const response = await axios.put(API_HOST + '/user', user);
+    return response.data;
 }
 
 // --- Movies ---------------------------------------------------------------------------------------
@@ -43,10 +59,15 @@ async function findMovieByID(movieID){
 
 }
 
+
+
 export {
     createProfile, 
     findUserByEmail,
     removeUser,
+    updateUser,
+    getUser,
+    login,
     allMovies,
     movieSessions,
     findMovieByID,

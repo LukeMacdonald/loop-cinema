@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import { login } from "../data/repository";
 
 import '../styles/styles.css'
 
 function Signin(props) {
   
   const [fields, setFields] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  // const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   
   // Generic change handler.
   const handleInputChange = (event) => {
@@ -27,20 +28,20 @@ function Signin(props) {
   };
   
   // handles form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // const verified = verifyLogin(fields.email,fields.password)
-    // if (verified === "success"){
-    //     // Show a pop-up message after form submission.
-    //     window.alert("Login successful!");
-    //     props.loginUser(fields.email);
-    //     navigate("/profile");
-    // }
+    const response = await login({username: fields.username, password: fields.password})
+    if (response.message === "Login successful"){
+        // Show a pop-up message after form submission.
+        window.alert(response.message);
+        props.loginUser(fields.username);
+        navigate(`/profile/${response.user.username}`);
+    }
     // Reset password field to blank.
     const temp = { ...fields };
     temp.password = "";
     setFields(temp);
-    // setErrorMessage(verified)
+    setErrorMessage(response.message)
   };
 
   return (
@@ -48,13 +49,13 @@ function Signin(props) {
       <h1 className="auth-header">Welcome Back</h1>
       <form onSubmit={handleSubmit}>
           <FormInput
-              label="Email"
-              name="email"
-              id="email"
+              label="Username"
+              name="username"
+              id="username"
               type="text"
-              value={fields.email}
+              value={fields.username}
               onChange={handleInputChange}
-              placeholder="Email Address"
+              placeholder="Username"
               required={true}
           />
           <FormInput
@@ -70,12 +71,12 @@ function Signin(props) {
           <div className="form-group" style={{textAlign:'center'}}>
               <input type="submit" className="btn btn-primary form-input" value="Submit" style={{width:'70%' ,marginTop: '5%'}} />
           </div>
-          {/* {errorMessage && (
+          {errorMessage && (
           <div className="form-group" style={{marginTop:'1rem'}}>
               <span className="text-danger">{errorMessage}</span>
           </div>
           
-          )} */}
+          )}
           <div className={'auth-signup-link'}>
             <a href="/signup">Don't already have an Account?</a>
           </div>
