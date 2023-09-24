@@ -6,6 +6,8 @@ module.exports = (express, app) => {
 
     router.post("/login", controller.loginAdmin)
 
+    router.get("/users" ,controller.getAllUsers)
+
     app.use('/admin', router);
 
 }

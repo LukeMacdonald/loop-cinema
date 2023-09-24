@@ -8,10 +8,11 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-async function findUserByEmail(email) {
-  const response = await api.get(`/user/${email}`);
+async function getAllUsers(){
+  const response = await api.get("/admin/users")
   return response.data;
 }
+
 
 async function getUserProfile(username) {
   const response = await api.get(`/user/profile/${username}`);
@@ -58,7 +59,7 @@ async function deleteReview(review_id) {
 }
 
 export {
-  findUserByEmail,
+  getAllUsers,
   removeUser,
   adminLogin,
   getUserProfile,

@@ -18,3 +18,12 @@ exports.loginAdmin = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while logging in.' });
     }
   }
+exports.getAllUsers = async (req,res) =>{
+    try {
+        const users = await db.user.findAll();
+        res.json(users);
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'An error occurred while fetching all users.' });
+      }
+}
