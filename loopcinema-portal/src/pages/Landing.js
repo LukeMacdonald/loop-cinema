@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import LandingCarousel from "../components/LandingCarousel";
+import LandingCarousel from "../components/landing/LandingCarousel";
 import { getAllMovies } from "../data/repository";
-import MovieCard from "../components/cards/MovieCard";
-import BusinessInfoCard from "../components/cards/BusinessInfoCard";
-import EventInfoCard from "../components/cards/EventInfoCard";
+import MovieCard from "../components/movie/MovieCard";
+import BusinessInfoCard from "../components/landing/BusinessInfoCard";
+import EventInfoCard from "../components/landing/EventInfoCard";
 
 function Landing(props) {
   const [movies, setMovies] = useState([]); // State to hold movies

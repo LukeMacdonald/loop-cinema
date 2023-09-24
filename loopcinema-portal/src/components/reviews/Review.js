@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Rating } from "@mui/material";
-import { deleteReview } from "../data/repository";
-import EditReview from "../components/modals/EditReview"
+import { deleteReview } from "../../data/repository";
+import EditReviewModal from "./EditReviewModal"
 
 
-function ReviewTableRow(props) {
+function Review(props) {
   const { review, index, username } = props;
   
 
@@ -51,7 +51,7 @@ function ReviewTableRow(props) {
           <button className="btn btn-danger" style={{ margin: "0 0.5rem" }} onClick={handleDelete(review.review_id)}>
             <i className="fa fa-trash" />
           </button>
-          <EditReview
+          <EditReviewModal
             review={review}
             show={reviewsModalShow[index] || false}
             onHide={() => handleCloseModal(index)}
@@ -62,4 +62,4 @@ function ReviewTableRow(props) {
   );
 }
 
-export default ReviewTableRow;
+export default Review;

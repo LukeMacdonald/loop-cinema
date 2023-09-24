@@ -1,6 +1,6 @@
-import ReleaseImage from '../assets/images/release.jpg'
-import CinemaImage from '../assets/images/cinema.jpg'
-import RatingImage from '../assets/images/rating.jpg'
+import ReleaseImage from '../../assets/images/release.jpg'
+import CinemaImage from '../../assets/images/cinema.jpg'
+import RatingImage from '../../assets/images/rating.jpg'
 import Carousel from 'react-bootstrap/Carousel';
 function LandingCarousel() {
     return (

@@ -3,13 +3,13 @@ module.exports = (express, app) => {
     
     const router = express.Router();
 
-    router.post('/', controller.create);
+    router.post('/', controller.createReview);
 
-    router.put('/', controller.update);
+    router.put('/', controller.updateReview);
 
-    router.delete('/:review_id', controller.delete)
+    router.delete('/:review_id', controller.deleteReview)
 
-    router.get('/movie/:movie_id', controller.allByMovieID);
+    router.get('/movie/:movie_id', controller.getReviewsByMovieID);
 
     app.use('/reviews',router)
 }

@@ -3,11 +3,11 @@ module.exports = (express, app) => {
     
     const router = express.Router();
 
-    router.post('/', controller.create);
+    router.post('/', controller.createMovie);
 
-    router.get('/', controller.all);
+    router.get('/', controller.getAllMovies);
 
-    router.get('/movie/:movie_id', controller.select);
+    router.get('/movie/:movie_id', controller.getMovieByID);
 
     app.use('/movies',router)
 }

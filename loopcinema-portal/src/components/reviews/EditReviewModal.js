@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Rating } from '@mui/material';
 import { updateReview } from '../../data/repository'
 
-function EditReview(props) {
+function EditReviewModal(props) {
   const review = props.review
   // State to manage rating and comment
   const [rating, setRating] = useState(review.rating);
@@ -77,4 +77,4 @@ function EditReview(props) {
   );
 }
 
-export default EditReview;
+export default EditReviewModal;

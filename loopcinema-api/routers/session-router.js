@@ -4,9 +4,9 @@ module.exports = (express, app) => {
 
     const router = express.Router();
 
-    router.post('/', controller.create);
+    router.post('/', controller.createSession);
 
-    router.get('/movie/:movie_id', controller.allByMovieID);
+    router.get('/movie/:movie_id', controller.getSessionsByMovieID);
 
     app.use('/sessions', router)
 }

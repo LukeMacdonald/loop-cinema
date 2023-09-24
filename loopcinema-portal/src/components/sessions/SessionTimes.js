@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
-import { getMovieSessions } from '../data/repository';
-import { getDayOfWeek, extractTime, formatDate } from '../config/config';
+import { getMovieSessions } from '../../data/repository';
+import { getDayOfWeek, formatTime, formatDate } from '../../utils/dates';
 
 function SessionTimes(props) {
   const [showings, setSessions] = useState([]);
   useEffect(() => {
     async function fetchMovies() {
       const sessions = await getMovieSessions(props.movieID);
-      console.log(sessions);
       setSessions(sessions); // Update movies state with the fetched data
     }
     fetchMovies(); // Call the async function to fetch movies
@@ -38,7 +37,7 @@ function SessionTimes(props) {
               <tr key={index}>
                 <td>{getDayOfWeek(showing.session_time)}</td>
                 <td>{formatDate(showing.session_time)}</td>
-                <td>{extractTime(showing.session_time)}</td>
+                <td>{formatTime(showing.session_time)}</td>
               </tr>
             ))}
           </tbody>

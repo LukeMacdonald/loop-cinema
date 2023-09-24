@@ -51,13 +51,22 @@ function verifySignUp(email, password, confirmPassword) {
 
 // Function to verify edit profile information
 function verifyEditProfile(email, name, oldEmail) {
+  const response = {
+    message: "Edit Profile Successful!",
+    success:true
+
+  }
   if (!isValidEmail(email)) {
-    return "Email is Invalid";
+    response.message = "Email is Invalid!"
+    response.success = false
+    return response;
   }
   if (name === "") {
-    return "Name cannot be empty!";
+    response.message = "Email is Invalid!"
+    response.success = false
+    return response;
   }
-  return "success"; // Validation successful
+  return response; // Validation successful
 }
 
 // Function to verify and prepare a review for submission

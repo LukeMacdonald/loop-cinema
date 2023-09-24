@@ -4,17 +4,17 @@ module.exports = (express, app) => {
     
     const router = express.Router();
 
-    router.post('/', controller.create);
+    router.post('/', controller.createUser);
 
-    router.put('/', controller.update)
+    router.put('/', controller.updateUser)
 
-    router.delete('/:id', controller.delete)
+    router.delete('/:username', controller.deleteUser)
 
-    router.get('/profile/:username', controller.select)
+    router.get('/profile/:username', controller.getUserByUsername)
 
-    router.get('/:email', controller.getByEmail);
+    router.get('/:email', controller.getUserByUsername);
 
-    router.post("/login", controller.login)
+    router.post("/login", controller.loginUser)
 
     app.use('/user', router);
 

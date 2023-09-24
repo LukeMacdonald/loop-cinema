@@ -3,88 +3,104 @@ const bcrypt = require("bcrypt")
 const saltRounds = 10
 
 
-exports.create = async (req, res) => {
-    const password = req.body.password;
-  
-    try {
-      const hash = await bcrypt.hash(password, saltRounds); 
-      console.log('Hash ', hash); 
-  
-      const user = await db.user.create({
-        username: req.body.username,
-        password: hash,
-        email: req.body.email,
-        name: req.body.name,
-      });
-  
-      res.json(user);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ error: 'An error occurred while creating the user.' });
-    }
-  };
-
-exports.update = async (req,res) => {
-  const user = await db.user.findByPk(req.body.username); 
-  // Update profile fields.
-  user.name = req.body.name;
-  user.email = req.body.email;
-
-  await user.save();
-  
-  res.json(user);
-};
-
-exports.delete = async (req,res) => {
-
-}
-
-exports.select = async (req,res) => {
-    const username = req.params.username
-    const user = await db.user.findByPk(username);
-    res.json(user)
-}
-
-exports.getByEmail = async (req,res) =>{
-  const email = req.params.email;
-  
-    try {
-      // Find all sessions with the specified movie_id
-      const user = await db.user.findOne({
-        where: { email: email },
-      });
-      res.json(user);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ error: 'An error occurred while fetching user by email.' });
-    }
-
-}
-
-exports.login = async(req,res) =>{
-  const username = req.body.username;
+exports.createUser = async (req, res) => {
   const password = req.body.password;
+
   try {
-    // Find the user by email
-    const user = await db.user.findByPk(username)
+    const hash = await bcrypt.hash(password, saltRounds);
+    console.log('Hash ', hash);
+
+    const user = await db.user.create({
+      username: req.body.username,
+      password: hash,
+      email: req.body.email,
+      name: req.body.name,
+    });
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while creating the user.' });
+  }
+}
+
+exports.updateUser = async (req, res) =>  {
+  const username = req.body.username;
+
+  try {
+    const user = await db.user.findByPk(username);
 
     if (!user) {
-        // User with the provided email doesn't exist
-        return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(404).json({ error: 'User not found.' });
     }
 
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // Update profile fields.
+    user.name = req.body.name;
+    user.email = req.body.email;
 
-    if (!passwordMatch) {
-        // Passwords don't match
-        return res.status(401).json({ error: 'Invalid email or password' });
+    await user.save();
+
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while updating the user.' });
+  }
+}
+
+exports.deleteUser = async (req, res) => {
+  const username = req.params.username;
+
+  try {
+    const user = await db.user.findByPk(username);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
     }
 
-    // Passwords match, user is authenticated
+    // Delete the user
+    await user.destroy();
+
+    res.json({ message: 'User deleted successfully.' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while deleting the user.' });
+  }
+}
+
+exports.getUserByUsername = async (req, res) => {
+  const username = req.params.username;
+  const user = await db.user.findByPk(username);
+  res.json(user);
+}
+
+exports.getUserByEmail = async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const user = await db.user.findOne({
+      where: { email: email },
+    });
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while fetching user by email.' });
+  }
+}
+
+exports.loginUser = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  try {
+    const user = await db.user.findByPk(username);
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
     res.json({ message: 'Login successful', user: user });
-} catch (err) {
+  } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: 'An error occurred while logging in.' });
+  }
 }
-};

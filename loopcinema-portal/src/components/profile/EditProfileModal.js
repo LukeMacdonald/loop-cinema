@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import FormInput from '../FormInput';
 import { updateUserProfile } from '../../data/repository';
+import { verifyEditProfile } from '../../data/validation';
 
-function EditProfile(props) {
+function EditProfileModal(props) {
   const { user } = props;
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -36,9 +37,11 @@ function EditProfile(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const verification = verifyEditProfile(fields.email,fields.name, user.email);
+
     // Add email validation here if needed
-    if (!validateEmail(fields.email)) {
-      setErrorMessage('Invalid email format');
+    if (!verification.success) {
+      setErrorMessage(verification.message);
       return;
     }
 
@@ -49,16 +52,9 @@ function EditProfile(props) {
     });
     props.setUser(editedUser)
 
-    window.alert('Account edited successfully!');
+    window.alert(verification.message);
     props.onHide();
     setErrorMessage(null);
-  };
-
-  const validateEmail = (email) => {
-    // Add email validation logic here
-    // You can use a regular expression or a library like validator.js
-    // For simplicity, we'll just check if it contains "@" and "."
-    return email.includes('@') && email.includes('.');
   };
 
   return (
@@ -112,4 +108,4 @@ function EditProfile(props) {
   );
 }
 
-export default EditProfile;
+export default EditProfileModal;

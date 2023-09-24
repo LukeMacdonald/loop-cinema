@@ -1,7 +1,7 @@
 // Import your Sequelize model and any required dependencies here
 const db = require('../database')
 // Function to find reviews by movie ID
-exports.allByMovieID = async (req, res) => {
+exports.getReviewsByMovieID = async (req, res) => {
     try {
       const movie_id = req.params.movie_id;
       const reviews = await db.review.findAll({
@@ -16,7 +16,7 @@ exports.allByMovieID = async (req, res) => {
 };
   
 // Function to create a new review
-exports.create = async (req, res) => {
+exports.createReview = async (req, res) => {
     try {
       const { rating, comment, username, movie_id } = req.body;
   
@@ -40,7 +40,7 @@ exports.create = async (req, res) => {
 };
   
  // Function to update an existing review
-exports.update = async (req, res) => {
+exports.updateReview = async (req, res) => {
     try {
       const { review_id, rating, comment } = req.body;
   
@@ -73,7 +73,7 @@ exports.update = async (req, res) => {
 };
 
 // Function to delete a review by its ID
-exports.delete = async (req, res) => {
+exports.deleteReview = async (req, res) => {
     try {
       const review_id = req.params.review_id;
   

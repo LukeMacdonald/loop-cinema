@@ -1,27 +1,57 @@
 const db = require('../database')
 
 
-exports.create = async (req,res) => {
-    const movie = await db.movie.create({
-        title: req.body.title,
-        description: req.body.description,
-        director: req.body.director,
-        release_date: req.body.release_date,
-        poster: req.body.poster,
-        duration: req.body.duration,
-        genre: req.body.genre
-    })
-    res.json(movie);
-}
+exports.createMovie = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      director,
+      release_date,
+      poster,
+      duration,
+      genre,
+    } = req.body;
 
-exports.select = async (req,res) =>{
-    const movie_id = req.params.movie_id;
-    console.log(movie_id)
-    const movie = await db.movie.findByPk(movie_id);
-    res.json(movie);
+    const movie = await db.movie.create({
+      title,
+      description,
+      director,
+      release_date,
+      poster,
+      duration,
+      genre,
+    });
+
+    res.status(201).json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while creating the movie.' });
+  }
 };
 
-exports.all = async (req,res) =>{
-  const movies = await db.movie.findAll();
-  return res.json(movies);
-}
+exports.getMovieByID = async (req, res) => {
+  try {
+    const movie_id = req.params.movie_id;
+    const movie = await db.movie.findByPk(movie_id);
+
+    if (!movie) {
+      return res.status(404).json({ error: 'Movie not found.' });
+    }
+
+    res.json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while fetching the movie.' });
+  }
+};
+
+exports.getAllMovies = async (req, res) => {
+  try {
+    const movies = await db.movie.findAll();
+    res.json(movies);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'An error occurred while fetching all movies.' });
+  }
+};

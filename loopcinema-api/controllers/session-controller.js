@@ -1,6 +1,6 @@
 const db = require('../database')
 
-exports.create = async(req,res) => {
+exports.createSession = async(req,res) => {
     const session = await db.session.create({
         session_time: req.body.session_time,
         movie_id: req.body.movie_id,
@@ -8,7 +8,7 @@ exports.create = async(req,res) => {
     res.json(session);
 }
 
-exports.allByMovieID = async (req, res) => {
+exports.getSessionsByMovieID = async (req, res) => {
     const movie_id = req.params.movie_id;
   
     try {

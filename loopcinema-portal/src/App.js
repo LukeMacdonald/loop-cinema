@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import Landing from "./pages/Landing";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import Review from "./pages/Review";
+import MovieReviews from "./pages/MovieReviews";
 import Profile from "./pages/Profile";
 
 import './styles/styles.css'
@@ -34,7 +34,7 @@ function App() {
                 <Route path="/signup" element={<Signup loginUser={loginUser}/>} />
                 <Route path="/signin" element={<Signin loginUser={loginUser}/>} />
                 <Route path="/profile/:username" element={<Profile logoutUser={logoutUser}/>}/>
-                <Route path="/reviews/:movieID" element={<Review username = {username} isLoggedIn={username !== null}/>}/>
+                <Route path="/reviews/:movieID" element={<MovieReviews username = {username} isLoggedIn={username !== null}/>}/>
               </Routes>
             </div>
         </main>
