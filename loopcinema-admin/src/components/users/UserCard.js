@@ -1,4 +1,5 @@
 import React from 'react';
+import BlockedButton from './BlockedButton';
 
 function UserCard({ user, toggleUserBlock }) {
   const toggleBlock = () => {
@@ -15,17 +16,7 @@ function UserCard({ user, toggleUserBlock }) {
           <h5 style={styles.userName}>{user.name} ({user.username})</h5>
           <p>{user.email}</p>
         </div>
-        <div className="col-md-3" style={styles.buttonContainer}>
-          {!user.blocked ? (
-            <button className="btn btn-danger" onClick={toggleBlock}>
-              Block
-            </button>
-          ) : (
-            <button className="btn btn-primary" onClick={toggleBlock}>
-              Unblock
-            </button>
-          )}
-        </div>
+        <BlockedButton blocked={user.blocked} toggleBlock={toggleBlock}/>
       </div>
     </div>
   );
