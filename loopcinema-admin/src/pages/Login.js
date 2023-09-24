@@ -37,7 +37,7 @@ const Login = (props) => {
         // Show a pop-up message after form submission.
         window.alert(response.message);
         props.loginUser(fields.username);
-        navigate(`/profile/${response.user.username}`);
+        navigate(`/admin`);
     }
     // Reset password field to blank.
     const temp = { ...fields };
