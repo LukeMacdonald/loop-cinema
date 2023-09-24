@@ -1,13 +1,8 @@
 const db = require('../database')
-const bcrypt = require("bcrypt")
-const saltRounds = 10
-
-
+const {hashedPassword,validateLogin} = require('../utils')
 exports.createUser = async (req, res) => {
-  const password = req.body.password;
-
   try {
-    const hash = await bcrypt.hash(password, saltRounds);
+    const hash = hashedPassword(req.body.password)
     console.log('Hash ', hash);
 
     const user = await db.user.create({
@@ -90,11 +85,12 @@ exports.getUserByEmail = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(password)
 
   try {
     const user = await db.user.findByPk(username);
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await validateLogin(password, user.password))) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config.js");
+const {hashedPassword} = require('../utils.js')
 
 const db = {
     Op: Sequelize.Op
@@ -79,7 +80,19 @@ db.sync = async () => {
 };
 
 async function seedData() {
-    let count = await db.movie.count();
+    let count = await db.user.count();
+    if (count == 0){
+        console.log("Seeding user data...");
+        await db.user.bulkCreate([
+            {
+                username:'lukemacdonald.09',
+                password:await hashedPassword('abc123'),
+                name:'Luke Macdonald',
+                email: 'lukemacdonald09@outlook.com'
+            }
+        ]);
+    }
+    count = await db.movie.count();
     console.log("Seeding data...");
   
     // Only seed data if necessary.

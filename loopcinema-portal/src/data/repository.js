@@ -30,6 +30,7 @@ async function removeUser(userID) {
 }
 
 async function userLogin(login) {
+  console.log(login)
   const response = await api.post("/user/login", login);
   return response.data;
 }

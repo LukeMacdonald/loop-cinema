@@ -30,6 +30,7 @@ function Signin(props) {
   // handles form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(fields.password)
     const response = await userLogin({username: fields.username, password: fields.password})
     if (response.message === "Login successful"){
         // Show a pop-up message after form submission.
