@@ -18,6 +18,7 @@ db.review = require("./models/review.js")(db, DataTypes);
 db.session = require("./models/session.js")(db,DataTypes);
 db.seat = require("./models/seat.js")(db,DataTypes);
 db.reservation = require('./models/reservation.js')(db,DataTypes);
+db.admin = require('./models/admin.js')(db,DataTypes);
 
 // Define Relationships
 db.review.belongsTo(db.user,{
@@ -166,6 +167,18 @@ async function seedData() {
                 comment: "Not a very good movie!",
                 username: "lukemacdonald.09",
                 movie_id: 2
+            }
+        ]);
+    }
+    count = await db.admin.count();
+    if (count == 0){
+        console.log("Seeding user data...");
+        await db.admin.bulkCreate([
+            {
+                username:'admin',
+                password:await hashedPassword('admin'),
+                name:'Administrator',
+                email: 'admin@gmail.com'
             }
         ]);
     }
