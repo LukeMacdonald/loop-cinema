@@ -14,7 +14,7 @@ function Movies(){
     }, []);
 
     return (
-        <div style={{width:'60%', textAlign:'left', margin:'0 auto'}}>
+        <div style={{width:'90%', textAlign:'left', margin:'0 auto'}}>
             <h1>Movies</h1>
             <hr/>
             {movies.map((movie, index) => (

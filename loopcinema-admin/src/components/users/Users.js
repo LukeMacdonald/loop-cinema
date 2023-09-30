@@ -14,7 +14,7 @@ function Users(){
     }, []);
 
     return (
-        <div style={{width:'60%', textAlign:'left', margin:'0 auto'}}>
+        <div style={{width:'90%', textAlign:'left', margin:'0 auto'}}>
             <h1>Users</h1>
             <hr/>
             {users.map((user, index) => (
