@@ -9,6 +9,7 @@ import MovieReviews from "./pages/MovieReviews";
 import Profile from "./pages/Profile";
 
 import './styles/styles.css'
+import Reservation from "./components/reservations/Reservation";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/signin" element={<Signin loginUser={loginUser}/>} />
                 <Route path="/profile/:username" element={<Profile logoutUser={logoutUser}/>}/>
                 <Route path="/reviews/:movieID" element={<MovieReviews username = {username} isLoggedIn={username !== null}/>}/>
+                <Route path="/reservation/:movieID/:sessionID" element={<Reservation username = {username} isLoggedIn={username !== null}/>}/>
               </Routes>
             </div>
         </main>

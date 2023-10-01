@@ -15,6 +15,7 @@ require("./routers/user-router")(express, app);
 require("./routers/movie-router")(express, app);
 require("./routers/review-router")(express, app);
 require("./routers/session-router")(express, app);
+require("./routers/reserveration-router")(express, app);
 
 
 // Set port, listen for requests.

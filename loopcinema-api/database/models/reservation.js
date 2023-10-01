@@ -4,5 +4,9 @@ db.sequelize.define("reservation",{
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement:true,
+    },
+    total_seats:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
     }
 });

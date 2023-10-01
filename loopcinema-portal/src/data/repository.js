@@ -57,6 +57,11 @@ async function getMovieSessions(movieID) {
   return response.data;
 }
 
+async function getSessionDetails(sessionID){
+  const response = await api.get(`/sessions/session/${sessionID}`);
+  return response.data;
+}
+
 // Review-related functions
 async function getMovieReviews(movieID) {
   const response = await api.get(`/reviews/movie/${movieID}`);
@@ -78,6 +83,20 @@ async function deleteReview(review_id) {
   return response.data;
 }
 
+async function createReservation(session,username,seats){
+
+  const reservation = {
+    username: username,
+    session_id: session.session_id,
+    total_seats: seats
+  }
+
+  const response = await api.post("/reservations", reservation)
+  
+  return response.data;
+
+}
+
 export {
   createUser,
   findUserByEmail,
@@ -92,4 +111,6 @@ export {
   createReview,
   updateReview,
   deleteReview,
+  getSessionDetails,
+  createReservation
 };
