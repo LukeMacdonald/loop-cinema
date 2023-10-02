@@ -97,6 +97,16 @@ async function createReservation(session,username,seats){
 
 }
 
+async function getUserReservation(username){
+  const response = await api.get(`/reservations/users/${username}`);
+  return response.data;
+}
+
+async function getReservationDetails(id){
+  const response = await api.get(`/reservations/details/${id}`);
+  return response.data;
+}
+
 export {
   createUser,
   findUserByEmail,
@@ -112,5 +122,7 @@ export {
   updateReview,
   deleteReview,
   getSessionDetails,
-  createReservation
+  createReservation,
+  getUserReservation,
+  getReservationDetails
 };

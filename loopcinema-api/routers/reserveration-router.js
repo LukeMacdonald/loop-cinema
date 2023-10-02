@@ -5,5 +5,9 @@ module.exports = (express, app) => {
 
     router.post('/', controller.createReservation);
 
+    router.get('/users/:username', controller.getReservationsByUsername);
+
+    router.get('/details/:reservation_id', controller.getReservationFullDetails)
+
     app.use('/reservations',router)
 }
