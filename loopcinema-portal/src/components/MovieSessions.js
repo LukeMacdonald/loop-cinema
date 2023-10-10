@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import { formatTime, formatDate } from '../utils/dates';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 function groupSessionsByDate(sessions) {
     const groupedSessions = sessions.reduce((acc, session) => {
@@ -17,7 +18,9 @@ function groupSessionsByDate(sessions) {
 
 function MovieSessions(props) {
     const { movie, sessions } = props;
-    const username = localStorage.getItem("user");
+    const { state } = useAuth();
+    const username = state.username;
+
     const groupedSessions = groupSessionsByDate(sessions);
     const [selectedDate, setSelectedDate] = useState(null);
     const containerRef = useRef(null);

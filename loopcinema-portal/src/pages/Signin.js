@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { userLogin } from "../data/repository";
+import { useAuth } from '../AuthContext';
+import '../styles/styles.css';
 
-import '../styles/styles.css'
+function Signin() {
+  const { dispatch } = useAuth();
 
-function Signin(props) {
-  
   const [fields, setFields] = useState({
     username: "",
     password: "",
@@ -15,34 +16,28 @@ function Signin(props) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
-  
-  // Generic change handler.
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    // Update state.
     setFields((prevFields) => ({
       ...prevFields,
       [name]: value,
     }));
   };
-  
-  // handles form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(fields.password)
-    const response = await userLogin({username: fields.username, password: fields.password})
-    if (response.message === "Login successful"){
-        // Show a pop-up message after form submission.
-        window.alert(response.message);
-        props.loginUser(fields.username);
-        navigate(`/profile/${response.user.username}`);
+    const response = await userLogin({ username: fields.username, password: fields.password });
+    if (response.message === "Login successful") {
+      window.alert(response.message);
+      dispatch({ type: 'LOGIN', payload: fields.username }); // Dispatch a LOGIN action to update the context state.
+      navigate(`/profile/${response.user.username}`);
     }
-    // Reset password field to blank.
+
     const temp = { ...fields };
     temp.password = "";
     setFields(temp);
-    setErrorMessage(response.message)
+    setErrorMessage(response.message);
   };
 
   return (

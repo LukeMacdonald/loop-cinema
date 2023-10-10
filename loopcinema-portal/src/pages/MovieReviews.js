@@ -5,6 +5,7 @@ import ReviewCard from '../components/reviews/ReviewCard';
 import MovieSessions from '../components/MovieSessions';
 import { findMovieByID, getMovieReviews, getMovieSessions } from '../data/repository';
 import { formatDDMMYYYY } from '../utils/dates';
+import { useAuth } from '../AuthContext';
 
 // MovieDetails component to display movie details
 function MovieDetails({ movie }) {
@@ -30,7 +31,9 @@ function MovieDetails({ movie }) {
 }
 
 // ReviewsTable component to display existing reviews
-function ReviewsTable({ reviews, username }) {
+function ReviewsTable({ reviews }) {
+  const { state } = useAuth();
+  const username = state.username;
   return (
     <table className="table table-hover review-table">
       <thead>
@@ -56,12 +59,11 @@ function ReviewsTable({ reviews, username }) {
   );
 }
 
-function MovieReviews(props) {
+function MovieReviews() {
   const { movieID } = useParams();
   const [movie, setMovie] = useState({});
   const [reviews, setReviews] = useState([]);
   const [sessions, setSessions] = useState([]);
-  const { username, isLoggedIn } = props;
 
   useEffect(() => {
     async function fetchMovies() {
@@ -83,8 +85,8 @@ function MovieReviews(props) {
       <MovieSessions movie={movie} sessions={sessions}/>
       <div className="review-section">
         <h2 className="title">Reviews</h2>
-        <ReviewsTable reviews={reviews} username={username} />
-        <ReviewCard username={username} movie_id={movie.movie_id} isLoggedIn={isLoggedIn} />
+        <ReviewsTable reviews={reviews}/>
+        <ReviewCard movie_id={movie.movie_id}/>
       </div>
     </div>
   );

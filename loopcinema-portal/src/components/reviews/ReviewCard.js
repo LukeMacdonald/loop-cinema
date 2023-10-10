@@ -2,11 +2,17 @@ import { useState, useEffect } from "react";
 import Rating from '@mui/material/Rating';
 import { createReview, getUserProfile,  } from '../../data/repository';
 import { verifyReview } from '../../data/validation';
+import { useAuth } from "../../AuthContext";
 function ReviewCard(props) {
   // State to manage the review rating and comment
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState("");
   const [user, setUser] = useState({})
+  
+  const { state } = useAuth();
+
+  const username = state.username;
+  const isLoggedIn = state.isLoggedIn
 
   // State to manage error messages
   const [errorMessage, setErrorMessage] = useState(null);
@@ -14,7 +20,7 @@ function ReviewCard(props) {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const account = await getUserProfile(props.username)
+        const account = await getUserProfile(username)
         setUser(account);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -22,7 +28,7 @@ function ReviewCard(props) {
     }
 
     fetchUserData();
-  }, []);
+  });
 
   // Handler for updating the comment state
   const handleCommentChange = (event) => {
@@ -39,7 +45,7 @@ function ReviewCard(props) {
     event.preventDefault();
 
     // Verify the review and get the response
-    const response = verifyReview(props.username, comment, rating, props.movie_id);
+    const response = verifyReview(username, comment, rating, props.movie_id);
 
     if (response.successful) {
       // Update the review and show a success message
@@ -56,7 +62,7 @@ function ReviewCard(props) {
 
   let content;
 
-  if (props.isLoggedIn) {
+  if (isLoggedIn) {
     if (user.blocked) {
       content = <div>User Blocked By Admin</div>;
     } else {

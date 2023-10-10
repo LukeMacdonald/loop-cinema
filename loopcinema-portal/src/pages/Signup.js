@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { verifySignUp } from "../data/validation";
 import { createUser } from "../data/repository";
+import { useAuth } from '../AuthContext';
 
-function Signup(props) {
+function Signup() {
+  const { dispatch } = useAuth();
+
   const [fields, setFields] = useState({
     username: "",
     name: "",
@@ -17,11 +20,9 @@ function Signup(props) {
 
   const navigate = useNavigate();
 
-  // Generic change handler.
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // Update state.
     setFields((prevFields) => ({
       ...prevFields,
       [name]: value,
@@ -43,14 +44,11 @@ function Signup(props) {
         name: fields.name,
         email: fields.email,
       });
-      // Show a pop-up message after form submission.
       window.alert("Account created successfully!");
-      props.loginUser(fields.email);
+      dispatch({ type: 'LOGIN', payload: fields.email }); // Dispatch a LOGIN action to update the context state.
       navigate("/profile");
-      // Clear error message on successful submission
       setErrorMessage(null);
     } else {
-      // Reset password field to blank.
       const temp = { ...fields };
       temp.password = "";
       temp.confirmPassword = "";
@@ -58,7 +56,6 @@ function Signup(props) {
       setErrorMessage(verified);
     }
   };
-
   return (
     <div className={"auth-container"}>
       <h1 className={"auth-header"}>Create Account</h1>

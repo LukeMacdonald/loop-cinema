@@ -1,8 +1,12 @@
-import Logo from '../assets/images/logo.png';
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext"; // Provide the correct path to your AuthContext file
+
+import Logo from '../assets/images/logo.png';
 
 function Header(props) {
     const navigate = useNavigate();
+    const { state, dispatch } = useAuth(); // Access the state and dispatch function from the AuthContext
 
     // Handler for navigating to the signup page
     const handleSignup = (event) => {
@@ -19,7 +23,7 @@ function Header(props) {
     // Handler for user logout
     const handleLogout = (event) => {
         event.preventDefault();
-        props.logoutUser(); // Update app state
+        dispatch({ type: 'LOGOUT' }); // Dispatch LOGOUT action to update context state
         navigate("/"); // Navigate to the home page
     };
 
@@ -32,15 +36,15 @@ function Header(props) {
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
                         {/* Show "Profile" link if user is logged in */}
-                        {props.isLoggedIn && <a className="nav-link" href={`/profile/${props.username}`}>Profile<span className="sr-only">(current)</span></a>}
+                        {state.isLoggedIn && <a className="nav-link" href={`/profile/${state.username}`}>Profile<span className="sr-only">(current)</span></a>}
                     </li>
                 </ul>
                 <div style={{ marginRight: '2rem' }}>
                     {/* Show "Sign in" and "Sign up" buttons if user is not logged in */}
-                    {!props.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleSignin}>Sign in</button>}
-                    {!props.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleSignup}>Sign up</button>}
+                    {!state.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleSignin}>Sign in</button>}
+                    {!state.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleSignup}>Sign up</button>}
                     {/* Show "Sign out" button if user is logged in */}
-                    {props.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleLogout}>Sign out</button>}
+                    {state.isLoggedIn && <button className="btn btn-outline-info nav-button" onClick={handleLogout}>Sign out</button>}
                 </div>
             </div>
         </nav>
@@ -48,3 +52,4 @@ function Header(props) {
 }
 
 export default Header;
+
