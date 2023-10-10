@@ -1,7 +1,5 @@
 import React, { useReducer } from 'react';
 import BlockedButton from './BlockedButton';
-import { updateUserBlocking } from '../../database/repository';
-
 
 const userReducer = (state, action) => {
   switch (action.type) {
