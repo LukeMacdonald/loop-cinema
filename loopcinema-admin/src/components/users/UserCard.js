@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import BlockedButton from './BlockedButton';
+import { updateUserBlocking } from '../../database/repository';
 
-function UserCard({ user, toggleUserBlock }) {
-  const toggleBlock = () => {
-    // You can add the logic here to toggle the user's blocked status.
-    // For this example, let's assume you have a function called toggleUserBlock.
-    // You should replace this with your actual logic.
-    toggleUserBlock(user.id);
+
+const userReducer = (state, action) => {
+  switch (action.type) {
+    case 'BLOCK_USER':
+      return { ...state, blocked: true };
+    case 'UNBLOCK_USER':
+      return { ...state, blocked: false };
+    default:
+      return state;
+  }
+};
+
+function UserCard({ user, toggleBlock}) {
+
+  const [state, dispatch] = useReducer(userReducer, user);
+  
+  const handleToggleBlock = () => {
+    if (state.blocked) {
+      dispatch({ type: 'UNBLOCK_USER' });
+    } else {
+      dispatch({ type: 'BLOCK_USER' });
+    }
+    toggleBlock(user.username, !state.blocked);
   };
 
   return (
@@ -16,7 +34,7 @@ function UserCard({ user, toggleUserBlock }) {
           <h5 style={styles.userName}>{user.name} ({user.username})</h5>
           <p>{user.email}</p>
         </div>
-        <BlockedButton blocked={user.blocked} toggleBlock={toggleBlock}/>
+        <BlockedButton blocked={state.blocked} toggleBlock={handleToggleBlock} />
       </div>
     </div>
   );

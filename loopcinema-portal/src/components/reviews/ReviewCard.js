@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Rating from '@mui/material/Rating';
-import { createReview } from '../../data/repository';
+import { createReview, getUserProfile,  } from '../../data/repository';
 import { verifyReview } from '../../data/validation';
 function ReviewCard(props) {
   // State to manage the review rating and comment
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState("");
+  const [user, setUser] = useState({})
 
   // State to manage error messages
   const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const account = await getUserProfile(props.username)
+        setUser(account);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
   // Handler for updating the comment state
   const handleCommentChange = (event) => {
@@ -40,51 +54,58 @@ function ReviewCard(props) {
     }
   };
 
-  return (
-    <div>
-      {/* Form to leave a review */}
-      <h4 className="review-header">Leave a Review</h4>
-      {props.isLoggedIn ? (
-        <form onSubmit={handleSubmit}>
-          {/* Rating component */}
-          <Rating
-            name="size-large"
-            defaultValue={1}
-            size="large"
-            value={rating}
-            onChange={handleRatingChange}
-            required={true}
-          />
-          <br />
+  let content;
 
-          {/* Textarea for comment */}
-          <textarea
-            rows={6}
-            cols={70}
-            name="comment"
-            placeholder={"Add your feedback"}
-            value={comment}
-            onChange={handleCommentChange}
-            maxLength={600}
-            required={true}
-          />
-
-          {/* Submit button and error message */}
-          <div className="form-group">
-            <input type="submit" className="btn btn-primary" value="Submit" style={{ width: '200px', marginTop: '20px' }} />
-          </div>
-          {errorMessage && (
-            <div className="form-group" style={{ marginTop: '1rem' }}>
-              <span className="text-danger">{errorMessage}</span>
-            </div>
-          )}
-        </form>
-      ) : (
+  if (props.isLoggedIn) {
+    if (user.blocked) {
+      content = <div>User Blocked By Admin</div>;
+    } else {
+      content = (
         <div>
-          <a href='/signin'>Sign in to leave a review</a>
+          {/* Form to leave a review */}
+          <h4 className="review-header">Leave a Review</h4>
+          <form onSubmit={handleSubmit}>
+            {/* Rating component */}
+            <Rating
+              name="size-large"
+              defaultValue={1}
+              size="large"
+              value={rating}
+              onChange={handleRatingChange}
+              required={true}
+            />
+            <br />
+
+            {/* Textarea for comment */}
+            <textarea
+              rows={6}
+              cols={70}
+              name="comment"
+              placeholder={"Add your feedback"}
+              value={comment}
+              onChange={handleCommentChange}
+              maxLength={600}
+              required={true}
+            />
+
+            {/* Submit button and error message */}
+            <div className="form-group">
+              <input type="submit" className="btn btn-primary" value="Submit" style={{ width: '200px', marginTop: '20px' }} />
+            </div>
+            {errorMessage && (
+              <div className="form-group" style={{ marginTop: '1rem' }}>
+                <span className="text-danger">{errorMessage}</span>
+              </div>
+            )}
+          </form>
         </div>
-      )}
-    </div>
-  );
+      );
+    }
+  } else {
+    content = <div><a href='/signin'>Sign in to leave a review</a></div>;
+  }
+
+  return <div>{content}</div>;
 }
+
 export default ReviewCard;

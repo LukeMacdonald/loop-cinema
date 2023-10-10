@@ -16,6 +16,8 @@ module.exports = (express, app) => {
 
     router.post("/login", controller.loginUser)
 
+    router.put('/block', controller.updateBlock)
+
     app.use('/user', router);
 
 }

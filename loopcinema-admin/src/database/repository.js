@@ -24,6 +24,12 @@ async function removeUser(userID) {
   return response.data;
 }
 
+async function updateUserBlocking(username, block){
+  const data = {"username": username, "block": block}
+  const response = await api.put("/user/block", data)
+  return response.data
+}
+
 async function adminLogin(login) {
   console.log(login)
   const response = await api.post("/admin/login", login);
@@ -72,6 +78,7 @@ export {
   removeUser,
   adminLogin,
   getUserProfile,
+  updateUserBlocking,
   getAllMovies,
   getMovieSessions,
   updateMovie,
