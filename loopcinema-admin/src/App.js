@@ -1,39 +1,32 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./AuthContext";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login"
-import { useState } from "react";
+import Login from "./pages/Login";
 import DashboardUsers from "./pages/DashboardUsers";
 import DashboardMovies from "./pages/DashboardMovies";
 import MovieForm from "./components/movies/movie/NewMovie";
 import EditMovieForm from "./components/movies/movie/EditMovie";
+import './assets/styles/pages.css'
+import './assets/styles/styles.css'
 
 function App() {
-  const [username, setUsername] = useState(localStorage.getItem("user"));
-
-  const loginUser = (username) => {
-    localStorage.setItem('user', username);
-    setUsername(username);
-  }
-
-  const logoutUser = () => {
-    localStorage.removeItem('user');
-    setUsername(null);
-  };
-
   return (
     <div className="App">
-      <Router>
-        <main role="main" className="main">
-          <Routes>
-            <Route path="/" element={<Login loginUser={loginUser} />} />
-            <Route path="/admin/" element={<Dashboard username={username} />} />
-            <Route path="/admin/users" element={<DashboardUsers username={username}/>} />
-            <Route path="/admin/movies" element={<DashboardMovies username={username} />} />
-            <Route path="/admin/movies/add" element = {<MovieForm/>}/>
-            <Route path="/admin/movies/edit/:id" element = {<EditMovieForm/>}/>
-          </Routes>
-        </main>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <main role="main" className="main">
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/admin/" element={<Dashboard />} />
+              <Route path="/admin/users" element={<DashboardUsers />} />
+              <Route path="/admin/movies" element={<DashboardMovies />} />
+              <Route path="/admin/movies/add" element={<MovieForm />} />
+              <Route path="/admin/movies/edit/:id" element={<EditMovieForm />} />
+            </Routes>
+          </main>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }

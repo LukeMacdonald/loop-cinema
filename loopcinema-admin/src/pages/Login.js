@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Container, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { adminLogin } from '../database/repository';
-import LandingImage from "../assets/images/landing.gif"
-// "https://gifer.com/en/8V9H"  link for gif
 import FormInput from '../components/FormInput';
-import '../assets/styles/pages.css'
+import { useAuth } from '../AuthContext';
+import LandingImage from "../assets/images/landing.gif";
+// "https://gifer.com/en/8V9H"  link for gif
 
-const Login = (props) => {
+const Login = () => {
+  const { dispatch } = useAuth();
+
   const [fields, setFields] = useState({
     username: "",
     password: "",
@@ -16,34 +18,31 @@ const Login = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
-  
-  // Generic change handler.
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // Update state.
     setFields((prevFields) => ({
       ...prevFields,
       [name]: value,
     }));
   };
-  
-  // handles form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(fields.password)
-    const response = await adminLogin({username: fields.username, password: fields.password})
-    if (response.message === "Login successful"){
-        // Show a pop-up message after form submission.
-        window.alert(response.message);
-        props.loginUser(fields.username);
-        navigate(`/admin`);
+    const response = await adminLogin({ username: fields.username, password: fields.password });
+
+    if (response.message === "Login successful") {
+      window.alert(response.message);
+      // Dispatch a LOGIN action to update the context state.
+      dispatch({ type: 'LOGIN', payload: fields.username });
+      navigate(`/admin`);
     }
-    // Reset password field to blank.
+
     const temp = { ...fields };
     temp.password = "";
     setFields(temp);
-    setErrorMessage(response.message)
+    setErrorMessage(response.message);
   };
 
   return (

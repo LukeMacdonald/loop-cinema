@@ -1,8 +1,20 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from '../AuthContext';
 
 function Sidebar() {
     const location = useLocation();
+    const naviage = useNavigate()
+
+    const { dispatch } = useAuth();
+
+
+
+    const handleLogout = () => {
+        // Dispatch a LOGOUT action to update the context state.
+        dispatch({ type: 'LOGOUT' });
+        naviage("/")
+    };
 
     return (
         <div className="col-md-3 sidebar-container">
@@ -25,6 +37,11 @@ function Sidebar() {
                             <i className="fa-solid fa-clapperboard" style={{ marginRight: '1rem' }}></i> Movies
                         </Link>
                     </li>
+                    <li className="nav-item">
+                    <button className="nav-link" onClick={handleLogout} style={{ fontSize: '1.25rem', color: 'white', border: 'none', background: 'none', marginTop: '0.75rem' }}>
+                        <i className="fa-solid fa-sign-out" style={{ marginRight: '1rem' }}></i> Logout
+                    </button>
+                </li>
                 </ul>
             </div>
         </div>
