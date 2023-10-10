@@ -8,6 +8,8 @@ module.exports = (express, app) => {
 
     router.get('/movie/:movie_id', controller.getSessionsByMovieID);
 
+    router.get('/session/:session_id', controller.getSession)
+
     app.use('/sessions', router)
 }
 

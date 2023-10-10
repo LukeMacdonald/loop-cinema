@@ -34,10 +34,6 @@ function Header(props) {
                         {/* Show "Profile" link if user is logged in */}
                         {props.isLoggedIn && <a className="nav-link" href={`/profile/${props.username}`}>Profile<span className="sr-only">(current)</span></a>}
                     </li>
-                    <li className="nav-item active">
-                        {/* Show "Reviews" link if user is logged in */}
-                        {props.isLoggedIn && <a className="nav-link" href="/movies">Reviews<span className="sr-only">(current)</span></a>}
-                    </li>
                 </ul>
                 <div style={{ marginRight: '2rem' }}>
                     {/* Show "Sign in" and "Sign up" buttons if user is not logged in */}

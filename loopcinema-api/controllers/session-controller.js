@@ -23,3 +23,15 @@ exports.getSessionsByMovieID = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching movie sessions.' });
     }
 };
+
+exports.getSession = async (req,res) => {
+  const session_id = req.params.session_id;
+  try{
+    const session = await db.session.findByPk(session_id);
+    res.json(session)
+  } catch(err){
+    console.error(err.message);
+    res.status(500).json({err: 'An error occured while fetching session'})
+
+  }
+}

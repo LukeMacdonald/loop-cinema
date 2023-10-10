@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Review from '../components/reviews/Review';
 import ReviewCard from '../components/reviews/ReviewCard';
-import { findMovieByID, getMovieReviews } from '../data/repository';
+import MovieSessions from '../components/MovieSessions';
+import { findMovieByID, getMovieReviews, getMovieSessions } from '../data/repository';
 import { formatDDMMYYYY } from '../utils/dates';
 
 // MovieDetails component to display movie details
@@ -59,14 +60,18 @@ function MovieReviews(props) {
   const { movieID } = useParams();
   const [movie, setMovie] = useState({});
   const [reviews, setReviews] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const { username, isLoggedIn } = props;
 
   useEffect(() => {
     async function fetchMovies() {
       const currentMovie = await findMovieByID(movieID);
       const allReviews = await getMovieReviews(movieID);
+      const allSessions = await getMovieSessions(movieID)
+
       setMovie(currentMovie);
       setReviews(allReviews);
+      setSessions(allSessions)
     }
 
     fetchMovies();
@@ -75,6 +80,7 @@ function MovieReviews(props) {
   return (
     <div>
       <MovieDetails movie={movie} />
+      <MovieSessions movie={movie} sessions={sessions}/>
       <div className="review-section">
         <h2 className="title">Reviews</h2>
         <ReviewsTable reviews={reviews} username={username} />

@@ -16,7 +16,6 @@ db.user = require("./models/user.js")(db, DataTypes);
 db.movie = require("./models/movie.js")(db, DataTypes);
 db.review = require("./models/review.js")(db, DataTypes);
 db.session = require("./models/session.js")(db,DataTypes);
-db.seat = require("./models/seat.js")(db,DataTypes);
 db.reservation = require('./models/reservation.js')(db,DataTypes);
 db.admin = require('./models/admin.js')(db,DataTypes);
 
@@ -46,26 +45,14 @@ db.movie.hasMany(db.session,{
     as:'sessions'
 });
 
-db.session.hasMany(db.seat, {
-    foreignKey: 'session_id', // Corrected foreign key reference
-    allowNull: false,
-    as:'seats'
-});
-db.seat.belongsTo(db.session,{
-    foreignKey: 'session_id',
-    allowNull: false,
-});
-
 db.reservation.belongsTo(db.user,{
     foreignKey:'username',
     allowNull: false,
 });
-
-db.reservation.hasMany(db.seat, {
-    foreignKey: 'reservation_id',
-    allowNull: false,
-    as:'seats'
-});
+db.reservation.belongsTo(db.session,{
+    foreignKey:'session_id',
+    allowNull: false
+})
 
 
 db.sync = async () => {
