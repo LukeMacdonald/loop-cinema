@@ -9,6 +9,10 @@ module.exports = (express, app) => {
 
     router.get('/movie/:movie_id', controller.getMovieByID);
 
+    router.put('/:movie_id', controller.updateMovie);
+
+    router.delete('/:movie_id', controller.deleteMovie);
+
     app.use('/movies',router)
 }
 
