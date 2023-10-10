@@ -101,19 +101,3 @@ exports.loginUser = async (req, res) => {
   }
 }
 
-exports.updateBlock = async (req, res) => {
-  const username = req.body.username;
-  try {
-    const user = await db.user.findByPk(username);
-    user.blocked = req.body.block;
-
-    await user.save();
-
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ error: 'An error occurred while updating the user.' });
-  }
-  
-
-}

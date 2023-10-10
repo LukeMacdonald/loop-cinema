@@ -12,5 +12,10 @@ module.exports = (db, DataTypes) =>
     comment:{
         type: DataTypes.STRING(600),
         allowNull: false
-    }, 
+    },
+    removed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false, // Make it NOT NULL
+        defaultValue: false, // Set the default value to false
+      }, 
 });

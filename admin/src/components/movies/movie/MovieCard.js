@@ -14,7 +14,7 @@ function MovieCard(props) {
     const [modalShow, setModalShow] = useState(false);
   
     const handleReview = () => {
-      navigate(`/reviews/${encodeURIComponent(movie.movie_id)}`);
+      navigate(`/admin/reviews/${encodeURIComponent(movie.movie_id)}`);
     };
 
     const handleEdit = () => {

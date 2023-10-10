@@ -7,8 +7,10 @@ import DashboardUsers from "./pages/DashboardUsers";
 import DashboardMovies from "./pages/DashboardMovies";
 import MovieForm from "./components/movies/movie/NewMovie";
 import EditMovieForm from "./components/movies/movie/EditMovie";
+import MovieReviews from "./pages/MovieReviews";
 import './assets/styles/pages.css'
 import './assets/styles/styles.css'
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
               <Route path="/admin/" element={<Dashboard />} />
               <Route path="/admin/users" element={<DashboardUsers />} />
               <Route path="/admin/movies" element={<DashboardMovies />} />
+              <Route path="/admin/reviews/:movieID" element={<MovieReviews />} />
               <Route path="/admin/movies/add" element={<MovieForm />} />
               <Route path="/admin/movies/edit/:id" element={<EditMovieForm />} />
             </Routes>

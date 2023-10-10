@@ -26,7 +26,7 @@ async function removeUser(userID) {
 
 async function updateUserBlocking(username, block){
   const data = {"username": username, "block": block}
-  const response = await api.put("/user/block", data)
+  const response = await api.put("/admin/user/block", data)
   return response.data
 }
 
@@ -69,7 +69,7 @@ async function getMovieReviews(movieID) {
 }
 
 async function deleteReview(review_id) {
-  const response = await api.delete(`/reviews/${review_id}`);
+  const response = await api.put(`admin/review/delete/${review_id}`);
   return response.data;
 }
 
