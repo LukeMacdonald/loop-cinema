@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { findMovieByID, getSessionDetails, createReservation } from '../../data/repository';
+import {formatFullDate} from '../../utils/dates';
 
 function Reservation() {
     const { movieID, sessionID } = useParams();
@@ -50,7 +51,7 @@ function Reservation() {
             <h1>{movie.title}</h1>
             <p>Movie ID: {movieID}</p>
             <p>Session ID: {session.session_id}</p>
-            <p>Session Time: {session.session_time}</p>
+            <p>Session Time: {formatFullDate(session.session_time)}</p>
             <p>Available Seats: {session.available_seats}</p>
 
             <form onSubmit={handleSubmit}>
