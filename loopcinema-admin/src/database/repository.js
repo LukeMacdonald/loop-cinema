@@ -41,6 +41,15 @@ async function findMovieByID(movieID) {
   return response.data;
 }
 
+async function createMovie(movieData){
+  const response = await api.post('/movies', movieData)
+  return response.data;
+}
+async function updateMovie(id, movieData){
+  const response = await api.put(`/movies/${id}`,movieData)
+  return response.data
+}
+
 // Session-related functions
 async function getMovieSessions(movieID) {
   const response = await api.get(`/sessions/movie/${movieID}`);
@@ -65,6 +74,8 @@ export {
   getUserProfile,
   getAllMovies,
   getMovieSessions,
+  updateMovie,
+  createMovie,
   findMovieByID,
   getMovieReviews,
   deleteReview,

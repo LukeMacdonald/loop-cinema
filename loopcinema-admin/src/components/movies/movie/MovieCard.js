@@ -16,6 +16,11 @@ function MovieCard(props) {
     const handleReview = () => {
       navigate(`/reviews/${encodeURIComponent(movie.movie_id)}`);
     };
+
+    const handleEdit = () => {
+      // Pass movie data to the edit page, navigate to the edit route
+      navigate(`/admin/movies/edit/${encodeURIComponent(movie.movie_id)}`);
+    };
   
     return (
       <div className="card movie-card">
@@ -26,6 +31,9 @@ function MovieCard(props) {
           <div className="col-md-9">
             <MovieDetails movie={movie} />
             <ReviewButton onClick={handleReview} />
+            <button className="btn btn-primary mr-2" onClick={handleEdit}>
+              Edit
+              </button>
             <SessionButton onClick={() => setModalShow(true)} />
             <SessionTimes movieID={movie.movie_id} show={modalShow} onHide={() => setModalShow(false)} />
           </div>
