@@ -31,7 +31,7 @@ function Signin() {
     if (response.message === "Login successful") {
       window.alert(response.message);
       dispatch({ type: 'LOGIN', payload: fields.username }); // Dispatch a LOGIN action to update the context state.
-      navigate(`/profile/${response.user.username}`);
+      navigate(`/profile/details/${response.user.username}`);
     }
 
     const temp = { ...fields };

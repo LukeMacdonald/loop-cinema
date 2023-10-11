@@ -1,4 +1,4 @@
-import { formatDDMMYYYY } from "../../utils/dates";
+import { formatDDMMYYYY } from "../../../utils/dates";
 
 
 // Create a MovieDetails component

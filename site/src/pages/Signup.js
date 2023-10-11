@@ -46,7 +46,7 @@ function Signup() {
       });
       window.alert("Account created successfully!");
       dispatch({ type: 'LOGIN', payload: fields.email }); // Dispatch a LOGIN action to update the context state.
-      navigate("/profile");
+      navigate(`/profile/details/${fields.username}`);
       setErrorMessage(null);
     } else {
       const temp = { ...fields };

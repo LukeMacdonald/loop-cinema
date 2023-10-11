@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import { Rating } from '@mui/material';
-import { updateReview } from '../../data/repository'
+import { updateReview } from '../../../data/repository'
 
 function EditReviewModal(props) {
   const review = props.review

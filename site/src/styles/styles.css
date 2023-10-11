@@ -1,47 +1,70 @@
-/* Navbar Styles  */
-.nav-button{
+/* Base Styles */
+:root {
+  --primary-color: #00ADB5;
+  --secondary-color: #1ea3f6;
+  --highlight-color: #6baad1;
+  --background-color: #1B262C;
+  --text-color: white;
+}
+
+/* Common Styles */
+.button {
   width: 8rem;
   margin: 0 5px;
   border-radius: 10px;
-  border-color:#00ADB5;
-  color: #00ADB5;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transition: all 0.3s ease;
 }
-.nav-button:hover{
-  background-color: #00ADB5;
-  border-color: #00ADB5;
-} 
+
+.button:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+/* Navbar Styles */
+.nav-button, .custom-nav-link {
+  text-decoration: none;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.nav-button:hover, .custom-nav-link:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
 
 /* Footer Styles */
 .footer {
-  bottom: 0;
   background-color: #f9f9f9;
   min-height: 6rem;
   padding: 1rem;
-  color:grey;
+  color: grey;
   text-decoration: underline;
-  padding-top: 1.5rem;
-}
-.footer-content{
   text-align: center;
-  font-size: 0.8rem;
 }
 
 /* Landing Page Styles */
-.website-name{
+.website-name {
   font-size: 5rem;
   font-family: Georgia, serif;
-  margin: 35rem 0 1rem 0
+  margin: 35rem 0 1rem 0;
+  text-align: center;
 }
 
 /* Movie Card Styles */
-.movie-card{
-  margin: 1% 0 1% 0;
+.movie-card {
+  margin: 1% 0;
 }
-.movie-card-button{
+
+.movie-card-button {
   margin-right: 2%;
   width: 10rem;
 }
-.movie-poster{
+
+.movie-poster {
   padding: 5% 0 5% 5%;
   height: 18rem;
   width: 13rem;
@@ -49,10 +72,11 @@
 }
 
 /* Form Input Styles */
-.form-input{
+.form-input {
   height: 45px;
 }
-.form-input-group{
+
+.form-input-group {
   padding: 2%;
 }
 
@@ -60,9 +84,6 @@
 .movie-review-poster {
   height: 25rem;
   padding: 10%;
-}
-.poster-column{
-  text-align: center;
 }
 
 .review-section {
@@ -72,29 +93,17 @@
 }
 
 .movie-details {
-  padding: 5% 2% 2% 2% ;
+  padding: 5% 2%;
 }
 
-.review-table {
-  text-align: left;
-}
-
-.review-header {
-  margin-top: 2rem;
-}
-
-.review-email {
-  padding-left: 0.5rem;
-  font-size: 0.90rem;
-}
-
+/* Authentication Styles */
 .auth-container {
   width: 50%;
   margin: 10% auto;
   text-align: center;
 }
+
 .auth-header {
-  
   text-align: center;
   padding-bottom: 2rem;
 }
@@ -103,10 +112,57 @@
   text-align: center;
   margin-top: 10%;
 }
+
 .auth-signup-link {
   margin: 5% auto;
   text-align: center;
 }
-.main{
+
+/* Main Content Styles */
+.main {
   min-height: 95vh;
+}
+
+.session-box {
+  background-color: #EEEEEE;
+  text-align: center;
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.session-box:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Sidebar Styles */
+.sidebar-container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 0;
+}
+
+.sidebar-link-container {
+  margin-left: 0.5rem;
+  margin-top: 2rem;
+}
+
+.movie-nav-link {
+  text-decoration: none;
+  font-size: 1.25rem;
+  color: var(--text-color);
+  text-align: center;
+  height: 2.5rem;
+}
+
+.movie-nav-link:hover {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.movie-active {
+  background-color: var(--secondary-color);
+  color: white;
 }

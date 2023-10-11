@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Rating from '@mui/material/Rating';
-import { createReview, getUserProfile,  } from '../../data/repository';
-import { verifyReview } from '../../data/validation';
-import { useAuth } from "../../AuthContext";
+import { createReview, getUserProfile,  } from '../../../data/repository';
+import { verifyReview } from '../../../data/validation';
+import { useAuth } from "../../../AuthContext";
 function ReviewCard(props) {
   // State to manage the review rating and comment
   const [rating, setRating] = useState(1);
@@ -92,11 +92,12 @@ function ReviewCard(props) {
               onChange={handleCommentChange}
               maxLength={600}
               required={true}
+              style={{padding:'1rem', borderRadius:'10px', marginTop:'1rem'}}
             />
 
             {/* Submit button and error message */}
             <div className="form-group">
-              <input type="submit" className="btn btn-primary" value="Submit" style={{ width: '200px', marginTop: '20px' }} />
+              <input type="submit" className="btn btn-primary" value="Submit" style={{ width: '75%', marginTop: '20px' }} />
             </div>
             {errorMessage && (
               <div className="form-group" style={{ marginTop: '1rem' }}>

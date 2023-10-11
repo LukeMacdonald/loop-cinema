@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { findMovieByID, getSessionDetails, createReservation } from '../../data/repository';
-import {formatFullDate} from '../../utils/dates';
+import { findMovieByID, getSessionDetails, createReservation } from '../../../data/repository';
+import {formatFullDate} from '../../../utils/dates';
 
 function Reservation() {
     const { movieID, sessionID } = useParams();

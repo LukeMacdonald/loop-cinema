@@ -5,6 +5,8 @@ body, html {
     font-family: 'Roboto', sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    background-color: #222831;
+    color: white;
 }
 
 code {

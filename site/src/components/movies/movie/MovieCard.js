@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SessionTimes from "../sessions/SessionTimes";
 import MoviePoster from "./MoviePoster";
 import MovieDetails from "./MovieDetails"
-import ReviewButton from "./ReviewButton";
-import SessionButton from "./SessionButton";
+import ReviewButton from "../reviews/ReviewButton";
+import SessionButton from "../sessions/SessionButton";
 
 // Refactored MovieCard component
 function MovieCard(props) {
@@ -13,7 +13,7 @@ function MovieCard(props) {
     const [modalShow, setModalShow] = useState(false);
   
     const handleReview = () => {
-      navigate(`/reviews/${encodeURIComponent(movie.movie_id)}`);
+      navigate(`/movie/details/${encodeURIComponent(movie.movie_id)}`);
     };
   
     return (

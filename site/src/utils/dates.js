@@ -47,7 +47,23 @@ const formatDDMMYYYY = (dateString) => {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
-
+function formatHoursAndMinutes(dateString) {
+  const dateObject = new Date(dateString);
+  const hours = dateObject.getHours().toString().padStart(2, '0'); // Gets the hours (0-23) and pads with 0 if necessary
+  const minutes = dateObject.getMinutes().toString().padStart(2, '0'); // Gets the minutes (0-59) and pads with 0 if necessary
+  return `${hours}:${minutes}`;
+}
+function groupSessionsByDate(sessions) {
+  const groupedSessions = sessions.reduce((acc, session) => {
+      const sessionDate = formatDate(session.session_time);
+      if (!acc[sessionDate]) {
+          acc[sessionDate] = [];
+      }
+      acc[sessionDate].push(session);
+      return acc;
+  }, {});
+  return groupedSessions;
+}
 export {
-  formatDate, formatTime, getDayOfWeek, formatFullDate, formatDDMMYYYY
+  formatDate, formatTime, getDayOfWeek, formatFullDate, formatDDMMYYYY, formatHoursAndMinutes, groupSessionsByDate
 };

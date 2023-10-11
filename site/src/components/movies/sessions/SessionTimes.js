@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
-import { getMovieSessions } from '../../data/repository';
-import { getDayOfWeek, formatTime, formatDate } from '../../utils/dates';
+import { getMovieSessions } from '../../../data/repository';
+import { getDayOfWeek, formatTime, formatDate } from '../../../utils/dates';
 
 function SessionTimes(props) {
   const [showings, setSessions] = useState([]);

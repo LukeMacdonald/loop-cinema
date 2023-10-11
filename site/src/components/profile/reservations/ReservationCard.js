@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getReservationDetails } from "../../data/repository";
-import { formatFullDate } from "../../utils/dates";
+import { getReservationDetails } from "../../../data/repository";
+import { formatFullDate } from "../../../utils/dates";
 
 function ReservationCard(props) {
     const reservation = props.reservation;

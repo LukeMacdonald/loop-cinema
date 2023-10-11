@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import LandingCarousel from "../components/landing/LandingCarousel";
 import { getAllMovies } from "../data/repository";
-import MovieCard from "../components/movie/MovieCard";
+import MovieCard from "../components/movies/movie/MovieCard";
 import BusinessInfoCard from "../components/landing/BusinessInfoCard";
 import EventInfoCard from "../components/landing/EventInfoCard";
 
@@ -19,10 +18,7 @@ function Landing(props) {
 
   return (
     <div>
-      <LandingCarousel />
-      <h1 className="website-name">Loop Cinema</h1>
-      <h4 style={{fontWeight:'bold', fontStyle:'italic', marginBottom:'4rem'}}>"Bringing Movies and Community Together: Loop Cinemas, Where Entertainment Meets Unity"</h4>
-      
+      {/* <LandingCarousel /> */}
       <div className="row">
         <div className="col-lg-8">
           <div className="row">

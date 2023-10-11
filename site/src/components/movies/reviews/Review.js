@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Rating } from "@mui/material";
-import { deleteReview } from "../../data/repository";
+import { deleteReview } from "../../../data/repository";
 import EditReviewModal from "./EditReviewModal";
 
 function Review(props) {
