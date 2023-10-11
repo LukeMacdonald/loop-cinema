@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Review from '../components/movies/reviews/Review';
-import { findMovieByID, getMovieReviews } from '../database/repository';
+import { findMovieByID } from '../database/repository';
 import { formatDDMMYYYY } from '../utils/dates';
 import { useAuth } from '../AuthContext';
 
@@ -59,20 +59,22 @@ function ReviewsTable({ reviews }) {
 
 function MovieReviews() {
   const { movieID } = useParams();
+  const parsedMovieID = parseInt(movieID, 10);
   const [movie, setMovie] = useState({});
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     async function fetchMovies() {
-      const currentMovie = await findMovieByID(movieID);
-      const allReviews = await getMovieReviews(movieID);
+
+      const currentMovie = await findMovieByID(parsedMovieID);
+      const allReviews = currentMovie.reviews
 
       setMovie(currentMovie);
       setReviews(allReviews);
     }
 
     fetchMovies();
-  }, [movieID]);
+  }, [parsedMovieID]);
 
   return (
     <div>

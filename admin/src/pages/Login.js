@@ -30,21 +30,27 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await adminLogin({ username: fields.username, password: fields.password });
-
-    if (response.message === "Login successful") {
-      window.alert(response.message);
+  
+    try {
+      await adminLogin({ username: fields.username, password: fields.password });
+  
+      window.alert("Login successful");
+  
       // Dispatch a LOGIN action to update the context state.
       dispatch({ type: 'LOGIN', payload: fields.username });
       navigate(`/admin`);
+  
+    } catch (error) {
+      // Handle the error here, you might want to log it or show an appropriate message to the user.
+      console.error("Error during login:", error);
+      console.log(error)
+  
+      const temp = { ...fields };
+      temp.password = "";
+      setFields(temp);
+      setErrorMessage(error.message);
     }
-
-    const temp = { ...fields };
-    temp.password = "";
-    setFields(temp);
-    setErrorMessage(response.message);
   };
-
   return (
     <Container className='full-width-height'>
       <Row>

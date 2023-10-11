@@ -1,89 +1,209 @@
-import axios from "axios";
-
-// Define a constant for the API base URL
-const API_BASE_URL = "http://localhost:4000";
-
-// Create a reusable Axios instance with the base URL
-const api = axios.create({
-  baseURL: API_BASE_URL,
-});
+import { request, gql } from "graphql-request";
+const GRAPH_QL_URL = "http://localhost:4001/graphql";
 
 async function getAllUsers(){
-  const response = await api.get("/admin/users")
-  return response.data;
+  const query = gql`
+    {
+      all_users {
+        username
+        email
+        name
+        blocked
+      }
+    }
+  `;
+  const data = await request(GRAPH_QL_URL, query);
+  return data.all_users;
 }
 
+async function updateUserBlocking(username, block) {
+  const mutation = gql`
+    mutation UpdateUserBlocking($input: UserInput) {
+      manage_user(input: $input) {
+        username
+        email
+        name
+        blocked
+      }
+    }
+  `;
 
-async function getUserProfile(username) {
-  const response = await api.get(`/user/profile/${username}`);
-  return response.data;
-}
-
-async function removeUser(userID) {
-  const response = await api.delete(`/user/${userID}`);
-  return response.data;
-}
-
-async function updateUserBlocking(username, block){
-  const data = {"username": username, "block": block}
-  const response = await api.put("/admin/user/block", data)
-  return response.data
+  const variables = {
+    input: {
+      username: username,
+      blocked: block,
+    },
+  };
+  try {
+    const response = await request(GRAPH_QL_URL, mutation, variables);
+    return response.manage_user;
+  } catch (error) {
+    throw new Error("Error updating user blocking status: " + error.message);
+  }
 }
 
 async function adminLogin(login) {
-  console.log(login)
-  const response = await api.post("/admin/login", login);
-  return response.data;
+  try {
+
+    const { username, password } = login;
+
+    const query = gql`
+      query($username: String, $password: String) {
+        login(username: $username, password: $password) {
+          username
+          email
+          name
+        }
+      }
+    `;
+
+    const variables = { username, password };
+    const data = await request(GRAPH_QL_URL, query, variables);
+    if (data.login === null){
+      throw Error("Account Not Found!")
+    }
+    return data.login;
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 // Movie-related functions
 async function getAllMovies() {
-  const response = await api.get("/movies");
-  return response.data;
+  const query = gql`
+  {
+    all_movies {
+      movie_id
+      title
+      description
+      director
+      release_date
+      poster
+      duration
+      genre
+    }
+  }
+`;
+const data = await request(GRAPH_QL_URL, query);
+return data.all_movies;
 }
 
-async function findMovieByID(movieID) {
-  const response = await api.get(`/movies/movie/${movieID}`);
-  return response.data;
+async function findMovieByID(movie_id) {
+  const query = gql`
+    query ($movie_id: Int) {
+      movie(movie_id: $movie_id) {
+        movie_id
+        title
+        description
+        director
+        release_date
+        poster
+        duration
+        genre
+        reviews {
+          review_id
+          comment
+          rating
+          removed
+          updatedAt
+        }
+      }
+    }
+  `;
+
+  const variables = { movie_id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.movie;
 }
 
 async function createMovie(movieData){
-  const response = await api.post('/movies', movieData)
-  return response.data;
+  const mutation = gql`
+  mutation CreateMovie($input: MovieInput) {
+    create_movie(input: $input) {
+      movie_id
+      title
+      description
+      director
+      release_date
+      poster
+      duration
+      genre
+    }
+  }
+`;
+  movieData["duration"] = parseInt(movieData["duration"],10)
+  const variables = { input: movieData };
+  const data = await request(GRAPH_QL_URL, mutation, variables);
+  return data.create_movie;
 }
-async function updateMovie(id, movieData){
-  const response = await api.put(`/movies/${id}`,movieData)
-  return response.data
+async function updateMovie(id, movieData) {
+  const { reviews, ...updatedMovieData } = movieData;
+  const mutation = gql`
+    mutation UpdateMovie($input: MovieInput) {
+      update_movie(input: $input) {
+        movie_id
+        title
+        description
+        director
+        release_date
+        poster
+        duration
+        genre
+      }
+    }
+  `;
+  const variables = {input: updatedMovieData };
+  const data = await request(GRAPH_QL_URL, mutation, variables);
+  return data.update_movie;
 }
 
 // Session-related functions
-async function getMovieSessions(movieID) {
-  const response = await api.get(`/sessions/movie/${movieID}`);
-  return response.data;
-}
+async function getMovieSessions(movie_id) {
+  const query = gql`
+    query ($movie_id: Int) {
+      movie(movie_id: $movie_id) {
+        movie_id
+        sessions {
+          session_id
+          session_time
+          available_seats
+        }
+      }
+    }
+  `;
 
-// Review-related functions
-async function getMovieReviews(movieID) {
-  const response = await api.get(`/reviews/movie/${movieID}`);
-  return response.data;
+  const variables = { movie_id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.movie.sessions;
+
 }
 
 async function deleteReview(review_id) {
-  const response = await api.put(`admin/review/delete/${review_id}`);
-  return response.data;
+  const mutation = gql`
+    mutation DeleteReview($review_id: Int) {
+      remove_review(input: { review_id: $review_id }) {
+        review_id
+        comment
+        rating
+        removed
+        updatedAt
+      }
+    }
+  `;
+
+  const variables = { review_id };
+  const data = await request(GRAPH_QL_URL, mutation, variables);
+  return data.remove_review;
 }
 
 export {
   getAllUsers,
-  removeUser,
   adminLogin,
-  getUserProfile,
   updateUserBlocking,
   getAllMovies,
   getMovieSessions,
   updateMovie,
   createMovie,
   findMovieByID,
-  getMovieReviews,
   deleteReview,
 };

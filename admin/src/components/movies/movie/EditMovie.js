@@ -10,7 +10,7 @@ function EditMovieForm() {
       director: '',
       release_date: '', // Note: Initialize it as an empty string
       poster: '',
-      duration: '',
+      duration: 0,
       genre: ''
     });
   
@@ -19,7 +19,8 @@ function EditMovieForm() {
     useEffect(() => {
       async function fetchMovieData() {
         try {
-          const movie = await findMovieByID(id);
+          const movie_id = parseInt(id, 10)
+          const movie = await findMovieByID(movie_id);
           // Extract the date part in the format YYYY-MM-DD from the release_date string
           const formattedReleaseDate = movie.release_date ? movie.release_date.split('T')[0] : '';
           setFormData({ ...movie, release_date: formattedReleaseDate });
