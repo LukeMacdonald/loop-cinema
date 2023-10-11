@@ -4,6 +4,7 @@ import Review from '../components/movies/reviews/Review';
 import { findMovieByID } from '../database/repository';
 import { formatDDMMYYYY } from '../utils/dates';
 import { useAuth } from '../AuthContext';
+import Sidebar from '../components/Sidebar';
 
 // MovieDetails component to display movie details
 function MovieDetails({ movie }) {
@@ -77,13 +78,18 @@ function MovieReviews() {
   }, [parsedMovieID]);
 
   return (
-    <div>
-      <MovieDetails movie={movie} />
-      <div className="review-section">
-        <h2 className="title">Reviews</h2>
-        <ReviewsTable reviews={reviews}/>
+  <div className="container-fluid">
+    <div className="row">
+      <Sidebar />
+      <div className="col-md-9 col-sm-8" style={{ margin: '2rem 0' }}>
+        <MovieDetails movie={movie} />
+        <div className="review-section">
+          <h2 className="title">Reviews</h2>
+          <ReviewsTable reviews={reviews}/>
+        </div>
       </div>
     </div>
+  </div>
   );
 }
 

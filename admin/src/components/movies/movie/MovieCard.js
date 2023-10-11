@@ -31,7 +31,7 @@ function MovieCard(props) {
           <div className="col-md-9">
             <MovieDetails movie={movie} />
             <ReviewButton onClick={handleReview} />
-            <button className="btn btn-primary mr-2" onClick={handleEdit}>
+            <button className="btn btn-outline-dark btn-sm movie-card-button" onClick={handleEdit}>
               Edit
               </button>
             <SessionButton onClick={() => setModalShow(true)} />

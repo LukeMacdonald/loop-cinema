@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createMovie } from '../../../database/repository';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../Sidebar'
 
 function MovieForm() {
   const [formData, setFormData] = useState({
@@ -30,6 +31,10 @@ function MovieForm() {
   };
 
   return (
+    <div className="container-fluid">
+    <div className="row">
+      <Sidebar />
+      <div className="col-md-9 col-sm-8" style={{ margin: '2rem 0' }}>
     <div className="container mt-5" style={{width:'40%'}}>
       <h2>Movie Form</h2>
       <form onSubmit={handleSubmit}>
@@ -122,6 +127,9 @@ function MovieForm() {
         </div>
         
       </form>
+    </div>
+    </div>
+    </div>
     </div>
   );
 }

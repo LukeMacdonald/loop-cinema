@@ -27,7 +27,7 @@ function Movies() {
                     <h1>Movies</h1>
                 </div>
                 <div className='col-6' style={{ textAlign: 'right' }}>
-                    <button className='btn btn-primary' onClick={handleAddMovieClick}>+</button>
+                    <button className='btn btn-outline-dark btn-sm movie-card-button' onClick={handleAddMovieClick}>+</button>
                 </div>
             </div>
 

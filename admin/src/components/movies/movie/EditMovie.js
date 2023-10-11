@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { findMovieByID, updateMovie } from '../../../database/repository';
 import { useNavigate, useParams } from 'react-router-dom';
+import Sidebar from '../../Sidebar'
 
 function EditMovieForm() {
     const { id } = useParams();
@@ -48,8 +49,12 @@ function EditMovieForm() {
     }
   };
 
-  return (
-    <div className="container mt-5" style={{ width: '40%' }}>
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <Sidebar />
+          <div className="col-md-9 col-sm-8" style={{ margin: '2rem 0' }}>
+          <div className="container mt-5" style={{ width: '40%' }}>
       <h2>Edit Movie</h2>
       <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -141,8 +146,11 @@ function EditMovieForm() {
           </button>
         </div>
       </form>
-    </div>
-  );
+    </div> 
+          </div>
+        </div>
+      </div>
+    );
 }
 
 export default EditMovieForm;
