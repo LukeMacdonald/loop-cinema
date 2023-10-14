@@ -9,3 +9,7 @@ exports.hashedPassword = async (password) =>{
 exports.validateLogin = async (hashedPassword, suppliedPassword) =>{
    return await bcrypt.compare(hashedPassword, suppliedPassword)
 }
+exports.validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}

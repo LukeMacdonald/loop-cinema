@@ -1,0 +1,14 @@
+{
+    "development": {
+      "host": "rmit.australiaeast.cloudapp.azure.com",
+      "username": "s3888490_fwp_a2",
+      "password": "abc123",
+      "database": "s3888490_fwp_a2",
+      "dialect": "mysql"
+    },
+    "test": {
+      "dialect": "sqlite",
+      "storage": ":memory:"
+    }
+  }
+  

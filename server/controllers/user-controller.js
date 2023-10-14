@@ -1,23 +1,54 @@
 const db = require('../database')
-const {hashedPassword,validateLogin} = require('../utils')
+const {hashedPassword,validateLogin, validateEmail} = require('../utils')
 exports.createUser = async (req, res) => {
   try {
-    const hash = hashedPassword(req.body.password)
-    console.log('Hash ', hash);
+    // Validate request fields
+    const trimmedUsername = req.body.username.trim();
+    const trimmedPassword = req.body.password.trim();
+    const trimmedEmail = req.body.email.trim();
+    const trimmedName = req.body.name.trim();
 
-    const user = await db.user.create({
-      username: req.body.username,
-      password: hash,
-      email: req.body.email,
-      name: req.body.name,
+    if (!trimmedUsername || !trimmedPassword || !trimmedEmail || !trimmedName) {
+      return res.status(400).json({ error: 'All fields are required and cannot be empty.' });
+    }
+
+    if (!validateEmail(trimmedEmail)){
+      return res.status(400).json({ error: 'Invalid email format.' });
+    }
+
+    // Check if username or email already exists in the database
+    const checkUsername = await db.user.findByPk(trimmedUsername)
+
+    if (checkUsername) {
+      return res.status(400).json({ error: 'Username already exists.' });
+    }
+
+    const checkEmail = await db.user.findOne({
+      where: { email: trimmedEmail },
     });
 
-    res.json(user);
+    if (checkEmail){
+      return res.status(400).json({ error: 'Email already exists.' });
+    }
+
+    // Hash the password
+    const hash = await hashedPassword(trimmedPassword);
+ 
+    // Create the user in the database
+    const user = await db.user.create({
+      username: trimmedUsername,
+      password: hash,
+      email: trimmedEmail,
+      name: trimmedName,
+    });
+
+    // Return the created user
+    res.status(201).json(user); // 201 Created status for successful resource creation
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: 'An error occurred while creating the user.' });
   }
-}
+};
 
 exports.updateUser = async (req, res) =>  {
   const username = req.body.username;
@@ -63,10 +94,20 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.getUserByUsername = async (req, res) => {
-  const username = req.params.username;
-  const user = await db.user.findByPk(username);
-  res.json(user);
-}
+  try {
+    const username = req.params.username;
+    const user = await db.user.findByPk(username);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({ user });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ error: 'An error occurred while fetching the user.' });
+  }
+};
 
 exports.getUserByEmail = async (req, res) => {
   const email = req.params.email;
@@ -85,13 +126,22 @@ exports.getUserByEmail = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(password)
-
   try {
     const user = await db.user.findByPk(username);
 
-    if (!user || !(await validateLogin(password, user.password))) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+    if (username.trim() == ""){
+      return res.status(401).json({ error: 'Username cannot be empty' }); 
+    }
+    if (password.trim() == ""){
+      return res.status(401).json({ error: 'Password cannot be empty' }); 
+    }
+
+    if (!user){
+      return res.status(401).json({ error: 'Username not found' }); 
+    }
+
+    if (!(await validateLogin(password, user.password))) {
+      return res.status(401).json({ error: 'Password Incorrect' });
     }
 
     res.json({ message: 'Login successful', user: user });

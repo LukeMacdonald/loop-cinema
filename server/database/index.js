@@ -1,15 +1,23 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const config = require("./config.js");
+// const config = require("./config.js");
 const {hashedPassword} = require('../utils.js')
-
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/config/config.json')[env];
 const db = {
-    Op: Sequelize.Op
 };
 
-db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
-    host: config.HOST,
-    dialect: config.DIALECT
-});
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 // Define Models 
 db.user = require("./models/user.js")(db, DataTypes);
@@ -59,9 +67,11 @@ db.sync = async () => {
     try {
         // Sync schema.
         await db.sequelize.sync();
-
-        // Seed data.
-        await seedData();
+        if (env == "development"){
+            // Seed data.
+            await seedData();
+        }
+      
     } catch (error) {
         console.error('Error syncing database or seeding data:', error);
     }

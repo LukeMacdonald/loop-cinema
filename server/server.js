@@ -19,8 +19,18 @@ require('./routers/admin-router')(express, app);
 require("./routers/reserveration-router")(express, app);
 
 
+app.post('/terminate', (req, res) => {
+  console.log('Terminating the app...');
+  res.send('App terminated');
+  process.exit(0); // Exit the Node.js process with a success code (0)
+});
+
 // Set port, listen for requests.
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+
+
+module.exports = app;
