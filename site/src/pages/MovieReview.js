@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useLocation} from 'react-router-dom';
+import { useParams, useLocation, useNavigate} from 'react-router-dom';
 import MovieDetails from '../components/movies/movie/MovieDetails';
 import { useAuth } from '../AuthContext';
 import ReviewCard from '../components/movies/reviews/ReviewCard';
@@ -9,16 +9,21 @@ import '../styles/styles.css'
 import MovieNavLinks from '../components/navigation/MovieNavLink';
 
 
+
 function MovieReview() {
   const { movieID } = useParams();
   const { movie, reviews } = useMovie(movieID);
   const { state } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate(); 
+
   const username = state.username;  
+  
   return (
     <>
     <div className='row'>
       <div className='col-md-4'>
+      <button className='btn btn-secondary' onClick={() => navigate('/')} style={{margin:'1rem 0'}}><i className="fa-solid fa-left-long" style={{marginRight:'1rem'}}></i> Back</button><br/>
         <img src={movie.poster} style={{ width: '75%', borderRadius: '20px', marginBottom: '2rem' }} alt="" />
         <MovieDetails movie={movie} />
       </div>

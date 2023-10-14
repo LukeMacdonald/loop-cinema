@@ -87,6 +87,19 @@ async function getAllMovies() {
 const data = await request(GRAPH_QL_URL, query);
 return data.all_movies;
 }
+async function getAllMoviesViews(){
+  const query = gql`
+  {
+    all_movies {
+      title
+      views
+    }
+  }
+`;
+  const data = await request(GRAPH_QL_URL, query);
+  return data.all_movies;
+
+}
 
 async function findMovieByID(movie_id) {
   const query = gql`
@@ -177,6 +190,24 @@ async function getMovieSessions(movie_id) {
   return data.movie.sessions;
 
 }
+async function createSession(sessionData){
+  console.log(sessionData)
+  const mutation = gql`
+  mutation CreateSession($input: SessionInput) {
+    create_session(input: $input) {
+      movie_id
+      session_time
+      available_seats
+    }
+  }
+`;
+ 
+  const variables = { input: sessionData };
+  const data = await request(GRAPH_QL_URL, mutation, variables);
+  return data.create_session;
+
+}
+
 
 async function deleteReview(review_id) {
   const mutation = gql`
@@ -200,8 +231,10 @@ export {
   getAllUsers,
   adminLogin,
   updateUserBlocking,
+  getAllMoviesViews,
   getAllMovies,
   getMovieSessions,
+  createSession,
   updateMovie,
   createMovie,
   findMovieByID,

@@ -65,6 +65,7 @@ function EditMovieForm() {
             id="title"
             name="title"
             value={formData.title}
+            maxLength={255}
             onChange={handleInputChange}
             required
           />
@@ -75,6 +76,7 @@ function EditMovieForm() {
             className="form-control"
             id="description"
             name="description"
+            maxLength={600}
             value={formData.description}
             onChange={handleInputChange}
             required
@@ -85,6 +87,7 @@ function EditMovieForm() {
           <input
             type="text"
             className="form-control"
+            maxLength={60}
             id="director"
             name="director"
             value={formData.director}
@@ -108,6 +111,7 @@ function EditMovieForm() {
           <label htmlFor="poster">Poster URL:</label>
           <input
             type="text"
+            maxLength={255}
             className="form-control"
             id="poster"
             name="poster"
@@ -119,6 +123,7 @@ function EditMovieForm() {
         <div className="form-group">
           <label htmlFor="duration">Duration (minutes):</label>
           <input
+            min={0}
             type="number"
             className="form-control"
             id="duration"
@@ -132,6 +137,7 @@ function EditMovieForm() {
           <label htmlFor="genre">Genre:</label>
           <input
             type="text"
+            maxLength={40}
             className="form-control"
             id="genre"
             name="genre"

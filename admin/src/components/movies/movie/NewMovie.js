@@ -44,6 +44,7 @@ function MovieForm() {
             type="text"
             className="form-control"
             id="title"
+            maxLength={255}
             name="title"
             value={formData.title}
             onChange={handleInputChange}
@@ -53,6 +54,7 @@ function MovieForm() {
         <div className="form-group">
           <label htmlFor="description">Description:</label>
           <textarea
+            maxLength={600}
             className="form-control"
             id="description"
             name="description"
@@ -65,6 +67,7 @@ function MovieForm() {
           <label htmlFor="director">Director:</label>
           <input
             type="text"
+            maxLength={60}
             className="form-control"
             id="director"
             name="director"
@@ -89,6 +92,7 @@ function MovieForm() {
           <label htmlFor="poster">Poster URL:</label>
           <input
             type="text"
+            maxLength={255}
             className="form-control"
             id="poster"
             name="poster"
@@ -113,6 +117,7 @@ function MovieForm() {
           <label htmlFor="genre">Genre:</label>
           <input
             type="text"
+            maxLength={40}
             className="form-control"
             id="genre"
             name="genre"

@@ -7,7 +7,7 @@ import { useAuth } from '../../AuthContext';
 const ProfileSidebar = ({ username }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { dispatch } = useAuth();
+  const { dispatch, state } = useAuth();
 
   const handleLogout = () => {
     // Dispatch a LOGOUT action to update the context state.
@@ -18,7 +18,7 @@ const ProfileSidebar = ({ username }) => {
   return (
     <div className="col-md-3" style={{ margin: '2% auto', textAlign: 'left' }}>
         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" style={{width:'50%'}}/>
-        <h4 style={{marginTop:'2rem', marginBottom:'2rem'}}>Welcome Back</h4>
+        <h4 style={{marginTop:'2rem', marginBottom:'2rem'}}>Welcome {state.username}</h4>
         <div className="sidebar-link-container">
             <ul className="nav flex-column">
                 <li className={`nav-item custom-nav-link ${location.pathname === `/profile/details/${username}` ? 'custom-active' : ''}`}>

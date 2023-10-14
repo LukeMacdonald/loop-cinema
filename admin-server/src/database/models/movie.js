@@ -10,7 +10,7 @@ module.exports = (db, DataTypes) =>
         allowNull: false
     },
     description: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(600),
       allowNull: false,
     },
     director: {
