@@ -1,6 +1,8 @@
 const { buildSchema } = require("graphql");
 const db = require('../database');
 const { GraphQLScalarType, Kind } = require("graphql");
+const Sequelize = require('sequelize');
+const { Op } = Sequelize;
 
 const graphql = { };
 
@@ -76,7 +78,12 @@ graphql.schema = buildSchema(`
   type Reservation {
     reservation_id: Int
     total_seats: Int
+    createdAt: Date
   }
+  type ReservationCount {
+    createdAt: Date
+    totalReservations: Int
+}
 
   input UserInput {
     username: String
@@ -107,6 +114,7 @@ graphql.schema = buildSchema(`
     all_movies: [Movie],
     movie(movie_id:Int):Movie
     login(username: String, password: String): User
+    reservations_by_date: [ReservationCount]
   }
 
   type Mutation {
@@ -115,6 +123,7 @@ graphql.schema = buildSchema(`
     manage_user(input: UserInput): User,
     remove_review(input: ReviewInput): Review
     create_session(input: SessionInput): Session
+    
   }
 
 `)
@@ -149,6 +158,38 @@ graphql.root = {
         }catch (err) {
             throw new Error('An error occurred while fetching all movie.');
         }
+    },
+    reservations_by_date: async () => {
+      try {
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 7);
+
+        const endDate = new Date();
+        const reservations = await db.reservation.findAll({
+          attributes: [
+            [Sequelize.fn('date', Sequelize.col('createdAt')), 'createdAt'], // Extract date part from createdAt column
+            [Sequelize.fn('count', Sequelize.col('*')), 'totalReservations'], // Count total reservations for each date
+          ],
+          group: [Sequelize.fn('date', Sequelize.col('createdAt'))], // Group by the extracted date
+          where: {
+            createdAt: {
+              [Op.gte]: startDate, // Set the start date for your search
+              [Op.lt]: endDate, // Set the end date for your search (exclusive)
+            },
+          },
+        });
+  
+        // Map the output to match the ReservationCount type
+        const formattedReservations = reservations.map(reservation => ({
+          createdAt: reservation.dataValues.createdAt, // assuming createdAt is in the correct format
+          totalReservations: reservation.dataValues.totalReservations,
+        }));
+  
+        console.log(formattedReservations);
+        return formattedReservations;
+      } catch (err) {
+        throw new Error('An error occurred while fetching total reservations by date.');
+      }
     },
     login: async (args) => {
       console.log(args.username)

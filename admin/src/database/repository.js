@@ -191,7 +191,6 @@ async function getMovieSessions(movie_id) {
 
 }
 async function createSession(sessionData){
-  console.log(sessionData)
   const mutation = gql`
   mutation CreateSession($input: SessionInput) {
     create_session(input: $input) {
@@ -227,6 +226,20 @@ async function deleteReview(review_id) {
   return data.remove_review;
 }
 
+async function getGroupedReservations(){
+  const query = gql`
+  {
+    reservations_by_date {
+      createdAt
+      totalReservations
+    }
+  }
+`;
+  const data = await request(GRAPH_QL_URL, query);
+  return data.reservations_by_date;
+
+}
+
 export {
   getAllUsers,
   adminLogin,
@@ -239,4 +252,5 @@ export {
   createMovie,
   findMovieByID,
   deleteReview,
+  getGroupedReservations
 };
