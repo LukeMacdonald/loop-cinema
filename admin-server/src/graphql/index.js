@@ -51,6 +51,7 @@ graphql.schema = buildSchema(`
     poster: String
     duration: Int
     genre: String
+    views: Int
     reviews: [Review]
     sessions: [Session]
   }
@@ -69,6 +70,7 @@ graphql.schema = buildSchema(`
     session_id: Int
     session_time: Date
     available_seats: Int
+    movie_id: Int 
   }
 
   type Reservation {
@@ -94,6 +96,11 @@ graphql.schema = buildSchema(`
   input ReviewInput{
     review_id: Int
   }
+  input SessionInput {
+    movie_id: Int
+    session_time: Date
+    available_seats: Int
+  }
 
   type Query {
     all_users: [User],
@@ -107,6 +114,7 @@ graphql.schema = buildSchema(`
     update_movie(input: MovieInput): Movie,
     manage_user(input: UserInput): User,
     remove_review(input: ReviewInput): Review
+    create_session(input: SessionInput): Session
   }
 
 `)
@@ -165,8 +173,7 @@ graphql.root = {
 
     },
     update_movie: async (args) => {
-      const { input } = args;
-      console.log(input)
+      const { input } = args; 
       const { movie_id, ...updates } = input;
       try {
         const movie = await db.movie.findByPk(movie_id);
@@ -176,7 +183,6 @@ graphql.root = {
 
         // Update movie attributes
         Object.assign(movie, updates);
-
         await movie.save();
         return movie;
       } catch (err) {
@@ -212,7 +218,20 @@ graphql.root = {
         } catch (err) {
           throw new Error('An error occurred while updating the review.');
         }
-    }
+
+      },
+      create_session: async (args) => {
+        console.log("Hello")
+        const { input } = args;
+        console.log(input)
+        try {
+          const session = await db.session.create(input);
+          return session;
+        } catch (err) {
+          throw new Error('An error occurred while creating the session.');
+        }
+      },
+
 
 }
 module.exports = graphql;
