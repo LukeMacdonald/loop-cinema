@@ -1,8 +1,10 @@
 import { removeUser } from "../../data/repository";
 import { useNavigate } from "react-router-dom";
-function DeleteAccountButton({ username, logoutUser }) {
+import { useAuth } from "../../AuthContext";
+function DeleteAccountButton({ username }) {
   // Function to handle user account deletion
   const navigate = useNavigate();
+  const { dispatch } = useAuth();
   
   const handleDelete = async () => {
     const confirmation = window.confirm('Are you sure you want to delete your account?');
@@ -10,7 +12,7 @@ function DeleteAccountButton({ username, logoutUser }) {
       try {
         await removeUser(username); // Assuming removeUser takes the user ID as a parameter
         window.alert("User Deleted!");
-        logoutUser();
+        dispatch({ type: 'LOGOUT' });
         navigate("/");
       } catch (error) {
         console.error("Error deleting user account:", error);

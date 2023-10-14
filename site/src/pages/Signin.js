@@ -27,17 +27,24 @@ function Signin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await userLogin({ username: fields.username, password: fields.password });
-    if (response.message === "Login successful") {
-      window.alert(response.message);
-      dispatch({ type: 'LOGIN', payload: fields.username }); // Dispatch a LOGIN action to update the context state.
-      navigate(`/profile/details/${response.user.username}`);
+  
+    try {
+      const response = await userLogin({ username: fields.username, password: fields.password });
+  
+      if (response.message === "Login successful") {
+        window.alert(response.message);
+        dispatch({ type: 'LOGIN', payload: fields.username }); // Dispatch a LOGIN action to update the context state.
+        navigate(`/profile/details/${response.user.username}`);
+      }
+  
+      const temp = { ...fields };
+      temp.password = "";
+      setFields(temp);
+      setErrorMessage(response.message);
+    } catch (error) { 
+      // Handle the error, for example, show an error message to the user
+      setErrorMessage(error.response.data.error); 
     }
-
-    const temp = { ...fields };
-    temp.password = "";
-    setFields(temp);
-    setErrorMessage(response.message);
   };
 
   return (

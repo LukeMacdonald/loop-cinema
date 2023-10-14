@@ -21,7 +21,7 @@ async function findUserByEmail(email) {
 
 async function getUserProfile(username) {
   const response = await api.get(`/user/profile/${username}`);
-  return response.data;
+  return response.data.user;
 }
 
 async function removeUser(userID) {
@@ -29,8 +29,7 @@ async function removeUser(userID) {
   return response.data;
 }
 
-async function userLogin(login) {
-  console.log(login)
+async function userLogin(login) { 
   const response = await api.post("/user/login", login);
   return response.data;
 }

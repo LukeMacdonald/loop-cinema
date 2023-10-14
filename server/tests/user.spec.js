@@ -16,6 +16,7 @@ describe('User Controller', () => {
     await sequelize.sync({ force: true }); // Sync the database and force recreation
   });
 
+  // Sign Up Unit Tests
   describe('POST /user', () => {
     it('should create a new user', async () => {
       const user = {
@@ -146,6 +147,7 @@ describe('User Controller', () => {
     });
   })
   
+  // Sign In Unit Tests
   describe('POST /user/login', () => {
     it('should successfuly log user in', async () => {
       const data = {
@@ -201,6 +203,7 @@ describe('User Controller', () => {
     });
   });
   
+  // Profile Management Unit Tests
   describe('PUT /user', () => {
     it('should update a users email', async () => {
       const data = {
@@ -265,7 +268,7 @@ describe('User Controller', () => {
     });
 
   });
-  
+
   describe('DELETE /user/:username', () => {
     const username = 'testuser';
     it('should delete user by username', async () => {

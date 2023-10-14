@@ -31,29 +31,34 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
     const verified = verifySignUp(
       fields.email,
       fields.password,
       fields.confirmPassword
     );
 
-    if (verified === "success") {
-      await createUser({
-        username: fields.username,
-        password: fields.password,
-        name: fields.name,
-        email: fields.email,
-      });
-      window.alert("Account created successfully!");
-      dispatch({ type: 'LOGIN', payload: fields.email }); // Dispatch a LOGIN action to update the context state.
-      navigate(`/profile/details/${fields.username}`);
-      setErrorMessage(null);
-    } else {
-      const temp = { ...fields };
-      temp.password = "";
-      temp.confirmPassword = "";
-      setFields(temp);
-      setErrorMessage(verified);
+    try {
+      if (verified === "success") {
+        const response = await createUser({
+          username: fields.username,
+          password: fields.password,
+          name: fields.name,
+          email: fields.email,
+        });
+        window.alert("Account created successfully!");
+        dispatch({ type: 'LOGIN', payload: response.username });
+        navigate(`/profile/details/${response.username}`);
+        setErrorMessage(null);
+      } else {
+        const temp = { ...fields };
+        temp.password = "";
+        temp.confirmPassword = "";
+        setFields(temp);
+        setErrorMessage(verified);
+      }
+    } catch (error) {
+      setErrorMessage(error.response.data.error); 
     }
   };
   return (

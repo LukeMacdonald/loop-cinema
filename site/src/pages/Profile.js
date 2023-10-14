@@ -30,7 +30,7 @@ function Profile(props) {
      <div className="col-md-7" style={{  margin: '2% auto' }}>
         <ProfileHeader user={user} setModalShow={setModalShow} />
         <ProfileInfo user={user} />
-        <DeleteAccountButton username={user.username} logoutUser={props.logoutUser} />
+        <DeleteAccountButton username={username}/>
         <EditProfileModal show={modalShow} onHide={() => setModalShow(false)} user={user} setUser={setUser} />
       </div>
   </div>
