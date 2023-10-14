@@ -21,10 +21,29 @@ exports.createReview = async (req, res) => {
       const { rating, comment, username, movie_id } = req.body;
   
       // Input validation
-      if (!rating || !comment || !username || !movie_id) {
+      if (!username || !movie_id) {
+        
         return res.status(400).json({ error: 'Invalid input data.' });
       }
-  
+
+      if (comment.length <= 0 || comment.length > 600){
+        
+        return res.status(400).json({ error: 'Invalid comment length' });
+      }
+      if (rating < 1 || rating > 5){
+        return res.status(400).json({ error: 'Invalid rating value' });
+      }
+
+      existingUser = await db.user.findByPk(username)
+      if (!existingUser){
+        return res.status(400).json({ error: 'User doesnt exist.' });
+      }
+
+      existingMovie = await db.movie.findByPk(movie_id)
+      if (!existingMovie){
+        return res.status(400).json({ error: 'Movie doesnt exist.' });
+      }
+
       const review = await db.review.create({
         rating,
         comment,

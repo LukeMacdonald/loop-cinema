@@ -10,12 +10,11 @@ const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: ':memory:', // Use in-memory database
 });
+before(async () => {
+  await sequelize.sync({ force: true }); // Sync the database and force recreation
+});
 
 describe('User Controller', () => {
-  before(async () => {
-    await sequelize.sync({ force: true }); // Sync the database and force recreation
-  });
-
   // Sign Up Unit Tests
   describe('POST /user', () => {
     it('should create a new user', async () => {
@@ -292,13 +291,127 @@ describe('User Controller', () => {
       expect(res.body.error).to.equal('User not found.');
     });
   });
+});
+
+describe('Review Controller', () => {
+  before(async () =>{
+    
+    const user = {
+      username: 'testuser',
+      email: 'test@example.com',
+      password: 'testpassword',
+      name: 'Test User'
+    };
+
+    await chai.request(app).post('/user').send(user);
+
+    const movie = {
+      title: "Barbie",
+      description: "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+      director: "Greta Gerwig",
+      release_date: "2023-07-02",
+      poster: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQaoW2gxmJFDPtqfC9pGL6Rdist9nH9ntMLV7XR1FXpaQj1VrGT",
+      duration: 114,
+      genre: "Comedy"
+    }
+    await chai.request(app).post('/movies').send(movie);
   
-  after(async () => {
-    await sequelize.close(); // Close the database connection after all tests
-    // Send a POST request to the /terminate endpoint to shut down the app
-    await chai.request(app).post('/terminate');
-    console.log('Tests completed and app terminated.');
+  });
+
+  // Sign Up Unit Tests
+  describe('POST /reviews', () => {
+    it('should return 400 if movie doesnt exist', async () => {
+      const review = {
+        movie_id: 2,
+        username: "testuser",
+        comment: 'This is a great movie',
+        rating: 1
+      };
+
+      const res = await chai.request(app).post('/reviews').send(review);
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('object');
+      expect(res.body.error).to.equal("Movie doesnt exist.");
+
+    });
+    
+    it('should return 400 if user doesnt exist', async () => {
+      const review = {
+        movie_id: 1,
+        username: "testuse",
+        comment: 'This is a great movie',
+        rating: 1
+      };
+
+      const res = await chai.request(app).post('/reviews').send(review);
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('object');
+      expect(res.body.error).to.equal("User doesnt exist.");
+    });
+    
+    it('should return 400 if rating less than 1', async () => {
+      const review = {
+        movie_id: 1,
+        username: "testuser",
+        comment: 'This is a great movie',
+        rating: 0
+      };
+
+      const res = await chai.request(app).post('/reviews').send(review);
+
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('object');
+      expect(res.body.error).to.equal("Invalid rating value");
+    });
+    
+    it('should return 400 if comment is empty', async () => {
+      const review = {
+        movie_id: 1,
+        username: "testuse",
+        comment: '',
+        rating: 1
+      };
+      
+      const res = await chai.request(app).post('/reviews').send(review);
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('object');
+      expect(res.body.error).to.equal("Invalid comment length");
+    });
+    it('should return 400 if comment is to large', async () => {
+
+      const large_comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae dolor nec urna vestibulum cursus."
+        + "Nullam nec fringilla eros. Quisque auctor quam in tincidunt tempor. Nullam in arcu vel quam fringilla efficitur. Sed eu diam"
+        + "vel arcu tincidunt auctor. Proin in diam ut ex ultricies fermentum. Ut nec malesuada metus. Nunc consequat ex id justo fringilla," 
+        + "in commodo purus scelerisque. Donec dapibus interdum urna, in semper nunc placerat nec. Aenean eget nisi sit amet mi facilisis"
+        + "fermentum nec nec mauris. Integer euismod dapibus sem, id sollicitudin nisi tristique a. Vestibulum ante ipsum primis in faucibus"
+        + "orci luctus et ultrices posuere cubilia Curae; Ut ac justo non lacus euismod sollicitudin. Sed non enim ut elit malesuada fringilla"
+        + "at et libero. Maecenas vehicula, dui et lacinia suscipit, odio ante suscipit libero, et mollis mauris turpis nec lectus. Vestibulum"
+        + "vel sem eu mi fermentum commodo. Vestibulum tempus, eros a vehicula pharetra, odio mauris vehicula tellus, sit amet cursus sem nisi"
+        + "vel nunc. Integer ut neque vitae tortor vulputate aliquet in a erat. Cras non elit in ligula cursus lacinia nec id tellus. Fusce nec"
+        + "libero id nunc dignissim dictum. Duis et velit id mi vestibulum dapibus. Suspendisse potenti. Nunc hendrerit fringilla purus nec auctor."
+      
+      const review = {
+        movie_id: 1,
+        username: "testuse",
+        comment: large_comment,
+        rating: 1
+      };
+      
+      const res = await chai.request(app).post('/reviews').send(review);
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('object');
+      expect(res.body.error).to.equal("Invalid comment length");
+    });
   });
 });
+
+after(async () => {
+  await sequelize.close(); // Close the database connection after all tests
+  // Send a POST request to the /terminate endpoint to shut down the app
+  await chai.request(app).post('/terminate');
+  console.log('Tests completed and app terminated.');
+});
+
+
 
 
