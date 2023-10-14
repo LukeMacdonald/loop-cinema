@@ -88,11 +88,9 @@ function verifyReview(username, comment, rating, movie_id) {
     rating: rating,
     movie_id: movie_id
   };
-  console.log(response.review)
 
   return response
 }
-
 
 export {
   verifyEditProfile,

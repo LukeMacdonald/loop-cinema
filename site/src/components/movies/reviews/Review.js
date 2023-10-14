@@ -30,9 +30,9 @@ function Review(props) {
       {review.removed ? (
         <>
          <td colSpan={2}>
-          <strong>[This review has been deleted by the admin]</strong>
+          <div dangerouslySetInnerHTML={{ __html: review.comment  }} />
         </td>
-        <td colSpan={2}>
+        <td colSpan={2} style={{textAlign:'left'}}>
           {review.createdAt.split("T")[0]}
         </td>
         </>
@@ -42,14 +42,14 @@ function Review(props) {
           <td>
             <Rating name="read-only" value={review.rating} readOnly />
           </td>
-          <td>
+          <td style={{textAlign:'left'}}>
             {review.comment}
             <br />
             {username === review.username && <span className="review-email"> - {review.username}</span>}
           </td>
-          <td>{review.updatedAt.split("T")[0]}</td>
+          <td style={{textAlign:'left'}}>{review.updatedAt.split("T")[0]}</td>
           {username === review.username && (
-            <td style={{ textAlign: "center" }}>
+            <td style={{ textAlign: "left" }}>
               <button className="btn btn-secondary" style={{ margin: "0 0.5rem" }} onClick={() => handleOpenModal(index)}>
                 <i className="fa fa-pen-square" />
               </button>

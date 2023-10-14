@@ -20,7 +20,7 @@ function Review(props) {
         return (
             <tr key={index}>
                 <td colSpan={4} style={{ textAlign: "center" }}>
-                    <strong>[This review has been deleted by the admin]</strong>
+                    <div dangerouslySetInnerHTML={{ __html: review.comment  }} />
                 </td>
             </tr>
         );
@@ -31,7 +31,7 @@ function Review(props) {
             <td>
                 <Rating name="read-only" value={review.rating} readOnly />
             </td>
-            <td>
+            <td style={{textAlign:'left'}}>
                 {review.comment}
                 <br />
                 <span className="review-email"> - {review.username}</span>

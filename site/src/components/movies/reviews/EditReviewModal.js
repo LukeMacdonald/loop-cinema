@@ -9,6 +9,7 @@ function EditReviewModal(props) {
   // State to manage rating and comment
   const [rating, setRating] = useState(review.rating);
   const [comment, setComment] = useState(review.comment);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // Handler for comment change
   const handleCommentChange = (event) => {
@@ -23,16 +24,27 @@ function EditReviewModal(props) {
   // Handler for form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Edit the review with new comment and rating
-    await updateReview({
-        review_id: review.review_id,
+  
+
+    if ((comment.trim() !== "")) {
+      // Update the review and show a success message
+       // Edit the review with new comment and rating
+       await updateReview({
+        review_id: review.review_id, 
         movie_id: review.movie_id,
         comment: comment,
         rating: rating
-    });
+      });
+      window.alert("Review edited successfully!");
+      props.onHide(); // Hide the modal
+    } else {
+      // Reset the comment and rating, and show the error message
+      setComment("");
+      setRating(1);
+      setErrorMessage("Comment cannot be empty!");
+    }
+    
 
-    window.alert("Review edited successfully!");
-    props.onHide(); // Hide the modal
   };
 
   return (
@@ -62,6 +74,11 @@ function EditReviewModal(props) {
             onChange={handleCommentChange}
             maxLength={250}
           />
+          {errorMessage && (
+              <div className="form-group" style={{ marginTop: '1rem' }}>
+                <span className="text-danger">{errorMessage}</span>
+              </div>
+            )}
         </form>
       </Modal.Body>
       <Modal.Footer style={{margin:'0 auto'}}>

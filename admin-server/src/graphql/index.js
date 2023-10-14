@@ -206,6 +206,7 @@ graphql.root = {
             throw new Error('Review not found');
           }
           review.removed = true;
+          review.comment = "<strong>[This review has been deleted by the admin]</strong>"
           await review.save();
           return review;
         } catch (err) {
