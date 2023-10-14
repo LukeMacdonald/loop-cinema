@@ -3,7 +3,7 @@ import addressData from '../../data/data.json'
 
 function BusinessInfoCard() {
   return (
-    <div className="card" style={{ width: '100%' }} bg={'light'}>
+    <div className="card" style={{ width: '100%', backgroundColor:'#393E46', color:'white'  }}>
       <div className="card-body">
         <h5 className="card-title mb-2" style={{ fontSize: '1.5rem',fontWeight:'bold' }}>About Loop Cinema</h5>
         <h5 className="card-subtitle mb-2" style={{paddingTop:'1rem'}}>Locations:</h5>

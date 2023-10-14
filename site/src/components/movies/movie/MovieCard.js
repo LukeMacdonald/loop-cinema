@@ -24,8 +24,12 @@ function MovieCard(props) {
           </div>
           <div className="col-md-9">
             <MovieDetails movie={movie} />
-            <ReviewButton onClick={handleReview} />
-            <SessionButton onClick={() => setModalShow(true)} />
+            <div style={{marginLeft:'1rem'}}>
+              <ReviewButton onClick={handleReview} />
+              <SessionButton onClick={() => setModalShow(true)} />
+
+            </div>
+            
             <SessionTimes movieID={movie.movie_id} show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </div>

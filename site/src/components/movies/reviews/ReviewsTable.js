@@ -4,7 +4,7 @@ function ReviewsTable({ reviews }) {
     const { state } = useAuth();
     const username = state.username;
     return (
-      <div style={{backgroundColor:'white', padding:'1rem', borderRadius:'10px'}}>
+      <div style={{backgroundColor:'white', padding:'1rem', borderRadius:'10px', margin:'1rem'}}>
         <table className="table table-borderless" >
         <thead>
           <tr>
@@ -15,7 +15,6 @@ function ReviewsTable({ reviews }) {
           </tr>
         </thead>
         <tbody>
-          {/* Map through reviews and display each using Review component */}
           {reviews.map((review, index) => (
             <Review
               key={index}

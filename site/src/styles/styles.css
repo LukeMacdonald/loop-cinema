@@ -22,15 +22,26 @@
   border-color: var(--primary-color);
   color: white;
 }
-
+.nav-button{
+  color: #f9f9f9;
+  font-weight: 600;
+}
+.nav-button:hover{
+  color: #00ADB5;
+}
 /* Navbar Styles */
-.nav-button, .custom-nav-link {
+.custom-nav-link {
   text-decoration: none;
   color: var(--primary-color);
+}
+.nav-button{
   text-align: center;
 }
+.custom-nav-link{
+  border-radius: 5px 0 0 5px;
+}
 
-.nav-button:hover, .custom-nav-link:hover {
+.custom-nav-link:hover {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: white;
@@ -56,10 +67,13 @@
 
 /* Movie Card Styles */
 .movie-card {
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--text-color);
   margin: 1% 0;
 }
 
 .movie-card-button {
+
   margin-right: 2%;
   width: 10rem;
 }
@@ -88,7 +102,7 @@
 
 .review-section {
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
   text-align: center;
 }
 
@@ -163,6 +177,18 @@
 }
 
 .movie-active {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: white;
+}
+.movie-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 15px; /* Optional: Add margin bottom for spacing */
+}
+
+.movie-col-2 {
+  flex: 0 0 auto;
+  margin-right: 15px; /* Optional: Add margin between movie items */
+  font-size: 1.25rem;
 }

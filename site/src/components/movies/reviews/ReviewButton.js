@@ -1,6 +1,6 @@
 function ReviewButton({ onClick }) {
     return (
-      <button className="btn btn-outline-dark btn-sm movie-card-button" onClick={onClick}>
+      <button className="btn btn-secondary btn-sm movie-card-button" onClick={onClick}>
         Tickets & Reviews
       </button>
     );

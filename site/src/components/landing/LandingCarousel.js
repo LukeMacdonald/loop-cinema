@@ -4,7 +4,7 @@ import RatingImage from '../../assets/images/rating.jpg'
 import Carousel from 'react-bootstrap/Carousel';
 function LandingCarousel() {
     return (
-        <div style={{ display: 'block', padding: '30px 0 30px 0', width:'100%', left:'0',top:'1.5rem',position:'absolute'}}>
+        <div style={{ display: 'block', padding: '30px 0 30px 0', width:'100%', left:'0',top:'4rem',position:'absolute'}}>
             <Carousel controls={false} indicators={false} style={{borderRadius:'10%'}} fade>
                 <Carousel.Item interval={3000}>
                     <img

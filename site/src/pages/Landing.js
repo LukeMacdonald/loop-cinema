@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getAllMovies } from "../data/repository";
-import MovieCard from "../components/movies/movie/MovieCard";
-import BusinessInfoCard from "../components/landing/BusinessInfoCard";
-import EventInfoCard from "../components/landing/EventInfoCard";
+import EventInfoCard from "../components/landing/EventInfoCard"
+import BusinessInfoCard from "../components/landing/BusinessInfoCard"
 
 function Landing(props) {
   const [movies, setMovies] = useState([]); // State to hold movies
-  
+
   useEffect(() => {
     async function fetchMovies() {
       const cinemaMovies = await getAllMovies();
@@ -18,27 +17,30 @@ function Landing(props) {
 
   return (
     <div>
-      {/* <LandingCarousel /> */}
-      <div className="row">
-        <div className="col-lg-8">
-          <div className="row">
-            <div className="col">
-              <h3>Movies Showing</h3>
-            </div>
-            <div className="col" style={{ textAlign: "right", marginRight: "2rem" }}>
-              <button className="btn btn-secondary" style={{ width: "100px" }}>Sort</button>
-            </div>
+      <div>
+        
+      </div>
+      <h4>Now Showing</h4>
+      <div className="movie-container">
+        {movies.map((movie, index) => (
+          <div className="col-2 movie-col-2" key={movie.movie_id}>
+            <a href={`/movie/details/${encodeURIComponent(movie.movie_id)}`}>
+              <img src={movie.poster} style={{width:'95%',borderRadius:'15px' }} alt="" />
+            </a>
+            <p style={{margin:'0.5rem 1rem'}}>{movie.title}</p>
           </div>
-          <hr className="solid" />
-          {movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
-          ))}
-        </div>
-        <div className="col-lg-4">
-        <BusinessInfoCard />
+        ))}
+      </div>
+      <div className="row" style={{marginBottom:'2rem'}}>
+        <div className="col-lg-7">
           <EventInfoCard/>
         </div>
+        <div className="col-lg-5" style={{paddingRight:'2rem'}}>
+          <BusinessInfoCard /> 
+        </div>
       </div>
+      
+  
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-
 import MoviePoster from "./MoviePoster";
 import MovieDetails from "./MovieDetails"
 import ReviewButton from "./ReviewButton";
 import SessionButton from "./SessionButton";
 import SessionTimes from '../../sessions/SessionTimes'
-import '../../../assets/styles/styles.css'
-// Refactored MovieCard component
+
+
 function MovieCard(props) {
     const movie = props.movie;
     const navigate = useNavigate();

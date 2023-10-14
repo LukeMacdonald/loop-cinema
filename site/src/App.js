@@ -21,7 +21,7 @@ function App() {
         <Router>
           <Header />
           <main role="main" className="main">
-            <div className="container my-3">
+            <div className="" style={{marginLeft:'2rem'}}>
               <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/signup" element={<Signup />} />

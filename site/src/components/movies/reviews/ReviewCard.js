@@ -84,16 +84,21 @@ function ReviewCard(props) {
 
             {/* Textarea for comment */}
             <textarea
-              rows={6}
-              cols={70}
-              name="comment"
-              placeholder={"Add your feedback"}
-              value={comment}
-              onChange={handleCommentChange}
-              maxLength={600}
-              required={true}
-              style={{padding:'1rem', borderRadius:'10px', marginTop:'1rem'}}
-            />
+    rows={10}
+    cols={60}
+    name="comment"
+    placeholder={"Add your feedback"}
+    value={comment}
+    onChange={handleCommentChange}
+    maxLength={600}
+    required={true}
+    style={{
+        width: '90%',  // Set the width to 100% of its parent container
+        padding: '1rem',
+        borderRadius: '10px',
+        marginTop: '1rem'
+    }}
+/>
 
             {/* Submit button and error message */}
             <div className="form-group">
@@ -112,7 +117,7 @@ function ReviewCard(props) {
     content = <div><a href='/signin'>Sign in to leave a review</a></div>;
   }
 
-  return <div>{content}</div>;
+  return <div style={{width:'100%'}}>{content}</div>;
 }
 
 export default ReviewCard;

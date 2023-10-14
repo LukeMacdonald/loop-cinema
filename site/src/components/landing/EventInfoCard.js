@@ -3,7 +3,7 @@ import eventData from '../../data/data.json'
 
 function EventInfoCard() {
   return (
-    <div className="card" style={{ width: '100%', marginTop:'1rem' }} bg={'light'}>
+    <div className="card" style={{ width: '100%', backgroundColor:'#393E46', color:'white' }}>
       <div className="card-body">
         <h3 className="card-title mb-2" style={{ fontSize: '1.5rem',fontWeight:'bold', paddingBottom:'1rem' }}>Upcoming Community Events</h3>
         <div>
