@@ -52,8 +52,15 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) =>  {
   const username = req.body.username;
+  const trimmedName = req.body.name ? req.body.name.trim() : null;
+  const trimmedEmail = req.body.email ? req.body.email.trim() : null;
 
   try {
+    // Validate request fields
+    if (!trimmedName && !trimmedEmail) {
+      return res.status(400).json({ error: 'At least one field (name or email) is required.' });
+    }
+
     const user = await db.user.findByPk(username);
 
     if (!user) {
@@ -61,8 +68,26 @@ exports.updateUser = async (req, res) =>  {
     }
 
     // Update profile fields.
-    user.name = req.body.name;
-    user.email = req.body.email;
+    if (trimmedName) {
+      user.name = trimmedName;
+    }
+
+    if (trimmedEmail) {
+      if (!validateEmail(trimmedEmail)){
+        return res.status(400).json({ error: 'Invalid email format.' });
+      }
+
+      // Check if the email already exists in the database
+      const checkEmail = await db.user.findOne({
+        where: { email: trimmedEmail },
+      });
+
+      if (checkEmail){
+        return res.status(400).json({ error: 'Email already exists.' });
+      }
+
+      user.email = trimmedEmail;
+    }
 
     await user.save();
 
