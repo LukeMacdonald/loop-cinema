@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { findMovieByID, getSessionDetails, createReservation } from '../../../data/repository';
 import {formatFullDate} from '../../../utils/dates';
+import {useAuth} from "../../../AuthContext"
 
 function Reservation() {
     const { movieID, sessionID } = useParams();
@@ -10,6 +11,10 @@ function Reservation() {
     const [fields, setFields] = useState({
         seats: 0,
     });
+
+    const { state } = useAuth();
+
+    const isLoggedIn = state.isLoggedIn
 
     const navigate = useNavigate(); // Get the navigate function from React Router
 
@@ -29,11 +34,7 @@ function Reservation() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(fields.seats);
-        console.log(sessionID);
-        console.log(localStorage.getItem("user"));
-        
+        e.preventDefault(); 
         try {
             await createReservation(session, localStorage.getItem("user"), fields.seats);
             // If the reservation is successful, navigate to a new page (for example, a confirmation page)
@@ -53,6 +54,7 @@ function Reservation() {
             <p>Session ID: {session.session_id}</p>
             <p>Session Time: {formatFullDate(session.session_time)}</p>
             <p>Available Seats: {session.available_seats}</p>
+            {isLoggedIn ? (
 
             <form onSubmit={handleSubmit}>
                 <label>
@@ -68,6 +70,9 @@ function Reservation() {
                 </label>
                 <button type="submit" disabled={isReserveButtonDisabled}>Reserve</button>
             </form>
+            ) : (
+                <div><a href='/signin'>Sign in to leave a book reservation</a></div>
+              )}
         </div>
     );
 }

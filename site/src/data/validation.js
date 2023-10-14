@@ -51,6 +51,7 @@ function verifySignUp(email, password, confirmPassword) {
 
 // Function to verify edit profile information
 function verifyEditProfile(email, name, oldEmail) {
+ 
   const response = {
     message: "Edit Profile Successful!",
     success:true
@@ -61,8 +62,8 @@ function verifyEditProfile(email, name, oldEmail) {
     response.success = false
     return response;
   }
-  if (name === "") {
-    response.message = "Email is Invalid!"
+  if (name.trim() === "") {
+    response.message = "Name cannot be blank"
     response.success = false
     return response;
   }

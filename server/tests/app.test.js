@@ -1,18 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const Sequelize = require('sequelize');
 const app = require('../server'); // Import your Express app
 
 chai.use(chaiHttp);
 const expect = chai.expect;
-
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: ':memory:', // Use in-memory database
-});
-before(async () => {
-  await sequelize.sync({ force: true }); // Sync the database and force recreation
-});
 
 describe('User Controller', () => {
   // Sign Up Unit Tests
@@ -406,10 +397,7 @@ describe('Review Controller', () => {
 });
 
 after(async () => {
-  await sequelize.close(); // Close the database connection after all tests
-  // Send a POST request to the /terminate endpoint to shut down the app
   await chai.request(app).post('/terminate');
-  console.log('Tests completed and app terminated.');
 });
 
 

@@ -82,7 +82,7 @@ exports.updateUser = async (req, res) =>  {
         where: { email: trimmedEmail },
       });
 
-      if (checkEmail){
+      if (checkEmail && trimmedEmail !== user.email){
         return res.status(400).json({ error: 'Email already exists.' });
       }
 

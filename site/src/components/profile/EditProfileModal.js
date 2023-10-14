@@ -36,25 +36,32 @@ function EditProfileModal(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const verification = verifyEditProfile(fields.email,fields.name, user.email);
-
-    // Add email validation here if needed
-    if (!verification.success) {
-      setErrorMessage(verification.message);
-      return;
+  
+    try {
+      const verification = verifyEditProfile(fields.email, fields.name, user.email);
+  
+      // Add email validation here if needed
+      if (!verification.success) {
+        setErrorMessage(verification.message);
+        return;
+      }
+  
+      const editedUser = await updateUserProfile({
+        username: user.username,
+        email: fields.email,
+        name: fields.name,
+      });
+      
+      props.setUser(editedUser);
+      window.alert(verification.message);
+      props.onHide();
+      setErrorMessage(null);
+    } catch (error) {
+      console.error("Error occurred:", error);
+      setErrorMessage(error.response.data.error);
+      // Handle the error, show a user-friendly message, or log it for debugging
+      // You can also set an error message state to display to the user
     }
-
-    const editedUser = await updateUserProfile({
-      username: user.username,
-      email: fields.email,
-      name: fields.name,
-    });
-    props.setUser(editedUser)
-
-    window.alert(verification.message);
-    props.onHide();
-    setErrorMessage(null);
   };
 
   return (
