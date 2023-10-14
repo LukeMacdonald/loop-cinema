@@ -65,6 +65,7 @@ graphql.schema = buildSchema(`
     updatedAt: Date
     createdAt: Date
     removed: Boolean
+    movie_id: Int 
 
   }
 
@@ -83,7 +84,11 @@ graphql.schema = buildSchema(`
   type ReservationCount {
     createdAt: Date
     totalReservations: Int
-}
+  }
+  type MovieReviewCount {
+    title: String
+    totalReviews: Int
+  }
 
   input UserInput {
     username: String
@@ -115,6 +120,7 @@ graphql.schema = buildSchema(`
     movie(movie_id:Int):Movie
     login(username: String, password: String): User
     reservations_by_date: [ReservationCount]
+    movies_review_counts: [MovieReviewCount]
   }
 
   type Mutation {
@@ -189,6 +195,31 @@ graphql.root = {
         return formattedReservations;
       } catch (err) {
         throw new Error('An error occurred while fetching total reservations by date.');
+      }
+    },
+    movies_review_counts: async () => {
+      try {
+
+        const moviesWithReviewCounts = await db.movie.findAll({
+          attributes: ['title'],
+          include: [
+            {
+              model: db.review,
+              attributes: [[Sequelize.fn('COUNT', Sequelize.col('review_id')), 'totalReviews']],
+            },
+          ],
+        });
+        console.log(moviesWithReviewCounts)
+  
+        // Map the output to match the MovieReviewCount type
+        const formattedMovies = moviesWithReviewCounts.map(movie => ({
+          title: movie.dataValues.title,
+          totalReviews: movie.dataValues.reviews[0].dataValues.totalReviews,
+        }));
+  
+        return formattedMovies;
+      } catch (err) {
+        throw new Error('An error occurred while fetching movies with review counts.');
       }
     },
     login: async (args) => {

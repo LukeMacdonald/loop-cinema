@@ -188,7 +188,24 @@ async function getMovieSessions(movie_id) {
   const variables = { movie_id };
   const data = await request(GRAPH_QL_URL, query, variables);
   return data.movie.sessions;
+}
 
+async function getMovieReviews(movie_id) {
+  const query = gql`
+    query ($movie_id: Int) {
+      movie(movie_id: $movie_id) {
+        movie_id
+        reviews {
+          review_id
+          comment
+        }
+      }
+    }
+  `;
+
+  const variables = { movie_id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.movie.reviews;
 }
 async function createSession(sessionData){
   const mutation = gql`
@@ -239,6 +256,28 @@ async function getGroupedReservations(){
   return data.reservations_by_date;
 
 }
+async function getMoviesWithTotalReviews() {
+  const query = gql`
+    {
+      all_movies {
+        title
+        movie_id
+      }
+    }
+  `;
+
+  const moviesData = await request(GRAPH_QL_URL, query);
+  const result = [];
+
+  // Using for...of loop for sequential async operations
+  for (const movie of moviesData.all_movies) {
+    const reviews = await getMovieReviews(movie.movie_id);
+    const count = reviews.length;
+    result.push({ "title": movie.title, "count": count });
+  }
+
+  return result;
+}
 
 export {
   getAllUsers,
@@ -252,5 +291,6 @@ export {
   createMovie,
   findMovieByID,
   deleteReview,
-  getGroupedReservations
+  getGroupedReservations,
+  getMoviesWithTotalReviews
 };
