@@ -32,6 +32,11 @@ module.exports = (db, DataTypes) =>
     genre: {
         type: DataTypes.STRING(40),
         allowNull: false
+    },
+    views:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   },
   {

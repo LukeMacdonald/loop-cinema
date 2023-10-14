@@ -56,6 +56,12 @@ async function getMovieSessions(movieID) {
   return response.data;
 }
 
+async function incrementMovieViews(movieID){
+  const response = await api.put(`/movies/views/${movieID}`);
+  return response.data;
+
+}
+
 async function getSessionDetails(sessionID){
   const response = await api.get(`/sessions/session/${sessionID}`);
   return response.data;
@@ -115,6 +121,7 @@ export {
   userLogin,
   getAllMovies,
   getMovieSessions,
+  incrementMovieViews,
   findMovieByID,
   getMovieReviews,
   createReview,
