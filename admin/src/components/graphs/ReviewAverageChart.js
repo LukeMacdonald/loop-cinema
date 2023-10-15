@@ -7,6 +7,14 @@ const ReviewsAverageChart = ({ data }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+    
+    if (data.length === 0) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.font = '20px Arial';
+      ctx.fillText('No data available', 10, 50);
+      return;
+    }
+
     const titles = data.map(item => item.title);
     const averages = data.map(item => item.average);
 
@@ -33,7 +41,7 @@ const ReviewsAverageChart = ({ data }) => {
         plugins: {
           legend: {
             display: true,
-            position: 'bottom', // Display legend to the right of the chart
+            position: 'bottom',
           },
         },
       },
@@ -47,11 +55,12 @@ const ReviewsAverageChart = ({ data }) => {
       }
     };
   }, [data]);
+
   return (
-    <div className="col-md-6">
+    <div className="col-md-5" style={{ marginLeft:'3rem'}}>
         <div style={{ marginTop: '3rem', width:'80%' }}>
-            <h3>Average Reviews Count of Movies</h3>
-            <canvas ref={chartRef} />;
+            <h5 style={{ marginBottm: '3rem' }}>Distribution of Reviews</h5>
+            <canvas ref={chartRef} width={400} height={200} />
         </div>
     </div>
   )

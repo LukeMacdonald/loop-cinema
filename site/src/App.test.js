@@ -5,6 +5,7 @@ import Signin from "./pages/Signin";
 import EditProfileModal from './components/profile/EditProfileModal'
 import Profile from "./pages/Profile";
 import DeleteAccountButton from './components/profile/DeleteProfileButton'
+import ReviewCard from './components/movies/reviews/ReviewCard'
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { userLogin, removeUser, createUser, getUserProfile} from "./data/repository";
 
@@ -170,9 +171,6 @@ describe('DeleteAccountButton Component', () => {
   test('handles account deletion on button click', async () => {
     const username = 'testuser';
 
-    // Mock the dispatch function from useAuth
-    const dispatch = jest.fn();
-
     // Mock the removeUser function to resolve successfully
     removeUser.mockResolvedValueOnce();
     
@@ -198,9 +196,3 @@ describe('DeleteAccountButton Component', () => {
     });
   });
 });
-
-describe("Add Review", () =>{})
-
-
-
-

@@ -21,14 +21,14 @@
 }
 
 .login-form-container{
-    width:70%; 
+    width:80%; 
     margin-top:8rem;
 } 
 
 .login-button-style {
   width: 90%;
   height: 50px;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   border-radius: 30px;
 }

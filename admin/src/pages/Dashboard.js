@@ -56,12 +56,34 @@ function Dashboard() {
       <div className="row">
         <Sidebar />
         <div className="col-md-9 col-sm-8" style={{ margin: '2rem 0' }}>
-          <ReservationChart data={reservations_total} />
-          <div className="row">
-            <ViewsChart data={movie_views} />
-            <ReviewsAverageChart data={reviews_average} />
+        <div style={{marginLeft:'2rem'}}>
+          <h1 style={{fontWeight:'bold'}}>Loop Cinema Analytics</h1>
+            <h2 style={{marginTop:'3rem'}}>Analytics of Customer Reservations</h2>
+            <hr/>
           </div>
-          <ReviewsChart data={movie_reviews}/>
+          <ReservationChart data={reservations_total} />
+          <div style={{marginLeft:'2rem'}}>
+            <h2>Analytics of Movie Reviews</h2>
+            <hr/>
+          </div>
+          
+          <div className="row" style={{marginLeft:'1rem'}}>
+            <ReviewsChart data={movie_reviews}/>
+            <ReviewsAverageChart data={reviews_average} />
+            
+          </div>
+          <div style={{marginLeft:'2rem'}}>
+            <h2>Analytics of Movie Page Visits</h2>
+            <hr/>
+          </div>
+          <div className="row" style={{marginLeft:'1rem'}}>
+            <ViewsChart data={movie_views} />
+          </div>
+          <div style={{marginLeft:'2rem'}}>
+            <h2>Analytics of Movie Ratings</h2>
+            <hr/>
+          </div>
+          
           <RatingsChart data={movie_ratings} />      
         </div>
       </div>

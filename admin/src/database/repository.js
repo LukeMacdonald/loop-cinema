@@ -197,7 +197,8 @@ async function getMovieReviews(movie_id) {
       movie(movie_id: $movie_id) {
         movie_id
         reviews {
-          review_id 
+          review_id
+          removed 
         }
       }
     }
@@ -215,6 +216,7 @@ async function getMovieReviewsWithRating(movie_id) {
         movie_id
         reviews { 
           rating
+          removed
         }
       }
     }
@@ -290,8 +292,13 @@ async function getMoviesWithTotalReviews() {
   // Using for...of loop for sequential async operations
   for (const movie of moviesData.all_movies) {
     const reviews = await getMovieReviews(movie.movie_id);
-    const count = reviews.length;
-    result.push({ "title": movie.title, "count": count });
+    const filteredReviews = reviews.filter(review => !review.removed);
+    const count = filteredReviews.length;
+    if (count > 0){
+      result.push({ "title": movie.title, "count": count });
+
+    }
+    
   }
   return result;
 }
@@ -313,9 +320,13 @@ async function getMoviesWithAverageReviews() {
   // Using for...of loop for sequential async operations
   for (const movie of moviesData.all_movies) {
     const reviews = await getMovieReviews(movie.movie_id);
-    totalCount += reviews.length;
-    const count = reviews.length;
-    result.push({ "title": movie.title, "count": count });
+    const filteredReviews = reviews.filter(review => !review.removed);
+    totalCount += filteredReviews.length;
+    const count = filteredReviews.length;
+    if (count > 0){
+      result.push({ "title": movie.title, "count": count });
+    }
+    
   }
 
   // Calculate average reviews count for each movie
@@ -338,17 +349,20 @@ async function getMoviesWithRating() {
 
   const moviesData = await request(GRAPH_QL_URL, query);
   const result = [];
-
-  // Using for...of loop for sequential async operations
+ 
   for (const movie of moviesData.all_movies) {
     const reviews = await getMovieReviewsWithRating(movie.movie_id);
+    const filteredReviews = reviews.filter(review => !review.removed);
     let totalRating = 0;
-    for (const review of reviews) {
-      totalRating += review.rating;
+    for (const review of filteredReviews) { 
+        totalRating += review.rating;
     }
-    const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
-    result.push({ "title": movie.title, "rating": averageRating });
-  }
+    if (filteredReviews.length > 0){
+      const averageRating = filteredReviews.length > 0 ? totalRating / filteredReviews.length : 0;
+      result.push({ "title": movie.title, "rating": averageRating });
+    }
+    
+}
 
   return result;
 }

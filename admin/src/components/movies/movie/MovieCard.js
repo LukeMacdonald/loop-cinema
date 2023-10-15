@@ -34,7 +34,7 @@ function MovieCard(props) {
               Edit
               </button>
             <SessionButton onClick={() => setModalShow(true)} />
-            <SessionTimes movieID={movie.movie_id} show={modalShow} onHide={() => setModalShow(false)} />
+            <SessionTimes movie_id={movie.movie_id} show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </div>
       </div>

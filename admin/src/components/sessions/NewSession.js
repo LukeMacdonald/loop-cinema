@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { createSession } from '../../database/repository';
 
 function NewSession(props) {
+  const movie_id = props.movie_id
     const [sessionDetails, setSessionDetails] = useState({
         date: '',
         availableSeats: 10, // Default value set to 10
@@ -19,7 +20,8 @@ function NewSession(props) {
       // Call the API function to create a new session
       await createSession({
         session_time: sessionDetails.date,
-        movie_id: props.movieID,
+        movie_id: movie_id,
+
         available_seats: sessionDetails.availableSeats
       });
 
@@ -38,7 +40,6 @@ function NewSession(props) {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-    
           <Form.Group controlId="datetime">
             <Form.Label>Date</Form.Label>
             <Form.Control
@@ -49,7 +50,7 @@ function NewSession(props) {
               required
             />
           </Form.Group>
-          <Form.Group controlId="availableSeats">
+          <Form.Group controlId="availableSeats" style={{marginTop:'1rem'}}>
             <Form.Label>Available Seats</Form.Label>
             <Form.Control
               type="number"
@@ -60,17 +61,20 @@ function NewSession(props) {
               required
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Create Session
-        </Button>
+          <div style={{textAlign:'center', margin:'1rem'}}>
+            <Button variant="primary" type="submit" style={{width:'33%'}}>
+              Create Session
+            </Button>
+          </div>
+          
          
         </Form>
       </Modal.Body>
       
-      <Modal.Footer>
+      {/* <Modal.Footer>
       
         <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
+      </Modal.Footer> */}
     </Modal>
   );
 }

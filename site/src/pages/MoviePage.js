@@ -11,10 +11,7 @@ function MoviePage() {
     const { movie, sessions } = useMovie(movieID);
     const groupedSessions = groupSessionsByDate(sessions);
     const location = useLocation();
-    const navigate = useNavigate(); 
-    
-    
-    
+    const navigate = useNavigate();  
     return (
     <>
     <div className='row'>

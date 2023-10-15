@@ -7,6 +7,12 @@ const ViewsChart = ({ data }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+    if (data.length === 0) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.font = '20px Arial';
+      ctx.fillText('No data available', 10, 50);
+      return;
+    }
     const titles = data.map(item => item.title);
     const views = data.map(item => item.views);
 
@@ -49,10 +55,10 @@ const ViewsChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="col-md-6">
-        <div style={{ marginTop: '3rem', width:'80%' }}>
-            <h3>Total View Count of Movies</h3>
-            <canvas ref={chartRef} />;
+    <div className="col-md-5" style={{ marginLeft:'1rem'}}>
+        <div style={{ marginTop: '1rem', width:'80%' }}>
+          <h5 style={{ marginBottom: '1rem' }}>Total View Count of Movies</h5>
+          <canvas ref={chartRef} />;
         </div>
     </div>
   )

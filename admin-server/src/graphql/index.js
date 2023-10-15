@@ -226,7 +226,7 @@ graphql.root = {
         } catch (err) {
           throw new Error('An error occurred while logging in.');
         }
-      },
+    },
     // Mutations
     create_movie: async (args) => {
       const { input } = args;
@@ -270,33 +270,31 @@ graphql.root = {
           throw new Error('An error occurred while updating the user.');
         }
       },
-      remove_review: async (args) => {
-        const { review_id } = args.input;
-        try {
-          const review = await db.review.findByPk(review_id);
-          if (!review) {
-            throw new Error('Review not found');
-          }
-          review.removed = true;
-          review.comment = "<strong>[This review has been deleted by the admin]</strong>"
-          await review.save();
-          return review;
-        } catch (err) {
-          throw new Error('An error occurred while updating the review.');
+    remove_review: async (args) => {
+      const { review_id } = args.input;
+      try {
+        const review = await db.review.findByPk(review_id);
+        if (!review) {
+          throw new Error('Review not found');
         }
+        review.removed = true;
+        review.comment = "<strong>[This review has been deleted by the admin]</strong>"
+        await review.save();
+        return review;
+      } catch (err) {
+        throw new Error('An error occurred while updating the review.');
+      }
 
-      },
-      create_session: async (args) => {
-        console.log("Hello")
-        const { input } = args;
-        console.log(input)
-        try {
-          const session = await db.session.create(input);
-          return session;
-        } catch (err) {
-          throw new Error('An error occurred while creating the session.');
-        }
-      },
+    },
+    create_session: async (args) => {
+      const { input } = args;
+      try {
+        const session = await db.session.create(input);
+        return session;
+      } catch (err) {
+        throw new Error('An error occurred while creating the session.');
+      }
+    },
 
 
 }

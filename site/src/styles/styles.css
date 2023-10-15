@@ -7,6 +7,10 @@
   --text-color: white;
 }
 
+.footer-content{
+  margin-top: 2rem;
+
+}
 /* Common Styles */
 .button {
   width: 8rem;

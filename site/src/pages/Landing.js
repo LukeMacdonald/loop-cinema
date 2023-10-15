@@ -23,9 +23,8 @@ function Landing(props) {
   };
 
   return (
-    <div>
-      <div></div>
-      <h4>Now Showing</h4>
+    <div> 
+      <h4 style={{margin:'2rem 0 1rem 0'}}>Now Showing</h4>
       <div className="movie-container">
         {movies.map((movie, index) => (
           <div className="col-2 movie-col-2" key={movie.movie_id}>

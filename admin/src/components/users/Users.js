@@ -27,7 +27,7 @@ function Users() {
             <h1>Users</h1>
             <hr/>
             {users.map((user, index) => (
-                <UserCard user={user} toggleBlock={toggleBlock}></UserCard>
+                <UserCard key={index} user={user} toggleBlock={toggleBlock}></UserCard>
             ))}
         </div>
     );

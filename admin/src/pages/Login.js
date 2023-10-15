@@ -62,7 +62,7 @@ const Login = () => {
               <div style={{textAlign:'center'}}>
               <h1 style={{fontSize:'3rem', fontWeight:'bold'}}>Admin Portal</h1>
               </div>
-                  <div className='mt-5'>
+                  <div className='mt-4'>
                     <FormInput
                       label="Username"
                       name="username"
@@ -74,7 +74,7 @@ const Login = () => {
                       required={true}
                     />
                   </div>
-                  <div className="mt-5">
+                  <div className="mt-4">
                     <FormInput
                       label="Password"
                       name="password"
@@ -86,7 +86,7 @@ const Login = () => {
                       required={true}
                     />
                   </div>
-                  <div className="text-center mt-5">
+                  <div className="text-center mt-3">
                   {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                     <Button
                       variant="primary"

@@ -7,6 +7,12 @@ const ReviewsChart = ({ data }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+    if (data.length === 0) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.font = '20px Arial';
+      ctx.fillText('No data available', 10, 50);
+      return;
+    }
     const titles = data.map(item => item.title);
     const reviews = data.map(item => item.count);
 
@@ -30,7 +36,7 @@ const ReviewsChart = ({ data }) => {
         plugins: {
           legend: {
             display: true,
-            position: 'right', // Display legend to the right of the chart
+            position: 'top', // Display legend to the right of the chart
           },
         },
       },
@@ -46,9 +52,11 @@ const ReviewsChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
-      <h3>Total Reviews Per Movie</h3>  
+    <div className="col-md-6">
+    <div style={{ marginTop: '3rem', marginLeft:'2rem'}}>
+      <h5>Total Reviews Per Movie</h5>  
       <canvas ref={chartRef} />;
+    </div>
     </div>
     )
 };

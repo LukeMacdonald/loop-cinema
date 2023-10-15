@@ -7,14 +7,15 @@ import NewSession from './NewSession';
 function SessionTimes(props) {
   const [showings, setSessions] = useState([]);
   const [showNewSessionModal, setShowNewSessionModal] = useState(false);
+  const movie_id = props.movie_id
 
   useEffect(() => {
     async function fetchMovies() {
-      const sessions = await getMovieSessions(props.movieID);
+      const sessions = await getMovieSessions(movie_id);
       setSessions(sessions); // Update movies state with the fetched data
     }
     fetchMovies(); // Call the async function to fetch movies
-  }, [props.movieID]); // Empty dependency array to run the effect once
+  }, [movie_id, showNewSessionModal]); // Empty dependency array to run the effect once
 
   return (
     <>
@@ -56,14 +57,14 @@ function SessionTimes(props) {
           </Button>
           <Button onClick={props.onHide}>Close</Button>
         </Modal.Footer>
-        <NewSession show={showNewSessionModal} onHide={() => setShowNewSessionModal(false)} movieID={props.movieID} />
+        <NewSession show={showNewSessionModal} onHide={() => setShowNewSessionModal(false)} movieID={movie_id} />
       </Modal>
       )}
 
       <NewSession
         show={showNewSessionModal}
         onHide={() => setShowNewSessionModal(false)}
-        movieID={props.movieID}
+        movie_id={movie_id}
       />
     </>
   );

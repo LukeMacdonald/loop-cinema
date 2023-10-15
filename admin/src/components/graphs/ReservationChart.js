@@ -7,6 +7,14 @@ const ReservationChart = ({ data }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+
+    if (data.length === 0) { 
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.font = '20px Arial';
+      ctx.fillText('No data available', 10, 50);
+      return;
+    }
+
     const dates = data.map(item => item.createdAt);
     const totalReservations = data.map(item => item.totalReservations);
 
@@ -22,22 +30,18 @@ const ReservationChart = ({ data }) => {
           label: 'Total Reservations',
           data: totalReservations,
           borderColor: 'rgba(75, 192, 192, 1)',
-          borderDash: [5, 5], // Dashed line style
-
+          borderDash: [5, 5],
           borderWidth: 3,
-          
         }],
-       
       },
       options: {
         plugins: {
           legend: {
             display: true,
-            position: '', // Display legend to the right of the chart
+            position: '',
           },
         },
       }
-      
     });
 
     setChartInstance(newChartInstance);
@@ -50,11 +54,12 @@ const ReservationChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div style={{width:'90%', marginTop:'3rem', marginLeft:'2rem'}}> 
-      <h3>Total Reservations Booked For Past Week</h3>  
-      <canvas ref={chartRef} />;
+    <div style={{ width: '90%', marginTop: '2rem', marginLeft: '2rem' }}>
+      <h5>Total Reservations Booked For Past Day</h5>
+      <canvas ref={chartRef} width={400} height={200} />
     </div>
-    )
+  );
 };
 
 export default ReservationChart;
+

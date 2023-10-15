@@ -9,7 +9,6 @@ import '../styles/styles.css'
 import MovieNavLinks from '../components/navigation/MovieNavLink';
 
 
-
 function MovieReview() {
   const { movieID } = useParams();
   const { movie, reviews } = useMovie(movieID);
@@ -23,7 +22,11 @@ function MovieReview() {
     <>
     <div className='row'>
       <div className='col-md-4'>
-      <button className='btn btn-secondary' onClick={() => navigate('/')} style={{margin:'1rem 0'}}><i className="fa-solid fa-left-long" style={{marginRight:'1rem'}}></i> Back</button><br/>
+      <button className='btn btn-secondary' onClick={() => navigate('/')} style={{margin:'1rem 0'}}>
+        <i className="fa-solid fa-left-long" style={{marginRight:'1rem'}}></i> 
+        Back
+      </button>
+      <br/>
         <img src={movie.poster} style={{ width: '60%', borderRadius: '20px', marginBottom: '2rem' }} alt="" />
         <MovieDetails movie={movie} />
       </div>

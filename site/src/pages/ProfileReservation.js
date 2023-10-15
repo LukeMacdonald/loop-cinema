@@ -14,7 +14,7 @@ function ProfileReservation () {
      <div className="col-md-7" style={{  margin: '2% auto' }}>
      <h2>Booked Reservations</h2>
         {reservations.map((reservation, index) => (
-          <ReservationCard reservation={reservation}/>
+          <ReservationCard key={index} reservation={reservation}/>
       ))}
       </div>
   </div>

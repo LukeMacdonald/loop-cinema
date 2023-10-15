@@ -75,7 +75,7 @@ function MovieReviews() {
     }
 
     fetchMovies();
-  }, [parsedMovieID]);
+  }, [parsedMovieID, reviews]);
 
   return (
   <div className="container-fluid">

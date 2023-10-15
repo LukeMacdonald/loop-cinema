@@ -10,17 +10,15 @@ function MovieDetails({ movie }) {
       <p className="card-text">
         {movie.duration} mins | {formatDDMMYYYY(movie.release_date)} | {movie.genre}
       </p>
-      <p>
-        <div style={{marginTop:'1rem'}}>
+      <p style={{marginTop:'1rem'}}>
+     
         <Rating
           className="custom-rating"
           size="large"
           value={movie.rating || 0} // Set a default value in case movie.rating is undefined
           precision={0.5}
           readOnly
-        />
-        </div>
-       
+        />       
       </p>
       <p className="card-text">{movie.description}</p>
       <p className="card-text">

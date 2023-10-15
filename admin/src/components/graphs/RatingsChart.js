@@ -7,6 +7,12 @@ const RatingsChart = ({ data }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
+    if (data.length === 0) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.font = '20px Arial';
+      ctx.fillText('No data available', 10, 50);
+      return;
+    }
     const titles = data.map(item => item.title);
     const ratings = data.map(item => item.rating);
     
@@ -46,7 +52,7 @@ const RatingsChart = ({ data }) => {
 
   return (
     <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
-      <h3>Averge Movie Ratings</h3>
+      <h5 style={{ marginBottom: '1rem' }}>Average Movie Ratings</h5>
       <canvas ref={chartRef} />;
     </div>
     )

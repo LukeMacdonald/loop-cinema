@@ -86,15 +86,12 @@ const handleCommentChange = (content, delta, source, editor) => {
                 value={rating}
                 onChange={handleRatingChange}
                 required={true}
+                data-testid="rating"
               />
               <br />
   
-           
+              <ReactQuill className="react-quill" value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
               
-                <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
-              
-  
-          
               <div className="form-group">
                 <input
                   type="submit"
