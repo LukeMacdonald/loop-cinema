@@ -29,22 +29,23 @@ function Review(props) {
     <tr key={index}>
       {review.removed ? (
         <>
-         <td colSpan={2}>
+        <td>
+            <Rating name="read-only" value={review.rating} disabled />
+          </td>
+         <td>
           <div dangerouslySetInnerHTML={{ __html: review.comment  }} />
         </td>
         <td colSpan={2} style={{textAlign:'left'}}>
           {review.createdAt.split("T")[0]}
         </td>
         </>
-       
       ) : (
         <>
           <td>
             <Rating name="read-only" value={review.rating} readOnly />
           </td>
           <td style={{textAlign:'left'}}>
-          <div dangerouslySetInnerHTML={{ __html: review.comment  }} />
-            <br />
+          <div dangerouslySetInnerHTML={{ __html: review.comment  }} /> 
             {username === review.username && <span className="review-email"> - {review.username}</span>}
           </td>
           <td style={{textAlign:'left'}}>{review.updatedAt.split("T")[0]}</td>

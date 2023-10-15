@@ -45,7 +45,7 @@ exports.getMovieByID = async (req, res) => {
       // Filter out the reviews where removed is false
       const filteredReviews = reviews.filter(review => !review.removed);
     
-      // Calculate total rating from filtered reviews
+     
       const totalRating = filteredReviews.reduce((acc, review) => acc + review.rating, 0);
     
       // Calculate average rating only from non-removed reviews
@@ -107,12 +107,6 @@ exports.getAllMovies = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
 exports.updateMovie = async (req, res) => {
   try {
     const movie_id = req.params.movie_id;
@@ -132,7 +126,6 @@ exports.updateMovie = async (req, res) => {
       return res.status(404).json({ error: 'Movie not found.' });
     }
 
-    // Update movie attributes
     movie.title = title;
     movie.description = description;
     movie.director = director;
@@ -160,7 +153,6 @@ exports.updateMovieViews = async (req, res) => {
       return res.status(404).json({ error: 'Movie not found.' });
     }
 
-    // Increment the views property of the movie directly
     movie.views += 1;
     console.log(movie.views)
 

@@ -119,6 +119,7 @@ async function findMovieByID(movie_id) {
           rating
           removed
           updatedAt
+          createdAt
         }
       }
     }
