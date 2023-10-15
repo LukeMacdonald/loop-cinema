@@ -42,8 +42,15 @@ exports.getMovieByID = async (req, res) => {
     });
     // Calculate average rating from reviews
     if (reviews.length > 0) {
-      const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-      const averageRating = totalRating / reviews.length;
+      // Filter out the reviews where removed is false
+      const filteredReviews = reviews.filter(review => !review.removed);
+    
+      // Calculate total rating from filtered reviews
+      const totalRating = filteredReviews.reduce((acc, review) => acc + review.rating, 0);
+    
+      // Calculate average rating only from non-removed reviews
+      const averageRating = totalRating / filteredReviews.length;
+    
       // Assign the average rating to the movie's rating attribute
       movie.dataValues.rating = averageRating;
     } else {
@@ -69,7 +76,7 @@ exports.getAllMovies = async (req, res) => {
   try {
     const movies = await db.movie.findAll();
 
-    // Map over movies and calculate average rating from reviews
+   
     const moviesWithNewAttribute = await Promise.all(movies.map(async (movie) => {
       const reviews = await db.review.findAll({
         where: {
@@ -77,14 +84,18 @@ exports.getAllMovies = async (req, res) => {
         }
       });
 
-      // Calculate average rating from reviews
+  
       if (reviews.length > 0) {
-        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-        const averageRating = totalRating / reviews.length;
-        // Assign the average rating to the movie's rating attribute
+      
+        const filteredReviews = reviews.filter(review => !review.removed);
+      
+        const totalRating = filteredReviews.reduce((acc, review) => acc + review.rating, 0);
+      
+        const averageRating = totalRating / filteredReviews.length;
+      
         movie.dataValues.rating = averageRating;
       } else {
-        // If there are no reviews, set the rating to 0 or any default value you prefer
+        
         movie.dataValues.rating = 0;
       }
 
