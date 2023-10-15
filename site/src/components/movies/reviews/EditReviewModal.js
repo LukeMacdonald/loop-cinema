@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import { Rating } from '@mui/material';
 import { updateReview } from '../../../data/repository'
+import ReactQuill from 'react-quill';
 
 function EditReviewModal(props) {
   const review = props.review
@@ -12,8 +13,11 @@ function EditReviewModal(props) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   // Handler for comment change
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
+  const handleCommentChange = (content, delta, source, editor) => {
+    const text = editor.getText();
+    if (text.length <= 600) {
+      setComment(content); 
+    }
   };
 
   // Handler for rating change
@@ -63,17 +67,10 @@ function EditReviewModal(props) {
             onChange={handleRatingChange}
           />
           <br />
-          {/* Textarea for comment */}
-          <textarea
-            className="edit-review-textarea" // Apply styling through CSS class
-            rows={6}
-            cols={70}
-            name="comment"
-            placeholder="Add your feedback"
-            value={comment}
-            onChange={handleCommentChange}
-            maxLength={250}
-          />
+
+          <div style={{ backgroundColor: 'white', borderRadius:'10px' }}>
+                <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
+          </div>
           {errorMessage && (
               <div className="form-group" style={{ marginTop: '1rem' }}>
                 <span className="text-danger">{errorMessage}</span>

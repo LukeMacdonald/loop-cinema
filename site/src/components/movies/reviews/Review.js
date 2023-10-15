@@ -43,7 +43,7 @@ function Review(props) {
             <Rating name="read-only" value={review.rating} readOnly />
           </td>
           <td style={{textAlign:'left'}}>
-            {review.comment}
+          <div dangerouslySetInnerHTML={{ __html: review.comment  }} />
             <br />
             {username === review.username && <span className="review-email"> - {review.username}</span>}
           </td>

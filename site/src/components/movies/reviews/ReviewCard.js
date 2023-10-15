@@ -3,12 +3,14 @@ import Rating from '@mui/material/Rating';
 import { createReview, getUserProfile,  } from '../../../data/repository';
 import { verifyReview } from '../../../data/validation';
 import { useAuth } from "../../../AuthContext";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 function ReviewCard(props) {
   // State to manage the review rating and comment
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState("");
   const [user, setUser] = useState({})
-  
+   
   const { state } = useAuth();
 
   const username = state.username;
@@ -16,6 +18,14 @@ function ReviewCard(props) {
 
   // State to manage error messages
   const [errorMessage, setErrorMessage] = useState(null);
+
+// Handler for updating the comment state and character count
+const handleCommentChange = (content, delta, source, editor) => {
+  const text = editor.getText();
+  if (text.length <= 600) {
+    setComment(content); 
+  }
+};
 
   useEffect(() => {
     async function fetchUserData() {
@@ -30,11 +40,6 @@ function ReviewCard(props) {
     fetchUserData();
   });
 
-  // Handler for updating the comment state
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
   // Handler for updating the rating state
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
@@ -43,81 +48,75 @@ function ReviewCard(props) {
   // Handler for submitting a review
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(comment)
 
     // Verify the review and get the response
     const response = verifyReview(username, comment, rating, props.movie_id);
 
     if (response.successful) {
+
       // Update the review and show a success message
       await createReview(response.review);
       window.alert("Review successfully posted!");
       window.location.reload();
     } else {
+
       // Reset the comment and rating, and show the error message
       setComment("");
       setRating(1);
       setErrorMessage(response.message);
     }
   };
-
-  let content;
-
-  if (isLoggedIn) {
-    if (user.blocked) {
-      content = <div>User Blocked By Admin</div>;
-    } else {
-      content = (
-        <div>
-          {/* Form to leave a review */}
-          <h4 className="review-header">Leave a Review</h4>
-          <form onSubmit={handleSubmit}>
-            {/* Rating component */}
-            <Rating
-              name="size-large"
-              defaultValue={1}
-              size="large"
-              value={rating}
-              onChange={handleRatingChange}
-              required={true}
-            />
-            <br />
-
-            {/* Textarea for comment */}
-            <textarea
-    rows={10}
-    cols={60}
-    name="comment"
-    placeholder={"Add your feedback"}
-    value={comment}
-    onChange={handleCommentChange}
-    maxLength={600}
-    required={true}
-    style={{
-        width: '90%',  // Set the width to 100% of its parent container
-        padding: '1rem',
-        borderRadius: '10px',
-        marginTop: '1rem'
-    }}
-/>
-
-            {/* Submit button and error message */}
-            <div className="form-group">
-              <input type="submit" className="btn btn-primary" value="Submit" style={{ width: '75%', marginTop: '20px' }} />
-            </div>
-            {errorMessage && (
-              <div className="form-group" style={{ marginTop: '1rem' }}>
-                <span className="text-danger">{errorMessage}</span>
+  return (
+    <div style={{ width: '100%' }}>
+      {isLoggedIn ? (
+        user.blocked ? (
+          <div>User Blocked By Admin</div>
+        ) : (
+          <div>
+          
+            <h4 className="review-header">Leave a Review</h4>
+            <form onSubmit={handleSubmit}>
+       
+              <Rating
+                name="size-large"
+                defaultValue={1}
+                size="large"
+                value={rating}
+                onChange={handleRatingChange}
+                required={true}
+              />
+              <br />
+  
+           
+              <div style={{ backgroundColor: 'white', borderRadius:'10px' }}>
+                <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
               </div>
-            )}
-          </form>
+  
+          
+              <div className="form-group">
+                <input
+                  type="submit"
+                  className="btn btn-primary"
+                  value="Submit"
+                  style={{ width: '75%', marginTop: '20px' }}
+                />
+              </div>
+              {errorMessage && (
+                <div className="form-group" style={{ marginTop: '1rem' }}>
+                  <span className="text-danger">{errorMessage}</span>
+                </div>
+              )}
+            </form>
+          </div>
+        )
+      ) : (
+        <div>
+          <a href="/signin">Sign in to leave a review</a>
         </div>
-      );
-    }
-  } else {
-    content = <div><a href='/signin'>Sign in to leave a review</a></div>;
-  }
-
-  return <div style={{width:'100%'}}>{content}</div>;
+      )}
+    </div>
+  );
 }
 
 export default ReviewCard;
