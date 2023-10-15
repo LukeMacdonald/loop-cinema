@@ -18,24 +18,21 @@ const ViewsChart = ({ data }) => {
 
     if (chartInstance) {
       chartInstance.destroy();
-    }
-
-    const randomColors = Array.from({ length: views.length }, () =>
-      `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`
-    );
+    } 
 
     const newChartInstance = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: titles,
         datasets: [{
+          label: 'Total Visits',
           data: views,
-          backgroundColor: randomColors,
-          borderColor: randomColors.map(color => color.replace('0.2', '1')), // Darker border color
+          backgroundColor: 'rgba(216, 0, 25, 0.5)',
+          borderColor: 'rgba(216, 0, 25, 0.5)',
           borderWidth: 1,
         }]
       },
-      
+    
     });
 
     setChartInstance(newChartInstance);

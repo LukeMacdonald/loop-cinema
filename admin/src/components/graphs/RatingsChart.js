@@ -26,8 +26,8 @@ const RatingsChart = ({ data }) => {
         datasets: [{
           label: 'Average Rating',
           data: ratings,
-          backgroundColor: 'rgba(17, 149, 98, 0.8)',
-          borderColor: 'rgba(17, 149, 98, 0.8)',
+          backgroundColor: 'rgba(17, 149, 98, 0.5)',
+          borderColor: 'rgba(17, 149, 98, 0.5)',
           borderWidth: 1,
         }]
       },
@@ -41,7 +41,7 @@ const RatingsChart = ({ data }) => {
         plugins: {
           legend: {
             display: true,
-            position: 'right', // Display legend to the right of the chart
+            position: 'top', // Display legend to the right of the chart
           },
         },
       },
@@ -57,7 +57,7 @@ const RatingsChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
+    <div style={{width:'60%', marginTop:'3rem', marginLeft:'2rem'}}>
       <h5 style={{ marginBottom: '1rem' }}>Average Movie Ratings</h5>
       <canvas ref={chartRef} />;
     </div>
