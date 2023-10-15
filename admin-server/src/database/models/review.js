@@ -10,7 +10,7 @@ module.exports = (db, DataTypes) =>
         allowNull: false
     },
     comment:{
-        type: DataTypes.STRING(600),
+        type: DataTypes.TEXT, 
         allowNull: false
     },
     removed: {

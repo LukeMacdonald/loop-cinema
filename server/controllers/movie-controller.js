@@ -35,6 +35,25 @@ exports.getMovieByID = async (req, res) => {
     const movie_id = req.params.movie_id;
     const movie = await db.movie.findByPk(movie_id);
 
+    const reviews = await db.review.findAll({
+      where: {
+        movie_id: movie.movie_id
+      }
+    });
+    // Calculate average rating from reviews
+    if (reviews.length > 0) {
+      const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+      const averageRating = totalRating / reviews.length;
+      // Assign the average rating to the movie's rating attribute
+      movie.dataValues.rating = averageRating;
+    } else {
+      // If there are no reviews, set the rating to 0 or any default value you prefer
+      movie.dataValues.rating = 0;
+    }
+
+
+    
+
     if (!movie) {
       return res.status(404).json({ error: 'Movie not found.' });
     }
@@ -49,12 +68,40 @@ exports.getMovieByID = async (req, res) => {
 exports.getAllMovies = async (req, res) => {
   try {
     const movies = await db.movie.findAll();
-    res.json(movies);
+
+    // Map over movies and calculate average rating from reviews
+    const moviesWithNewAttribute = await Promise.all(movies.map(async (movie) => {
+      const reviews = await db.review.findAll({
+        where: {
+          movie_id: movie.movie_id
+        }
+      });
+
+      // Calculate average rating from reviews
+      if (reviews.length > 0) {
+        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = totalRating / reviews.length;
+        // Assign the average rating to the movie's rating attribute
+        movie.dataValues.rating = averageRating;
+      } else {
+        // If there are no reviews, set the rating to 0 or any default value you prefer
+        movie.dataValues.rating = 0;
+      }
+
+      return movie;
+    }));
+    res.json(moviesWithNewAttribute);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: 'An error occurred while fetching all movies.' });
   }
 };
+
+
+
+
+
+
 
 exports.updateMovie = async (req, res) => {
   try {

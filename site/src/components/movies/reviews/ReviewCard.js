@@ -74,6 +74,7 @@ const handleCommentChange = (content, delta, source, editor) => {
           <div>User Blocked By Admin</div>
         ) : (
           <div>
+            <div style={{ backgroundColor: 'white', borderRadius:'10px', padding:'2rem 1rem', width:'80%', margin:'0 auto' }}>
           
             <h4 className="review-header">Leave a Review</h4>
             <form onSubmit={handleSubmit}>
@@ -89,9 +90,9 @@ const handleCommentChange = (content, delta, source, editor) => {
               <br />
   
            
-              <div style={{ backgroundColor: 'white', borderRadius:'10px' }}>
+              
                 <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
-              </div>
+              
   
           
               <div className="form-group">
@@ -99,7 +100,7 @@ const handleCommentChange = (content, delta, source, editor) => {
                   type="submit"
                   className="btn btn-primary"
                   value="Submit"
-                  style={{ width: '75%', marginTop: '20px' }}
+                  style={{ width: '50%', marginTop: '20px' }}
                 />
               </div>
               {errorMessage && (
@@ -108,6 +109,7 @@ const handleCommentChange = (content, delta, source, editor) => {
                 </div>
               )}
             </form>
+            </div>
           </div>
         )
       ) : (

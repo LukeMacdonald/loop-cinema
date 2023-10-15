@@ -53,7 +53,7 @@ function EditReviewModal(props) {
 
   return (
     <Modal {...props} size="lg" centered>
-      <Modal.Header style={{margin:'0 auto'}}>
+      <Modal.Header style={{margin:'0 auto', color:'black'}}>
         <Modal.Title>Edit Review</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{textAlign:'center'}}>
@@ -67,7 +67,6 @@ function EditReviewModal(props) {
             onChange={handleRatingChange}
           />
           <br />
-
           <div style={{ backgroundColor: 'white', borderRadius:'10px' }}>
                 <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
           </div>
