@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../AuthContext"; // Provide the correct path to your AuthContext file
+import { useAuth } from "../../AuthContext"; 
 
 function Header() {
     const navigate = useNavigate();
-    const { state, dispatch } = useAuth(); // Access the state and dispatch function from the AuthContext
+    const { state, dispatch } = useAuth();
 
     // Handler for navigating to the signup page
     const handleSignup = (event) => {

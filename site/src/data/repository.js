@@ -14,11 +14,6 @@ async function createUser(user) {
   return response.data;
 }
 
-async function findUserByEmail(email) {
-  const response = await api.get(`/user/${email}`);
-  return response.data;
-}
-
 async function getUserProfile(username) {
   const response = await api.get(`/user/profile/${username}`);
   return response.data.user;
@@ -114,7 +109,6 @@ async function getReservationDetails(id){
 
 export {
   createUser,
-  findUserByEmail,
   removeUser,
   updateUserProfile,
   getUserProfile,

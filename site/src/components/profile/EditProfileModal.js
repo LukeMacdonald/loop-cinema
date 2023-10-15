@@ -14,7 +14,6 @@ function EditProfileModal(props) {
   });
 
   useEffect(() => {
-    // Update fields state whenever the user prop changes
     setFields({
       name: user.name,
       email: user.email,
@@ -40,7 +39,6 @@ function EditProfileModal(props) {
     try {
       const verification = verifyEditProfile(fields.email, fields.name, user.email);
   
-      // Add email validation here if needed
       if (!verification.success) {
         setErrorMessage(verification.message);
         return;
@@ -59,8 +57,6 @@ function EditProfileModal(props) {
     } catch (error) {
       console.error("Error occurred:", error);
       setErrorMessage(error.response.data.error);
-      // Handle the error, show a user-friendly message, or log it for debugging
-      // You can also set an error message state to display to the user
     }
   };
 

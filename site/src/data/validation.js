@@ -109,7 +109,7 @@ function verifyReview(username, comment, rating, movie_id) {
     response.message = "Comment cannot be greater than 600 characters"
     return response
   }
-  
+
   response.success = true;
 
   response["review"] = {
@@ -121,6 +121,7 @@ function verifyReview(username, comment, rating, movie_id) {
 
   return response
 }
+
 function verifyLogin(username, password){
   const response = {"status":true, "message":"Success"}
   if (username.trim() === ""){

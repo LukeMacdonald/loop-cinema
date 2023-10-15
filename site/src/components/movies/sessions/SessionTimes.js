@@ -6,11 +6,11 @@ import { getDayOfWeek, formatTime, formatDate } from '../../../utils/dates';
 function SessionTimes(props) {
   const [showings, setSessions] = useState([]);
   useEffect(() => {
-    async function fetchMovies() {
+    async function fetchMovieSessions() {
       const sessions = await getMovieSessions(props.movieID);
-      setSessions(sessions); // Update movies state with the fetched data
+      setSessions(sessions); 
     }
-    fetchMovies(); // Call the async function to fetch movies
+    fetchMovieSessions(); // Call the async function to fetch movies
   }, [props.movieID]); // Empty dependency array to run the effect once
 
   return (
