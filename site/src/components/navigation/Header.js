@@ -38,15 +38,15 @@ function Header() {
                     <li className="nav-item">
                         {!state.isLoggedIn && 
                         <button className="btn nav-button" onClick={handleSignin} style={{ marginRight:'2rem', fontSize: '1.25rem' }}>
-                             <i class="fa-solid fa-right-to-bracket" style={{ marginRight:'1rem' }}></i> Log In
+                             <i className="fa-solid fa-right-to-bracket" style={{ marginRight:'1rem' }}></i> Log In
                         </button>}
                         {!state.isLoggedIn && 
                         <button className="btn nav-button" onClick={handleSignup} style={{ marginRight:'2rem',fontSize: '1.25rem' }}>
-                            <i class="fa-solid fa-user-plus" style={{ marginRight:'1rem' }}></i> Sign up 
+                            <i className="fa-solid fa-user-plus" style={{ marginRight:'1rem' }}></i> Sign up 
                         </button>}
                         {state.isLoggedIn && 
                         <button className="btn nav-button" onClick={handleLogout} style={{ marginRight:'2rem',fontSize: '1.25rem' }}>
-                            <i class="fa-solid fa-right-from-bracket" style={{ marginRight:'1rem' }}></i> Log Out
+                            <i className="fa-solid fa-right-from-bracket" style={{ marginRight:'1rem' }}></i> Log Out
                         </button>}
                     </li>
                 </ul>

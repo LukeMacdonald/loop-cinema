@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { userLogin } from "../data/repository";
+import { verifyLogin } from "../data/validation";
 import { useAuth } from '../AuthContext';
 import '../styles/styles.css';
 
@@ -29,18 +30,21 @@ function Signin() {
     event.preventDefault();
   
     try {
-      const response = await userLogin({ username: fields.username, password: fields.password });
-  
-      if (response.message === "Login successful") {
-        window.alert(response.message);
-        dispatch({ type: 'LOGIN', payload: fields.username }); // Dispatch a LOGIN action to update the context state.
-        navigate(`/profile/details/${response.user.username}`);
+      const validation = verifyLogin(fields.username, fields.password)
+      console.log(validation)
+      if (validation.status === true){
+        const response = await userLogin({ username: fields.username, password: fields.password });
+        if (response.message === "Login successful") {
+          window.alert(response.message);
+          dispatch({ type: 'LOGIN', payload: fields.username });
+          navigate(`/profile/details/${response.user.username}`);
+        }
       }
-  
-      const temp = { ...fields };
-      temp.password = "";
-      setFields(temp);
-      setErrorMessage(response.message);
+      console.log(validation)
+        const temp = { ...fields };
+        temp.password = "";
+        setFields(temp);
+        setErrorMessage(validation.message);
     } catch (error) { 
       // Handle the error, for example, show an error message to the user
       setErrorMessage(error.response.data.error); 
@@ -59,7 +63,7 @@ function Signin() {
               value={fields.username}
               onChange={handleInputChange}
               placeholder="Username"
-              required={true}
+              required={false}
           />
           <FormInput
               label="Password"
@@ -69,7 +73,7 @@ function Signin() {
               value={fields.password}
               onChange={handleInputChange}
               placeholder="Password"
-              required={true}
+              required={false}
           />
           <div className="form-group" style={{textAlign:'center'}}>
               <input type="submit" className="btn btn-primary form-input" value="Submit" style={{width:'70%' ,marginTop: '5%'}} />

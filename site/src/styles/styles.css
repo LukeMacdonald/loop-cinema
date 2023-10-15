@@ -112,9 +112,13 @@
 
 /* Authentication Styles */
 .auth-container {
+  background-color: #293a43;
+  border-radius: 20px;
+  padding: 4rem 8rem;
   width: 50%;
-  margin: 10% auto;
+  margin: 2% auto;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow here */
 }
 
 .auth-header {

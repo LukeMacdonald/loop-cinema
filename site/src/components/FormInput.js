@@ -3,6 +3,7 @@ import React from "react";
 const FormInput = ({ label, name, id, type, value, onChange,placeholder,required }) => {
   return (
     <div className="form-group form-input-group"> 
+
       <input
         name={name}
         id={id}
@@ -12,6 +13,7 @@ const FormInput = ({ label, name, id, type, value, onChange,placeholder,required
         onChange={onChange}
         placeholder={placeholder}
         required={required}
+        data-testid={id}
       />
     </div>
   );

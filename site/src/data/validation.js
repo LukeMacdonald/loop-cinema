@@ -34,19 +34,39 @@ function passwordsMatch(password, confirmPassword) {
 }
 
 // Function to verify sign-up information
-function verifySignUp(email, password, confirmPassword) {
-  if (!isValidEmail(email)) {
-    return "Email is Invalid!";
+function verifySignUp(email, password, confirmPassword, name, username) {
+  const response = {success:true, message: "Validation Successful"}
+  
+  if (username.trim() === "") {
+    response.message = "Username cannot be empty"
+    response.success = false
   }
-  if (!isStrongPassword(password)) {
-    return "Password must be at least 8 characters long and contain at least 1 Uppercase & Lowercase Letter," +
-      " 1 Number and 1 Special Character!";
+  else if (email.trim() === ""){
+    response.message = "Email cannot be empty"
+    response.success = false
   }
-  if (!passwordsMatch(password, confirmPassword)) {
-    return "Passwords Must Match!";
+  else if (!isValidEmail(email)) {
+    response.message = "Email is Invalid!";
+    response.success = false
   }
-
-  return "success"; // Validation successful
+  else if (name.trim() === ""){
+    response.message = "Name cannot be empty"
+    response.success = false
+  }
+  else if(password.trim() === ""){
+    response.message = "Password cannot be empty"
+    response.success = false
+  }
+  else if (!isStrongPassword(password)) {
+    response.message =  "Password must be at least 8 characters long and contain at least 1 Uppercase & Lowercase Letter,"
+      + " 1 Number and 1 Special Character!";
+    response.success = false
+  }
+  else if (!passwordsMatch(password, confirmPassword)) {
+    response.message = "Passwords Must Match!";
+    response.success = false
+  }
+  return response; // Validation successful
 }
 
 // Function to verify edit profile information
@@ -92,9 +112,27 @@ function verifyReview(username, comment, rating, movie_id) {
 
   return response
 }
+function verifyLogin(username, password){
+  const response = {"status":true, "message":"Success"}
+  if (username.trim() === ""){
+    response.status = false
+    response.message = "Username cannot be empty"
+    return response
+  }
+  else if (password.trim() === ""){
+    response.status = false
+    response.message = "Password cannot be empty"
+    return response
+  }
+  else {
+    return response
+  }
+}
+
 
 export {
   verifyEditProfile,
   verifySignUp,
-  verifyReview
+  verifyReview,
+  verifyLogin
 };

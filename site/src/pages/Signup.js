@@ -35,11 +35,13 @@ function Signup() {
     const verified = verifySignUp(
       fields.email,
       fields.password,
-      fields.confirmPassword
+      fields.confirmPassword,
+      fields.name,
+      fields.username
     );
 
     try {
-      if (verified === "success") {
+      if (verified.success) {
         const response = await createUser({
           username: fields.username,
           password: fields.password,
@@ -55,7 +57,7 @@ function Signup() {
         temp.password = "";
         temp.confirmPassword = "";
         setFields(temp);
-        setErrorMessage(verified);
+        setErrorMessage(verified.message);
       }
     } catch (error) {
       setErrorMessage(error.response.data.error); 
@@ -73,7 +75,7 @@ function Signup() {
           value={fields.username}
           onChange={handleInputChange}
           placeholder="Username"
-          required={true}
+          required={false}
         />
         <FormInput
           label="Name"
@@ -83,7 +85,7 @@ function Signup() {
           value={fields.name}
           onChange={handleInputChange}
           placeholder="Name"
-          required={true}
+          required={false}
         />
         <FormInput
           label="Email"
@@ -93,7 +95,7 @@ function Signup() {
           value={fields.email}
           onChange={handleInputChange}
           placeholder="Email Address"
-          required={true}
+          required={false}
         />
         <FormInput
           label="Password"
@@ -103,7 +105,7 @@ function Signup() {
           value={fields.password}
           onChange={handleInputChange}
           placeholder="Password"
-          required={true}
+          required={false}
         />
         <FormInput
           label="Confirm Password"
@@ -113,7 +115,7 @@ function Signup() {
           value={fields.confirmPassword}
           onChange={handleInputChange}
           placeholder="Confirm Password"
-          required={true}
+          required={false}
         />
         <div className="form-group auth-form-group">
           <input
@@ -121,11 +123,12 @@ function Signup() {
             className="btn btn-primary form-input"
             value="Submit"
             style={{ width: "70%" }}
+            data-testid="submit-button"
           />
         </div>
         {errorMessage && (
           <div className="form-group" style={{ marginTop: "1rem" }}>
-            <span className="text-danger">{errorMessage}</span>
+            <span className="text-danger" >{errorMessage}</span>
           </div>
         )}
         <div className={"auth-signup-link"}>
