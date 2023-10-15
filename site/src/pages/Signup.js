@@ -40,6 +40,8 @@ function Signup() {
       fields.username
     );
 
+    console.log(verified.message)
+
     try {
       if (verified.success) {
         const response = await createUser({
