@@ -149,6 +149,7 @@ async function createMovie(movieData){
   const data = await request(GRAPH_QL_URL, mutation, variables);
   return data.create_movie;
 }
+
 async function updateMovie(id, movieData) {
   const { reviews, ...updatedMovieData } = movieData;
   const mutation = gql`
@@ -196,8 +197,7 @@ async function getMovieReviews(movie_id) {
       movie(movie_id: $movie_id) {
         movie_id
         reviews {
-          review_id
-          comment
+          review_id 
         }
       }
     }
@@ -207,6 +207,24 @@ async function getMovieReviews(movie_id) {
   const data = await request(GRAPH_QL_URL, query, variables);
   return data.movie.reviews;
 }
+
+async function getMovieReviewsWithRating(movie_id) {
+  const query = gql`
+    query ($movie_id: Int) {
+      movie(movie_id: $movie_id) {
+        movie_id
+        reviews { 
+          rating
+        }
+      }
+    }
+  `;
+
+  const variables = { movie_id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.movie.reviews;
+}
+
 async function createSession(sessionData){
   const mutation = gql`
   mutation CreateSession($input: SessionInput) {
@@ -275,6 +293,32 @@ async function getMoviesWithTotalReviews() {
     const count = reviews.length;
     result.push({ "title": movie.title, "count": count });
   }
+  return result;
+}
+
+async function getMoviesWithRating() {
+  const query = gql`
+    {
+      all_movies {
+        title
+        movie_id
+      }
+    }
+  `;
+
+  const moviesData = await request(GRAPH_QL_URL, query);
+  const result = [];
+
+  // Using for...of loop for sequential async operations
+  for (const movie of moviesData.all_movies) {
+    const reviews = await getMovieReviewsWithRating(movie.movie_id);
+    let totalRating = 0;
+    for (const review of reviews) {
+      totalRating += review.rating;
+    }
+    const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
+    result.push({ "title": movie.title, "rating": averageRating });
+  }
 
   return result;
 }
@@ -292,5 +336,6 @@ export {
   findMovieByID,
   deleteReview,
   getGroupedReservations,
+  getMoviesWithRating,
   getMoviesWithTotalReviews
 };
