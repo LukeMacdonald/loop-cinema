@@ -84,7 +84,6 @@ exports.getAllMovies = async (req, res) => {
         }
       });
 
-  
       if (reviews.length > 0) {
       
         const filteredReviews = reviews.filter(review => !review.removed);
