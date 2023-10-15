@@ -3,8 +3,8 @@ import Rating from "@mui/material/Rating";
 import { createReview, getUserProfile } from "../../../data/repository";
 import { verifyReview } from "../../../data/validation";
 import { useAuth } from "../../../AuthContext";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import CommentEditor from "./CommentEditor";
 
 function ReviewCard(props) {
   const { state } = useAuth();
@@ -82,17 +82,7 @@ function ReviewCard(props) {
                   data-testid="rating"
                 />
                 <br />
-                <ReactQuill
-                  className="react-quill"
-                  value={comment}
-                  onChange={handleCommentChange}
-                  style={{
-                    padding: "1rem",
-                    borderRadius: "10px",
-                    marginTop: "1rem",
-                    color: "black",
-                  }}
-                />
+                <CommentEditor comment={comment} handleCommentChange={handleCommentChange}/>
                 <div className="form-group">
                   <input
                     type="submit"

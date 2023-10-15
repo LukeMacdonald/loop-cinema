@@ -3,9 +3,9 @@ import { Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import { Rating } from '@mui/material';
 import { updateReview } from '../../../data/repository'
-import ReactQuill from 'react-quill';
+import CommentEditor from './CommentEditor';
 
-function EditReviewModal(props) {
+function EditReviewModal(props){
   const review = props.review
   // State to manage rating and comment
   const [rating, setRating] = useState(review.rating);
@@ -31,8 +31,6 @@ function EditReviewModal(props) {
   
 
     if ((comment.trim() !== "")) {
-      // Update the review and show a success message
-       // Edit the review with new comment and rating
        await updateReview({
         review_id: review.review_id, 
         movie_id: review.movie_id,
@@ -40,9 +38,8 @@ function EditReviewModal(props) {
         rating: rating
       });
       window.alert("Review edited successfully!");
-      props.onHide(); // Hide the modal
+      props.onHide();
     } else {
-      // Reset the comment and rating, and show the error message
       setComment("");
       setRating(1);
       setErrorMessage("Comment cannot be empty!");
@@ -58,7 +55,6 @@ function EditReviewModal(props) {
       </Modal.Header>
       <Modal.Body style={{textAlign:'center'}}>
         <form onSubmit={handleSubmit}>
-          {/* Rating input */}
           <Rating
             name="size-large"
             defaultValue={1}
@@ -68,7 +64,7 @@ function EditReviewModal(props) {
           />
           <br />
           <div style={{ backgroundColor: 'white', borderRadius:'10px' }}>
-                <ReactQuill  value={comment} onChange={handleCommentChange} style={{ padding: '1rem',borderRadius: '10px',marginTop: '1rem', color:'black'}} />
+            <CommentEditor comment={comment} handleCommentChange={handleCommentChange}/>
           </div>
           {errorMessage && (
               <div className="form-group" style={{ marginTop: '1rem' }}>
@@ -78,7 +74,6 @@ function EditReviewModal(props) {
         </form>
       </Modal.Body>
       <Modal.Footer style={{margin:'0 auto'}}>
-        {/* Submit and cancel buttons */}
         <Button onClick={handleSubmit} className="edit-review-button">
           Submit
         </Button>
