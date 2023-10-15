@@ -3,18 +3,21 @@ import Sidebar from "../components/Sidebar";
 import { 
   getAllMoviesViews,
   getGroupedReservations, 
+  getMoviesWithAverageReviews, 
   getMoviesWithRating, 
   getMoviesWithTotalReviews } from "../database/repository";
-import MovieViewsChart from "../components/graphs/MovieViewsChart";
+import ViewsChart from "../components/graphs/ViewsChart";
 import ReservationChart from "../components/graphs/ReservationChart";
-import MovieReviewsChart from "../components/graphs/MovieReviewsChart";
-import MovieRatingsChart from "../components/graphs/MovieRatingsChart";
+import ReviewsChart from "../components/graphs/ReviewsChart";
+import RatingsChart from "../components/graphs/RatingsChart";
+import ReviewsAverageChart from "../components/graphs/ReviewAverageChart";
 
 
 function Dashboard() {
   const [movie_views,setMovieViews] = useState([])
   const [reservations_total,setReservations] = useState([])
   const [movie_reviews, setMovieReviews] = useState([])
+  const [reviews_average, setAverageReviews] = useState([])
   const [movie_ratings, setRatings] = useState([])
 
 
@@ -26,7 +29,8 @@ function Dashboard() {
         const reservations = await getGroupedReservations();
         const movies = await getMoviesWithTotalReviews();
         const ratings = await getMoviesWithRating();
-        console.log(ratings)
+        const review_average = await getMoviesWithAverageReviews()
+        console.log(review_average)
        
        
         // Update the state with the fetched data
@@ -34,6 +38,7 @@ function Dashboard() {
         setReservations(reservations)
         setMovieReviews(movies)
         setRatings(ratings)
+        setAverageReviews(review_average)
       } catch (error) {
         // Handle errors if any
         console.error("Error fetching data:", error);
@@ -51,24 +56,13 @@ function Dashboard() {
       <div className="row">
         <Sidebar />
         <div className="col-md-9 col-sm-8" style={{ margin: '2rem 0' }}>
+          <ReservationChart data={reservations_total} />
           <div className="row">
-            <div className="col-md-4">
-            <h3>Total View Count of Movies</h3>  
-            <MovieViewsChart data={movie_views} />
-            </div>
+            <ViewsChart data={movie_views} />
+            <ReviewsAverageChart data={reviews_average} />
           </div>
-          <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
-          <h3>Total Reservations Booked For Past Week</h3>  
-            <ReservationChart data={reservations_total} />
-          </div>   
-          <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
-            <h3>Total Reviews Per Movie</h3>  
-            <MovieReviewsChart data={movie_reviews}/>
-          </div>
-          <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
-            <h3>Total Reservations Booked For Past Week</h3>  
-            <MovieRatingsChart data={movie_ratings} />
-          </div>        
+          <ReviewsChart data={movie_reviews}/>
+          <RatingsChart data={movie_ratings} />      
         </div>
       </div>
     </div>

@@ -167,34 +167,28 @@ graphql.root = {
     },
     reservations_by_date: async () => {
       try {
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() - 7);
-
-        const endDate = new Date();
         const reservations = await db.reservation.findAll({
+          include: [{
+            model: db.session,
+            attributes: ['session_time'],
+          }],
           attributes: [
-            [Sequelize.fn('date', Sequelize.col('createdAt')), 'createdAt'], // Extract date part from createdAt column
-            [Sequelize.fn('count', Sequelize.col('*')), 'totalReservations'], // Count total reservations for each date
+            [Sequelize.fn('date', Sequelize.col('session.session_time')), 'sessionTime'], // Extract date part from session_time column
+            [Sequelize.fn('sum', Sequelize.col('total_seats')), 'totalReservations'], // Sum total_seats for each session_time
           ],
-          group: [Sequelize.fn('date', Sequelize.col('createdAt'))], // Group by the extracted date
-          where: {
-            createdAt: {
-              [Op.gte]: startDate, // Set the start date for your search
-              [Op.lt]: endDate, // Set the end date for your search (exclusive)
-            },
-          },
+          group: [Sequelize.fn('date', Sequelize.col('session.session_time'))], // Group by the extracted session_time
         });
-  
+    
         // Map the output to match the ReservationCount type
         const formattedReservations = reservations.map(reservation => ({
-          createdAt: reservation.dataValues.createdAt, // assuming createdAt is in the correct format
+          createdAt: reservation.dataValues.sessionTime, // assuming sessionTime is in the correct format
           totalReservations: reservation.dataValues.totalReservations,
         }));
-  
-        console.log(formattedReservations);
+    
         return formattedReservations;
-      } catch (err) {
-        throw new Error('An error occurred while fetching total reservations by date.');
+      } catch (error) {
+        console.error(error);
+        throw error;
       }
     },
     movies_review_counts: async () => {

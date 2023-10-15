@@ -1,33 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 
-const MovieViewsChart = ({ data }) => {
+const RatingsChart = ({ data }) => {
   const chartRef = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
     const titles = data.map(item => item.title);
-    const views = data.map(item => item.views);
+    const ratings = data.map(item => item.rating);
     
     if (chartInstance) {
       chartInstance.destroy();
     }
-
-    const randomColors = Array.from({ length: views.length }, () =>
-      `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`
-    );
-
     const newChartInstance = new Chart(ctx, {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: titles,
         datasets: [{
-          data: views,
-          backgroundColor: randomColors,
-          borderColor: randomColors.map(color => color.replace('0.2', '1')), // Darker border color
+          label: 'Average Rating',
+          data: ratings,
+          backgroundColor: 'rgba(17, 149, 98, 0.8)',
+          borderColor: 'rgba(17, 149, 98, 0.8)',
           borderWidth: 1,
         }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'right', // Display legend to the right of the chart
+          },
+        },
       },
     });
 
@@ -40,9 +44,14 @@ const MovieViewsChart = ({ data }) => {
     };
   }, [data]);
 
-  return <canvas ref={chartRef} />;
+  return (
+    <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
+      <h3>Averge Movie Ratings</h3>
+      <canvas ref={chartRef} />;
+    </div>
+    )
 };
 
-export default MovieViewsChart;
+export default RatingsChart;
 
 

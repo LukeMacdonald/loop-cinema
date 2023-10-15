@@ -296,6 +296,36 @@ async function getMoviesWithTotalReviews() {
   return result;
 }
 
+async function getMoviesWithAverageReviews() {
+  const query = gql`
+    {
+      all_movies {
+        title
+        movie_id
+      }
+    }
+  `;
+
+  const moviesData = await request(GRAPH_QL_URL, query);
+  const result = [];
+  let totalCount = 0;
+
+  // Using for...of loop for sequential async operations
+  for (const movie of moviesData.all_movies) {
+    const reviews = await getMovieReviews(movie.movie_id);
+    totalCount += reviews.length;
+    const count = reviews.length;
+    result.push({ "title": movie.title, "count": count });
+  }
+
+  // Calculate average reviews count for each movie
+  for (const movie of result) {
+    movie.average = movie.count / totalCount;
+  }
+
+  return result;
+}
+
 async function getMoviesWithRating() {
   const query = gql`
     {
@@ -337,5 +367,6 @@ export {
   deleteReview,
   getGroupedReservations,
   getMoviesWithRating,
-  getMoviesWithTotalReviews
+  getMoviesWithTotalReviews,
+  getMoviesWithAverageReviews
 };

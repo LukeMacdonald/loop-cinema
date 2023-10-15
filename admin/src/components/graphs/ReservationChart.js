@@ -15,17 +15,29 @@ const ReservationChart = ({ data }) => {
     }
 
     const newChartInstance = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: dates,
         datasets: [{
           label: 'Total Reservations',
           data: totalReservations,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-        }]
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderDash: [5, 5], // Dashed line style
+
+          borderWidth: 3,
+          
+        }],
+       
       },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: '', // Display legend to the right of the chart
+          },
+        },
+      }
+      
     });
 
     setChartInstance(newChartInstance);
@@ -37,7 +49,12 @@ const ReservationChart = ({ data }) => {
     };
   }, [data]);
 
-  return <canvas ref={chartRef} />;
+  return (
+    <div style={{width:'90%', marginTop:'3rem', marginLeft:'2rem'}}> 
+      <h3>Total Reservations Booked For Past Week</h3>  
+      <canvas ref={chartRef} />;
+    </div>
+    )
 };
 
 export default ReservationChart;

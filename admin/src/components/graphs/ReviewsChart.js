@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 
-const MovieReviewsChart = ({ data }) => {
+const ReviewsChart = ({ data }) => {
   const chartRef = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
 
@@ -26,6 +26,14 @@ const MovieReviewsChart = ({ data }) => {
           borderWidth: 1,
         }]
       },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'right', // Display legend to the right of the chart
+          },
+        },
+      },
     });
 
     setChartInstance(newChartInstance);
@@ -37,7 +45,12 @@ const MovieReviewsChart = ({ data }) => {
     };
   }, [data]);
 
-  return <canvas ref={chartRef}/>;
+  return (
+    <div style={{width:'70%', marginTop:'3rem', marginLeft:'2rem'}}>
+      <h3>Total Reviews Per Movie</h3>  
+      <canvas ref={chartRef} />;
+    </div>
+    )
 };
 
-export default MovieReviewsChart;
+export default ReviewsChart;
