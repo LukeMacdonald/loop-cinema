@@ -25,7 +25,7 @@ const ViewsChart = ({ data }) => {
     );
 
     const newChartInstance = new Chart(ctx, {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: titles,
         datasets: [{
@@ -35,14 +35,7 @@ const ViewsChart = ({ data }) => {
           borderWidth: 1,
         }]
       },
-      options: {
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom', // Display legend to the right of the chart
-          },
-        },
-      },
+      
     });
 
     setChartInstance(newChartInstance);
@@ -55,10 +48,10 @@ const ViewsChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="col-md-5" style={{ marginLeft:'1rem'}}>
-        <div style={{ marginTop: '1rem', width:'80%' }}>
+    <div className="col-md-6" style={{ marginLeft:'1rem'}}>
+        <div style={{ marginTop: '1rem', width:'100%' }}>
           <h5 style={{ marginBottom: '1rem' }}>Total View Count of Movies</h5>
-          <canvas ref={chartRef} />;
+          <canvas ref={chartRef} />
         </div>
     </div>
   )

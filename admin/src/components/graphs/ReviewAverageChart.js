@@ -16,13 +16,13 @@ const ReviewsAverageChart = ({ data }) => {
     }
 
     const titles = data.map(item => item.title);
-    const averages = data.map(item => item.average);
+    const percentages = data.map(item => (item.average * 100).toFixed(2)); // Convert to percentages with 2 decimal places
 
     if (chartInstance) {
       chartInstance.destroy();
     }
 
-    const randomColors = Array.from({ length: averages.length }, () =>
+    const randomColors = Array.from({ length: percentages.length }, () =>
       `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`
     );
 
@@ -31,9 +31,9 @@ const ReviewsAverageChart = ({ data }) => {
       data: {
         labels: titles,
         datasets: [{
-          data: averages,
+          data: percentages,
           backgroundColor: randomColors,
-          borderColor: randomColors.map(color => color.replace('0.2', '1')), // Darker border color
+          borderColor: randomColors.map(color => color.replace('0.2', '1')), 
           borderWidth: 1,
         }]
       },
@@ -44,6 +44,13 @@ const ReviewsAverageChart = ({ data }) => {
             position: 'bottom',
           },
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]}%`;
+            }
+          }
+        }
       },
     });
 
@@ -57,13 +64,14 @@ const ReviewsAverageChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="col-md-5" style={{ marginLeft:'3rem'}}>
-        <div style={{ marginTop: '3rem', width:'80%' }}>
-            <h5 style={{ marginBottm: '3rem' }}>Distribution of Reviews</h5>
-            <canvas ref={chartRef} width={400} height={200} />
-        </div>
+    <div className="col-md-5" style={{ marginLeft: '3rem' }}>
+      <div style={{ marginTop: '3rem', width: '80%' }}>
+        <h5 style={{ marginBottom: '3rem' }}>Distribution of Reviews (%)</h5>
+        <canvas ref={chartRef} width={400} height={200} />
+      </div>
     </div>
   )
 };
 
 export default ReviewsAverageChart;
+

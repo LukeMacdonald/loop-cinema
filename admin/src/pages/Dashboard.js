@@ -11,6 +11,7 @@ import ReservationChart from "../components/graphs/ReservationChart";
 import ReviewsChart from "../components/graphs/ReviewsChart";
 import RatingsChart from "../components/graphs/RatingsChart";
 import ReviewsAverageChart from "../components/graphs/ReviewAverageChart";
+import ViewsChartPie from "../components/graphs/ViewsChartPie";
 
 
 function Dashboard() {
@@ -78,6 +79,7 @@ function Dashboard() {
           </div>
           <div className="row" style={{marginLeft:'1rem'}}>
             <ViewsChart data={movie_views} />
+            <ViewsChartPie data={movie_views}/>
           </div>
           <div style={{marginLeft:'2rem'}}>
             <h2>Analytics of Movie Ratings</h2>

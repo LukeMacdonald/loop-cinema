@@ -32,6 +32,12 @@ const RatingsChart = ({ data }) => {
         }]
       },
       options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 5
+          }
+        },
         plugins: {
           legend: {
             display: true,
