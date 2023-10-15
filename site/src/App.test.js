@@ -5,9 +5,9 @@ import Signin from "./pages/Signin";
 import EditProfileModal from './components/profile/EditProfileModal'
 import Profile from "./pages/Profile";
 import DeleteAccountButton from './components/profile/DeleteProfileButton'
-import ReviewCard from './components/movies/reviews/ReviewCard'
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { userLogin, removeUser, createUser, getUserProfile} from "./data/repository";
+import { verifyReview } from './data/validation';
 
 
 // Mock the react-router-dom useNavigate hook and AuthContext
@@ -40,7 +40,8 @@ jest.mock("./data/repository", () => ({
   getUserProfile: jest.fn(),
 }));
 
-describe('Signup Component', () => {
+// Unit Tests for Signing up to Account
+describe('Signup Unit Test', () => {
   test('renders Signup component', async () => {
     render(<Signup />);
     const usernameInput = screen.getByTestId("username");
@@ -85,7 +86,8 @@ describe('Signup Component', () => {
   });
 });
 
-describe("Signin Component", () => {
+// Unit Tests for Signing into Account
+describe("Signin Unit Test", () => {
   test("form input changes", async () => {
     render(<Signin />);
     const usernameInput = screen.getByTestId("username");
@@ -113,18 +115,16 @@ describe("Signin Component", () => {
   })
 });
 
-describe('Profile Component', () => {
+describe('Get Profile Details Unit Test', () => {
   it('fetches and displays user profile data', async () => {
     const mockUser = {
       username: 'testuser',
       name: 'John Doe',
       email: 'testuser@example.com',
-      // ...other user properties
     };
 
     getUserProfile.mockResolvedValueOnce(mockUser);
 
-    // Render the component with a route parameter
     render(
       <MemoryRouter initialEntries={['/profile/testuser']}>
         <Routes>
@@ -133,7 +133,6 @@ describe('Profile Component', () => {
       </MemoryRouter>
     );
 
-    // Wait for the profile data to be fetched and displayed
     await waitFor(() => {
       expect(getUserProfile).toHaveBeenCalledWith('testuser');
       expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -143,14 +142,15 @@ describe('Profile Component', () => {
   });
 });
 
-describe("EditProfileModal Component", () => {
+// Unit Tests for Editing Profile
+describe("Edit Account Unit Test", () => {
   const user = {
     username: "testuser",
     name: "John Doe",
     email: "testuser@gmail.com"
   };
 
-  test("renders EditProfileModal component", () => {
+  test("should check all edit profile validations", () => {
     render(<EditProfileModal show={true} user={user} onHide={jest.fn()} setUser={jest.fn()} />);
     expect(screen.getByText("Edit Profile")).toBeInTheDocument();
     const nameInput = screen.getByTestId("name");
@@ -167,8 +167,9 @@ describe("EditProfileModal Component", () => {
   });
 });
 
-describe('DeleteAccountButton Component', () => {
-  test('handles account deletion on button click', async () => {
+// Unit Tests for Deleting Profile
+describe('Delete Account Unit Tests', () => {
+  test('should handle pressing delete account button and successfully deletes user', async () => {
     const username = 'testuser';
 
     // Mock the removeUser function to resolve successfully
@@ -192,7 +193,50 @@ describe('DeleteAccountButton Component', () => {
     await waitFor(() => {
 
       // Check if alert message appears
+      // This indicates if user was deleted
       expect(window.alert).toHaveBeenCalledWith('User Deleted!');
+    });
+  });
+});
+
+// Unit Tests For Creating a Review
+// The Review verification function was used to test the functionality of
+// creating a review
+describe('Review Unit Tests', () => {
+  test('should return error message if rating is less than 1', () => {
+    const response = verifyReview('testuser', 'Good movie!', 0, 123);
+    expect(response.success).toBe(false);
+    expect(response.message).toBe('Rating must be between 1 to 5');
+  });
+
+  test('should return error message if rating is greater than 5', () => {
+    const response = verifyReview('testuser', 'Good movie!', 6, 123);
+    expect(response.success).toBe(false);
+    expect(response.message).toBe('Rating must be between 1 to 5');
+  });
+
+  test('should return error message if comment is blank', () => {
+    const response = verifyReview('testuser', '', 4, 123);
+    expect(response.success).toBe(false);
+    expect(response.message).toBe('Comment cannot be blank!');
+  });
+
+  test('should return error message if comment is greater than 600 characters', () => {
+    const longComment = 'a'.repeat(601);
+    const response = verifyReview('testuser', longComment, 4, 123);
+    expect(response.success).toBe(false);
+    expect(response.message).toBe('Comment cannot be greater than 600 characters');
+  });
+
+  test('should return a valid review object if inputs are valid', () => {
+    const response = verifyReview('testuser', 'Good movie!', 4, 123);
+    expect(response.success).toBe(true);
+    expect(response.message).toBe('Review Verified');
+    expect(response.review).toEqual({
+      username: 'testuser',
+      comment: 'Good movie!',
+      rating: 4,
+      movie_id: 123
     });
   });
 });

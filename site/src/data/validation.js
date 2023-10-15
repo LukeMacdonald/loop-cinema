@@ -92,16 +92,25 @@ function verifyEditProfile(email, name, oldEmail) {
 
 // Function to verify and prepare a review for submission
 function verifyReview(username, comment, rating, movie_id) {
+  
   const response = {
-    "message": "",
-    "successful": false
+    "message": "Review Verified",
+    "success": false
   };
-
+  if (rating < 1 || rating > 5){
+    response.message = "Rating must be between 1 to 5";
+    return response
+  }
   if (comment.trim() === "") {
     response.message = "Comment cannot be blank!";
     return response;
   }
-  response.successful = true;
+  if (comment.length > 600){
+    response.message = "Comment cannot be greater than 600 characters"
+    return response
+  }
+  
+  response.success = true;
 
   response["review"] = {
     username: username,

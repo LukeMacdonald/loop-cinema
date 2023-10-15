@@ -53,7 +53,7 @@ const handleCommentChange = (content, delta, source, editor) => {
     // Verify the review and get the response
     const response = verifyReview(username, comment, rating, props.movie_id);
 
-    if (response.successful) {
+    if (response.success) {
 
       // Update the review and show a success message
       await createReview(response.review);
