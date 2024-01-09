@@ -20,7 +20,7 @@ function MovieReview() {
   
   return (
     <>
-    <div className='row'>
+    <div className='row mx-4'>
       <div className='col-md-4'>
       <button className='btn btn-secondary' onClick={() => navigate('/')} style={{margin:'1rem 0'}}>
         <i className="fa-solid fa-left-long" style={{marginRight:'1rem'}}></i> 

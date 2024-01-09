@@ -12,18 +12,20 @@ import './styles/styles.css';
 import Reservation from './components/profile/reservations/Reservation';
 import { AuthProvider } from './AuthContext'
 import ProfileReservation from './pages/ProfileReservation';
+import Home from './pages/Home';
 
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
+      <div className="App min-h-screen" style={{backgroundColor:'#1A1D1A'}}>
         <Router>
           <Header />
-          <main role="main" className="main">
-            <div className="" style={{marginLeft:'2rem'}}>
+          <main role="main">
+            <div className="">
               <Routes>
                 <Route path="/" element={<Landing />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/profile/details/:username" element={<Profile />} />
@@ -34,7 +36,7 @@ function App() {
               </Routes>
             </div>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </Router>
       </div>
     </AuthProvider>

@@ -26,32 +26,37 @@ function Header() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', margin: '1rem 0 0 2rem' }}>
-            <a className="navbar-brand" href="/" style={{ fontSize: '2rem' }}>
+        <header className="w-full font-medium flex items-center justify-between relative z-10">
+            <nav className="w-full navbar navbar-expand-lg navbar-dark z-1 bg-transparent">
+            <a className="navbar-brand text-2xl ml-4" href="/">
                LOOPCINEMA 
             </a>
             <div className="navbar-collapse justify-content-end">
                 <ul className="navbar-nav">
                     <li className="nav-item active">
-                        {state.isLoggedIn && <a className="nav-link" href={`/profile/details/${state.username}`} style={{ fontSize: '1.25rem', marginRight:'2rem' }}><i className="fa fa-user"></i></a>}
+                        {state.isLoggedIn && <a className="nav-link text-xl mr-8" href={`/profile/details/${state.username}`}><i className="fa fa-user"></i></a>}
                     </li>
                     <li className="nav-item">
                         {!state.isLoggedIn && 
-                        <button className="btn nav-button" onClick={handleSignin} style={{ marginRight:'2rem', fontSize: '1.25rem' }}>
-                             <i className="fa-solid fa-right-to-bracket" style={{ marginRight:'1rem' }}></i> Log In
+                        <button className="text-xl hover:text-red-700" onClick={handleSignin}>
+                             <i className="fa-solid fa-right-to-bracket mr-4"></i> Log In
                         </button>}
                         {!state.isLoggedIn && 
-                        <button className="btn nav-button" onClick={handleSignup} style={{ marginRight:'2rem',fontSize: '1.25rem' }}>
-                            <i className="fa-solid fa-user-plus" style={{ marginRight:'1rem' }}></i> Sign up 
+                        <button className="mx-8 text-xl hover:text-red-700" onClick={handleSignup}>
+                            <i className="fa-solid fa-user-plus mr-4" ></i> Sign up 
                         </button>}
                         {state.isLoggedIn && 
-                        <button className="btn nav-button" onClick={handleLogout} style={{ marginRight:'2rem',fontSize: '1.25rem' }}>
-                            <i className="fa-solid fa-right-from-bracket" style={{ marginRight:'1rem' }}></i> Log Out
+                        <button className="text-xl hover:text-red-700" onClick={handleLogout}>
+                            <i className="fa-solid fa-right-from-bracket mr-4"></i> Log Out
                         </button>}
                     </li>
                 </ul>
             </div>
         </nav>
+            
+
+        </header>
+    
     )
 }
 

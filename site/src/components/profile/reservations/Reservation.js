@@ -49,7 +49,7 @@ function Reservation() {
     const isReserveButtonDisabled = session.available_seats === 0;
 
     return (
-        <div className='row'>
+        <div className='row mx-4'>
         <div className='col-md-4'>
             <img src={movie.poster} style={{ width: '75%', borderRadius: '20px', marginBottom: '2rem' }} alt="" />
             <MovieDetails movie={movie} />
