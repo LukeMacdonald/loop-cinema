@@ -62,8 +62,8 @@ function ReviewCard(props) {
         ) : (
           <div>
             <div
+              className="bg-gray-200"
               style={{
-                backgroundColor: "white",
                 borderRadius: "10px",
                 padding: "2rem 1rem",
                 width: "80%",
@@ -81,11 +81,14 @@ function ReviewCard(props) {
                   data-testid="rating"
                 />
                 <br />
-                <CommentEditor comment={comment} handleCommentChange={handleCommentChange}/>
+                <CommentEditor
+                  comment={comment}
+                  handleCommentChange={handleCommentChange}
+                />
                 <div className="form-group">
                   <input
                     type="submit"
-                    className="btn btn-primary"
+                    className="py-2 bg-purple-900 hover:bg-purple-600 rounded-md"
                     value="Submit"
                     style={{ width: "50%", marginTop: "20px" }}
                   />

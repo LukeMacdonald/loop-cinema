@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import FormInput from '../FormInput';
-import { updateUserProfile } from '../../data/repository';
-import { verifyEditProfile } from '../../data/validation';
+import React, { useState, useEffect } from "react";
+import { Button, Modal } from "react-bootstrap";
+import FormInput from "../FormInput";
+import { updateUserProfile } from "../../data/repository";
+import { verifyEditProfile } from "../../data/validation";
 
 function EditProfileModal(props) {
   const { user } = props;
@@ -35,21 +35,25 @@ function EditProfileModal(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     try {
-      const verification = verifyEditProfile(fields.email, fields.name, user.email);
-  
+      const verification = verifyEditProfile(
+        fields.email,
+        fields.name,
+        user.email,
+      );
+
       if (!verification.success) {
         setErrorMessage(verification.message);
         return;
       }
-  
+
       const editedUser = await updateUserProfile({
         username: user.username,
         email: fields.email,
         name: fields.name,
       });
-      
+
       props.setUser(editedUser);
       window.alert(verification.message);
       props.onHide();
@@ -66,6 +70,7 @@ function EditProfileModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="text-dark"
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -73,7 +78,7 @@ function EditProfileModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <FormInput
+        <FormInput
           label="Name"
           name="name"
           id="name"
@@ -94,18 +99,29 @@ function EditProfileModal(props) {
           required={true}
         />
         {errorMessage && (
-          <div className="form-group" style={{ marginTop: '1rem', textAlign: 'center' }}>
+          <div
+            className="form-group"
+            style={{ marginTop: "1rem", textAlign: "center" }}
+          >
             <span className="text-danger">{errorMessage}</span>
           </div>
         )}
       </Modal.Body>
-      <Modal.Footer style={{ margin: '0 auto' }}>
-        <Button variant="success" onClick={handleSubmit} style={{ width: '150px' }}>
+      <Modal.Footer style={{ margin: "0 auto" }}>
+        <button
+          className="bg-green-700 py-2 rounded-md text-light hover:bg-green-500"
+          onClick={handleSubmit}
+          style={{ width: "150px" }}
+        >
           Confirm
-        </Button>
-        <Button variant="danger" onClick={handleCancel} style={{ width: '150px' }}>
+        </button>
+        <button
+          className="bg-red-700 py-2 rounded-md text-light hover:bg-red-500"
+          onClick={handleCancel}
+          style={{ width: "150px" }}
+        >
           Cancel
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   );

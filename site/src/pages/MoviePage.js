@@ -17,7 +17,7 @@ function MoviePage() {
       <div className="row mx-4">
         <div className="col-md-4">
           <button
-            className="btn btn-secondary"
+            className="py-3 hover:underline"
             onClick={() => navigate("/home")}
             style={{ margin: "1rem 0" }}
           >
@@ -39,7 +39,7 @@ function MoviePage() {
           <MovieNavLinks movieID={movieID} location={location} />
           {Object.keys(groupedSessions).map((date, index) => (
             <div key={index}>
-              <h4>{date}</h4>
+              <h4 className="pb-2 pt-4">{date}</h4>
               <Sessions sessions={groupedSessions[date]} />
             </div>
           ))}
