@@ -1,13 +1,22 @@
 import React from "react";
 
-const FormInput = ({ label, name, id, type, value, onChange,placeholder,required }) => {
+const FormInput = ({
+  label,
+  name,
+  id,
+  type,
+  value,
+  onChange,
+  placeholder,
+  required,
+  className = "",
+}) => {
   return (
-    <div className="form-group form-input-group"> 
-
+    <div className={`w-full ${className}`}>
       <input
         name={name}
         id={id}
-        className="form-control form-input"
+        className={`w-full py-2 rounded-md px-3 text-dark`}
         type={type}
         value={value}
         onChange={onChange}
@@ -20,3 +29,4 @@ const FormInput = ({ label, name, id, type, value, onChange,placeholder,required
 };
 
 export default FormInput;
+
