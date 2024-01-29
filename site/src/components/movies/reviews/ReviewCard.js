@@ -62,15 +62,17 @@ function ReviewCard(props) {
         ) : (
           <div>
             <div
-              className="bg-gray-200"
+              className="bg-gray-300"
               style={{
                 borderRadius: "10px",
                 padding: "2rem 1rem",
-                width: "80%",
+                width: "92%",
                 margin: "0 auto",
               }}
             >
-              <h4 className="review-header">Leave a Review</h4>
+              <h4 className="text-2xl text-black font-semibold pb-4">
+                Leave a Review
+              </h4>
               <form onSubmit={handleSubmit}>
                 <Rating
                   defaultValue={1}

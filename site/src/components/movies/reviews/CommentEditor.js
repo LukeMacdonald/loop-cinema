@@ -20,7 +20,7 @@ function CommentEditor(props) {
   ];
 
   return (
-    <div className="text-white">
+    <div className="">
       <ReactQuill
         className="react-quill"
         value={props.comment}
@@ -41,4 +41,3 @@ function CommentEditor(props) {
   );
 }
 export default CommentEditor;
-
